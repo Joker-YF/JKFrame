@@ -17,6 +17,20 @@ namespace JKFrame
         [DictionaryDrawerSettings(KeyLabel = "类型", ValueLabel = "列表")]
         public Dictionary<string, Dictionary<int, ConfigBase>> configDic;
 
+
+        /// <summary>
+        /// 获取多个配置
+        /// </summary>
+        public Dictionary<int, ConfigBase> GetConfigs(string configTypeName)
+        {
+            // 检查类型
+            if (!configDic.TryGetValue(configTypeName, out Dictionary<int, ConfigBase> dic))
+            {
+                throw new System.Exception("JK:配置设置中不包含这个Key:" + configTypeName);
+            }
+            return dic;
+        }
+
         /// <summary>
         /// 获取配置
         /// </summary>
@@ -26,17 +40,17 @@ namespace JKFrame
         public T GetConfig<T>(string configTypeName, int id) where T : ConfigBase
         {
             // 检查类型
-            if (!configDic.ContainsKey(configTypeName))
+            if (!configDic.TryGetValue(configTypeName, out Dictionary<int, ConfigBase> dic))
             {
                 throw new System.Exception("JK:配置设置中不包含这个Key:" + configTypeName);
             }
             // 检查ID
-            if (!configDic[configTypeName].ContainsKey(id))
+            if (!dic.TryGetValue(id, out ConfigBase config))
             {
                 throw new System.Exception($"JK:配置设置中{configTypeName}不包含这个ID:{id}");
             }
             // 说明一切正常
-            return configDic[configTypeName][id] as T;
+            return config as T;
         }
     }
 }

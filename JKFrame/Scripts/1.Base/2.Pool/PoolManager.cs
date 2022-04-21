@@ -32,7 +32,7 @@ namespace JKFrame
         {
             GameObject obj = null;
             // 检查有没有这一层
-            if (gameObjectPoolDic.TryGetValue(assetName,out GameObjectPoolData poolData ))
+            if (gameObjectPoolDic.TryGetValue(assetName, out GameObjectPoolData poolData) && poolData.poolQueue.Count > 0)
             {
                 obj = poolData.GetObj(parent);
             }
@@ -46,7 +46,7 @@ namespace JKFrame
         {
             string name = obj.name;
             // 现在有没有这一层
-            if (gameObjectPoolDic.TryGetValue(name,out GameObjectPoolData poolData))
+            if (gameObjectPoolDic.TryGetValue(name, out GameObjectPoolData poolData))
             {
                 poolData.PushObj(obj);
             }
@@ -133,7 +133,7 @@ namespace JKFrame
         public void ClearGameObject(string prefabName)
         {
             GameObject go = poolRootObj.transform.Find(prefabName).gameObject;
-            if (go.IsNull()==false)
+            if (go.IsNull() == false)
             {
                 Destroy(go);
                 gameObjectPoolDic.Remove(prefabName);

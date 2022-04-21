@@ -1,10 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 namespace JKFrame
 {
     public class ConfigManager : ManagerBase<ConfigManager>
     {
         [SerializeField]
         private ConfigSetting configSetting;
+
+        /// <summary>
+        /// 获取多个配置
+        /// </summary>
+        public Dictionary<int, ConfigBase> GetConfigs(string configTypeName)
+        {
+            return configSetting.GetConfigs(configTypeName);
+        }
 
         /// <summary>
         /// 获取配置
