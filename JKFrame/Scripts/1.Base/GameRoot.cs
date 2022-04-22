@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace JKFrame
 {
+    [InitializeOnLoad]
     public class GameRoot : SingletonMono<GameRoot>
     {
         /// <summary>
@@ -35,15 +36,23 @@ namespace JKFrame
         }
 
 #if UNITY_EDITOR
+
+        static GameRoot()
+        {
+            EditorApplication.update += () =>
+            {
+                InitForEditor();
+            };
+        }
         [InitializeOnLoadMethod]
         public static void InitForEditor()
         {
-            Debug.Log(11);
             // 当前是否要进行播放或准备播放中
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 return;
             }
+
             if (Instance == null && GameObject.Find("GameRoot") != null)
             {
                 Instance = GameObject.Find("GameRoot").GetComponent<GameRoot>();
@@ -62,11 +71,6 @@ namespace JKFrame
         }
 #endif
 
-
-
     }
-
-
-
 }
 
