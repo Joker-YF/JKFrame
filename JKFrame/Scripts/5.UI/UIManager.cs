@@ -11,6 +11,7 @@ namespace JKFrame
         private class UILayer
         {
             public Transform root;
+            public bool enableMask = true;
             public Image maskImage;
             private int count = 0;
             public void OnShow()
@@ -27,6 +28,7 @@ namespace JKFrame
 
             private void Update()
             {
+                if (enableMask == false) return;
                 maskImage.raycastTarget = count != 0;
                 int posIndex = root.childCount - 2;
                 maskImage.transform.SetSiblingIndex(posIndex < 0 ? 0 : posIndex);
@@ -45,6 +47,8 @@ namespace JKFrame
         // 提示窗
         [SerializeField]
         private UITips UITips;
+
+        public RectTransform DragLayer;
 
         public void AddTips(string info)
         {

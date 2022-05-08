@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 295300530}
   - component: {fileID: 295300529}
   m_Layer: 5
-  m_Name: Mask (3)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 687255681}
   - component: {fileID: 687255680}
   m_Layer: 5
-  m_Name: Mask (4)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 877360462}
   - component: {fileID: 877360461}
   m_Layer: 5
-  m_Name: Mask (1)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -905,6 +905,7 @@ RectTransform:
   - {fileID: 588667062}
   - {fileID: 1808348528}
   - {fileID: 778908334}
+  - {fileID: 2077328066}
   m_Father: {fileID: 3304632367700951243}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1286,7 +1287,7 @@ GameObject:
   - component: {fileID: 1935915077}
   - component: {fileID: 1935915076}
   m_Layer: 5
-  m_Name: Mask (2)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1350,6 +1351,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2077328065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2077328066}
+  - component: {fileID: 2077328067}
+  m_Layer: 5
+  m_Name: DragLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2077328066
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077328065}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1492594499}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2077328067
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2077328065}
+  m_CullTransparentMesh: 1
 --- !u!1 &3304632367700951240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,7 +1506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733177cdb293fdd42b84021f7c6d11a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localizationSetting: {fileID: 11400000, guid: d2ea399598c841e468a6995d234adac5, type: 2}
+  localizationSetting: {fileID: 11400000, guid: d2ea399598c841e468a6995d234adac5,
+    type: 2}
   currentLanguageType: 0
 --- !u!114 &1959911996
 MonoBehaviour:
@@ -1488,16 +1535,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UILayers:
   - root: {fileID: 209671190}
+    enableMask: 1
     maskImage: {fileID: 1052248273}
   - root: {fileID: 799209266}
+    enableMask: 0
     maskImage: {fileID: 877360461}
   - root: {fileID: 1698360326}
+    enableMask: 1
     maskImage: {fileID: 1935915076}
   - root: {fileID: 588667062}
+    enableMask: 0
     maskImage: {fileID: 295300529}
   - root: {fileID: 1808348528}
+    enableMask: 1
     maskImage: {fileID: 687255680}
   UITips: {fileID: 778908336}
+  DragLayer: {fileID: 2077328066}
 --- !u!1 &4733484578507733165
 GameObject:
   m_ObjectHideFlags: 0
