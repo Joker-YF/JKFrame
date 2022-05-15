@@ -44,9 +44,10 @@ namespace JKFrame
             JKEventListener lis = GetOrAddJKEventListener(com);
             lis.RemoveAllListener();
         }
-        public static void TriggerCustomEvent(this Component com,int customEventTypeInt)
-        { 
-        
+        public static void TriggerCustomEvent<T>(this Component com,int customEventTypeInt,T eventData)
+        {
+            JKEventListener lis = GetOrAddJKEventListener(com);
+            lis.TriggerAction<T>(customEventTypeInt,eventData);
         }
         #endregion
 
