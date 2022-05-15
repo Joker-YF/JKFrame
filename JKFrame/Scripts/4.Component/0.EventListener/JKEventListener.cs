@@ -9,26 +9,26 @@ namespace JKFrame
     /// </summary>
     public enum JKEventType
     {
-        OnMouseEnter,
-        OnMouseExit,
-        OnClick,
-        OnClickDown,
-        OnClickUp,
-        OnDrag,
-        OnBeginDrag,
-        OnEndDrag,
-        OnCollisionEnter,
-        OnCollisionStay,
-        OnCollisionExit,
-        OnCollisionEnter2D,
-        OnCollisionStay2D,
-        OnCollisionExit2D,
-        OnTriggerEnter,
-        OnTriggerStay,
-        OnTriggerExit,
-        OnTriggerEnter2D,
-        OnTriggerStay2D,
-        OnTriggerExit2D,
+        OnMouseEnter = -10001,
+        OnMouseExit = -10002,
+        OnClick = -10003,
+        OnClickDown = -10004,
+        OnClickUp = -10005,
+        OnDrag = -10006,
+        OnBeginDrag = -10007,
+        OnEndDrag = -10008,
+        OnCollisionEnter = -10009,
+        OnCollisionStay = -10010,
+        OnCollisionExit = -10011,
+        OnCollisionEnter2D = -10012,
+        OnCollisionStay2D = -10013,
+        OnCollisionExit2D = -10014,
+        OnTriggerEnter = -10015,
+        OnTriggerStay = -10016,
+        OnTriggerExit = -10017,
+        OnTriggerEnter2D = -10018,
+        OnTriggerStay2D = -10019,
+        OnTriggerExit2D = -10020,
     }
 
     public interface IMouseEvent : IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -40,7 +40,6 @@ namespace JKFrame
     /// </summary>
     public class JKEventListener : MonoBehaviour, IMouseEvent
     {
-
         #region 内部类、接口等
         /// <summary>
         /// 某个事件中一个时间的数据包装类
@@ -151,52 +150,52 @@ namespace JKFrame
 
         }
 
-        /// <summary>
-        /// 枚举比较器
-        /// </summary>
-        private class JKEventTypeEnumComparer : Singleton<JKEventTypeEnumComparer>, IEqualityComparer<JKEventType>
-        {
-            public bool Equals(JKEventType x, JKEventType y)
-            {
-                return x == y;
-            }
-
-            public int GetHashCode(JKEventType obj)
-            {
-                return (int)obj;
-            }
-        }
         #endregion
 
-        private Dictionary<JKEventType, IJKEventListenerEventInfos> eventInfoDic = new Dictionary<JKEventType, JKEventListener.IJKEventListenerEventInfos>(JKEventTypeEnumComparer.Instance);
+        private Dictionary<int, IJKEventListenerEventInfos> eventInfoDic = new Dictionary<int, JKEventListener.IJKEventListenerEventInfos>();
 
         #region 外部的访问
+
         /// <summary>
         /// 添加事件
         /// </summary>
-        public void AddListener<T>(JKEventType eventType, Action<T, object[]> action, params object[] args)
+        public void AddListener<T>(int eventTypeInt, Action<T, object[]> action, params object[] args)
         {
-            if (eventInfoDic.ContainsKey(eventType))
+            if (eventInfoDic.TryGetValue(eventTypeInt, out IJKEventListenerEventInfos info))
             {
-                (eventInfoDic[eventType] as JKEventListenerEventInfos<T>).AddListener(action, args);
+                (info as JKEventListenerEventInfos<T>).AddListener(action, args);
             }
             else
             {
                 JKEventListenerEventInfos<T> infos = PoolManager.Instance.GetObject<JKEventListenerEventInfos<T>>();
                 infos.AddListener(action, args);
-                eventInfoDic.Add(eventType, infos);
+                eventInfoDic.Add(eventTypeInt, infos);
             }
+        }
+        /// <summary>
+        /// 添加事件
+        /// </summary>
+        public void AddListener<T>(JKEventType eventType, Action<T, object[]> action, params object[] args)
+        {
+            AddListener<T>((int)eventType, action, args);
         }
 
         /// <summary>
         /// 移除事件
         /// </summary>
+        public void RemoveListener<T>(int eventTypeInt, Action<T, object[]> action, bool checkArgs = false, params object[] args)
+        {
+            if (eventInfoDic.TryGetValue(eventTypeInt,out IJKEventListenerEventInfos info))
+            {
+                (info as JKEventListenerEventInfos<T>).RemoveListener(action, checkArgs, args);
+            }
+        }
+        /// <summary>
+        /// 移除事件
+        /// </summary>
         public void RemoveListener<T>(JKEventType eventType, Action<T, object[]> action, bool checkArgs = false, params object[] args)
         {
-            if (eventInfoDic.ContainsKey(eventType))
-            {
-                (eventInfoDic[eventType] as JKEventListenerEventInfos<T>).RemoveListener(action, checkArgs, args);
-            }
+            RemoveListener((int)eventType, action, checkArgs, args);
         }
 
         /// <summary>
@@ -206,10 +205,10 @@ namespace JKFrame
         /// <param name="eventType"></param>
         public void RemoveAllListener(JKEventType eventType)
         {
-            if (eventInfoDic.ContainsKey(eventType))
+            if (eventInfoDic.TryGetValue((int)eventType, out IJKEventListenerEventInfos infos))
             {
-                eventInfoDic[eventType].RemoveAll();
-                eventInfoDic.Remove(eventType);
+                infos.RemoveAll();
+                eventInfoDic.Remove((int)eventType);
             }
         }
         /// <summary>
@@ -224,17 +223,25 @@ namespace JKFrame
 
             eventInfoDic.Clear();
         }
+
         #endregion
 
         /// <summary>
         /// 触发事件
         /// </summary>
-        private void TriggerAction<T>(JKEventType eventType, T eventData)
+        public void TriggerAction<T>(int eventTypeInt, T eventData)
         {
-            if (eventInfoDic.ContainsKey(eventType))
+            if (eventInfoDic.TryGetValue(eventTypeInt, out IJKEventListenerEventInfos infos))
             {
-                (eventInfoDic[eventType] as JKEventListenerEventInfos<T>).TriggerEvent(eventData);
+                (infos as JKEventListenerEventInfos<T>).TriggerEvent(eventData);
             }
+        }
+        /// <summary>
+        /// 触发事件
+        /// </summary>
+        public void TriggerAction<T>(JKEventType eventType, T eventData)
+        {
+            TriggerAction<T>((int)eventType, eventData);
         }
 
         #region 鼠标事件

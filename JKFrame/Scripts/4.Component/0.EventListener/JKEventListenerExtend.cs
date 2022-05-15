@@ -14,26 +14,41 @@ namespace JKFrame
         }
         public static void AddEventListener<T>(this Component com, JKEventType eventType, Action<T, object[]> action, params object[] args)
         {
+            AddEventListener(com, (int)eventType, action, args);
+        }
+        public static void AddEventListener<T>(this Component com, int customEventTypeInt, Action<T, object[]> action, params object[] args)
+        {
             JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.AddListener(eventType, action, args);
+            lis.AddListener(customEventTypeInt, action, args);
+        }
+        public static void RemoveEventListener<T>(this Component com, int customEventTypeInt, Action<T, object[]> action, bool checkArgs = false, params object[] args)
+        {
+            JKEventListener lis = GetOrAddJKEventListener(com);
+            lis.RemoveListener(customEventTypeInt, action, checkArgs, args);
         }
         public static void RemoveEventListener<T>(this Component com, JKEventType eventType, Action<T, object[]> action, bool checkArgs = false, params object[] args)
         {
+            RemoveEventListener(com,(int)eventType,action,checkArgs,args);
+        }
+        public static void RemoveAllListener(this Component com, int customEventTypeInt)
+        {
             JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.RemoveListener(eventType, action, checkArgs, args);
+            lis.RemoveAllListener(customEventTypeInt);
         }
         public static void RemoveAllListener(this Component com, JKEventType eventType)
         {
-            JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.RemoveAllListener(eventType);
+            RemoveAllListener(com, (int)eventType);
         }
         public static void RemoveAllListener(this Component com)
         {
             JKEventListener lis = GetOrAddJKEventListener(com);
             lis.RemoveAllListener();
         }
+        public static void TriggerCustomEvent(this Component com,int customEventTypeInt)
+        { 
+        
+        }
         #endregion
-
 
         #region 鼠标相关事件
         public static void OnMouseEnter(this Component com, Action<PointerEventData, object[]> action, params object[] args)
