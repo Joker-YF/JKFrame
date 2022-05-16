@@ -63,7 +63,6 @@ namespace JKFrame
             }
         }
 
-
         /// <summary>
         /// 加载游戏物体
         /// </summary>
@@ -146,6 +145,19 @@ namespace JKFrame
              return Addressables.LoadAssetsAsync<T>(keyName,callBack).WaitForCompletion();
         }
 
+        /// <summary>
+        /// 异步加载指定Key的所有资源
+        /// </summary>
+        public static void LoadAssetsAsync<T>(string keyName, Action<IList<T>> callBack = null, Action<T> callBackOnEveryOne = null)
+        {
+            MonoManager.Instance.StartCoroutine(DoLoadAssetsAsync<T>(keyName,callBack, callBackOnEveryOne));
+        }
 
+        static IEnumerator DoLoadAssetsAsync<T>(string keyName, Action<IList<T>> callBack = null,Action<T> callBackOnEveryOne = null)
+        {
+            AsyncOperationHandle<IList<T>> request = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne);
+            yield return request;
+            callBack?.Invoke(request.Result);
+        }
     }
 }
