@@ -29,6 +29,7 @@ namespace JKFrame
         OnTriggerEnter2D = -10018,
         OnTriggerStay2D = -10019,
         OnTriggerExit2D = -10020,
+        OnReleaseAddressableAsset = -10021
     }
 
     public interface IMouseEvent : IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -343,6 +344,13 @@ namespace JKFrame
         }
 
 
+        #endregion
+
+        #region 销毁事件
+        private void OnDestroy()
+        {
+            TriggerAction(JKEventType.OnReleaseAddressableAsset, gameObject);
+        }
         #endregion
     }
 }

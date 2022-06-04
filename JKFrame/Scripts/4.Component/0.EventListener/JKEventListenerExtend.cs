@@ -217,6 +217,15 @@ namespace JKFrame
         }
         #endregion
 
-
+        #region 资源相关事件
+        public static void OnReleaseAddressableAsset(this Component com, Action<GameObject, object[]> action, params object[] args)
+        {
+            AddEventListener(com, JKEventType.OnReleaseAddressableAsset, action, args);
+        }
+        public static void RemoveReleaseAddressableAsset(this Component com, Action<GameObject, object[]> action, bool checkArgs = false, params object[] args)
+        {
+            RemoveEventListener(com, JKEventType.OnReleaseAddressableAsset, action, checkArgs, args);
+        }
+        #endregion
     }
 }

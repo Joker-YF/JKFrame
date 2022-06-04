@@ -66,18 +66,35 @@ namespace JKFrame
         /// <summary>
         /// 加载游戏物体
         /// </summary>
-        public static GameObject LoadGameObject(string assetName, Transform parent = null)
+        /// <param name="assetName">资源名称</param>
+        /// <param name="parent">父物体</param>
+        /// <param name="automaticRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
+        /// <returns></returns>
+        public static GameObject LoadGameObject(string assetName, Transform parent = null,bool automaticRelease = true)
         {
             GameObject go = null;
             if (CheckCacheDic(assetName))
             {
                 go = PoolManager.Instance.GetGameObject(assetName, parent);
-                if (go.IsNull()==false) return go;
+                if (go.IsNull() == false) return go;
             }
             go = Addressables.InstantiateAsync(assetName, parent).WaitForCompletion();
+            if (automaticRelease)
+            {
+                go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
+            }
             go.name = assetName;
             return go;
         }
+
+        /// <summary>
+        /// 自动释放资源事件，基于事件工具
+        /// </summary>
+        private static void AutomaticReleaseAssetAction(GameObject obj, object[] arg2)
+        {
+            Addressables.ReleaseInstance(obj);
+        }
+
 
         /// <summary>
         /// 获取实例--组件模式
@@ -158,6 +175,14 @@ namespace JKFrame
             AsyncOperationHandle<IList<T>> request = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne);
             yield return request;
             callBack?.Invoke(request.Result);
+        }
+
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public static bool ReleaseInstance(GameObject obj)
+        {
+           return  Addressables.ReleaseInstance(obj);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 namespace JKFrame
 {
     public class PoolManager : ManagerBase<PoolManager>
@@ -8,7 +9,6 @@ namespace JKFrame
         // 根节点
         [SerializeField]
         private GameObject poolRootObj;
-
         /// <summary>
         /// GameObject对象容器
         /// </summary>
