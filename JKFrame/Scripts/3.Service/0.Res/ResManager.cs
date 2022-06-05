@@ -177,8 +177,12 @@ namespace JKFrame
             callBack?.Invoke(request.Result);
         }
 
+        public static void Release<T>(T obj)
+        {
+            Addressables.Release<T>(obj);
+        }
         /// <summary>
-        /// 释放资源
+        /// 释放实例
         /// </summary>
         public static bool ReleaseInstance(GameObject obj)
         {
