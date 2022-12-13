@@ -9,6 +9,8 @@ namespace JKFrame
     {
         [SerializeField]
         private AudioSource BGAudioSource;
+        [SerializeField]
+        private GameObject prefab_AudioPlay;
 
         // 场景中生效的所有特效音乐播放器
         private List<AudioSource> audioPlayList = new List<AudioSource>();
@@ -222,9 +224,7 @@ namespace JKFrame
                 audioPlayRoot = new GameObject("AudioPlayRoot").transform;
             }
             // 从对象池中获取播放器
-            GameObject audioPlay = PoolManager.Instance.GetGameObject("AudioPlay", audioPlayRoot);
-            if (audioPlay.IsNull()) audioPlay = ResManager.LoadGameObject("AudioPlay", audioPlayRoot);
-            AudioSource audioSource = audioPlay.GetComponent<AudioSource>();
+            AudioSource audioSource = PoolManager.Instance.GetGameObject<AudioSource>(prefab_AudioPlay, audioPlayRoot);
             SetEffectAudioPlay(audioSource, is3D ? 1f : 0f);
             audioPlayList.Add(audioSource);
             return audioSource;
@@ -245,6 +245,7 @@ namespace JKFrame
             // 放回池子
             if (audioSource != null)
             {
+                audioPlayList.Remove(audioSource);
                 audioSource.JKGameObjectPushPool();
                 // 回调 延迟 time（秒）时间
                 yield return new WaitForSeconds(time);
@@ -305,24 +306,24 @@ namespace JKFrame
         /// <param name="is3d">是否3D</param>
         /// <param name="callBack">回调函数-在音乐播放完成后执行</param>
         /// <param name="callBacKTime">回调函数在音乐播放完成后执行的延迟时间</param>
-        public void PlayOnShot(string clipAssetName, Component component, float volumeScale = 1, bool is3d = true, UnityAction callBack = null, float callBacKTime = 0)
+        public void PlayOnShot(string clipPath, Component component, float volumeScale = 1, bool is3d = true, UnityAction callBack = null, float callBacKTime = 0)
         {
-            AudioClip audioClip = ResManager.LoadAsset<AudioClip>(clipAssetName);
+            AudioClip audioClip = ResManager.LoadAsset<AudioClip>(clipPath);
             if (audioClip != null) PlayOnShot(audioClip, component, volumeScale, is3d, callBack, callBacKTime);
         }
 
         /// <summary>
         /// 播放一次特效音乐
         /// </summary>
-        /// <param name="clipAssetName">音效路径</param>
+        /// <param name="clipPath">音效路径</param>
         /// <param name="position">播放的位置</param>
         /// <param name="volumeScale">音量 0-1</param>
         /// <param name="is3d">是否3D</param>
         /// <param name="callBack">回调函数-在音乐播放完成后执行</param>
         /// <param name="callBacKTime">回调函数在音乐播放完成后执行的延迟时间</param>
-        public void PlayOnShot(string clipAssetName, Vector3 position, float volumeScale = 1, bool is3d = true, UnityAction callBack = null, float callBacKTime = 0)
+        public void PlayOnShot(string clipPath, Vector3 position, float volumeScale = 1, bool is3d = true, UnityAction callBack = null, float callBacKTime = 0)
         {
-            AudioClip audioClip = ResManager.LoadAsset<AudioClip>(clipAssetName);
+            AudioClip audioClip = ResManager.LoadAsset<AudioClip>(clipPath);
             if (audioClip != null) PlayOnShot(audioClip, position, volumeScale, is3d, callBack, callBacKTime);
         }
         #endregion
