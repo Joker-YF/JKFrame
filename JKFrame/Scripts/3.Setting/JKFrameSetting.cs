@@ -93,7 +93,6 @@ namespace JKFrame
                 {
                     RemoveScriptCompilationSymbol("ENABLE_LOG");
                 }
-                JKLog.Init(this);
             }
 #endif
         }
