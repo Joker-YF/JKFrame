@@ -52,29 +52,35 @@ namespace JKFrame
             public Dictionary<int, IJKEventListenerEventInfos> eventInfoDic = new Dictionary<int, JKEventListener.IJKEventListenerEventInfos>();
         }
 
+
+        private interface IJKEventListenerEventInfo<T>{
+            void TriggerEvent(T eventData);
+            void Destory();
+        }
+
         /// <summary>
         /// 某个事件中一个事件的数据包装类
         /// </summary>
-        private class JKEventListenerEventInfo<T>
+        private class JKEventListenerEventInfo<T,TEventArg>: IJKEventListenerEventInfo<T> 
         {
             // T：事件本身的参数（PointerEventData、Collision）
             // object[]:事件的参数
-            public Action<T, object[]> action;
-            public object[] args;
-            public void Init(Action<T, object[]> action, object[] args = null)
+            public Action<T, TEventArg> action;
+            public TEventArg arg;
+            public void Init(Action<T, TEventArg> action, TEventArg args=default(TEventArg))
             {
                 this.action = action;
-                this.args = args;
+                this.arg = args;
             }
             public void Destory()
             {
                 this.action = null;
-                this.args = null;
+                this.arg = default(TEventArg);
                 poolModul.PushObject(this);
             }
             public void TriggerEvent(T eventData)
             {
-                action?.Invoke(eventData, args);
+                action?.Invoke(eventData, arg);
             }
         }
 
@@ -90,48 +96,45 @@ namespace JKFrame
         private class JKEventListenerEventInfos<T> : IJKEventListenerEventInfos
         {
             // 所有的事件
-            private List<JKEventListenerEventInfo<T>> eventList = new List<JKEventListenerEventInfo<T>>();
+            private List<IJKEventListenerEventInfo<T>> eventList = new List<IJKEventListenerEventInfo<T>>();
 
             /// <summary>
             /// 添加事件
             /// </summary>
-            public void AddListener(Action<T, object[]> action, params object[] args)
+            public void AddListener<TEventArg>(Action<T, TEventArg> action, TEventArg args=default(TEventArg)) 
             {
-                JKEventListenerEventInfo<T> info = poolModul.GetObject<JKEventListenerEventInfo<T>>();
-                if (info == null) info = new JKEventListenerEventInfo<T>();
+                JKEventListenerEventInfo<T, TEventArg> info = poolModul.GetObject<JKEventListenerEventInfo<T, TEventArg>>();
+                if (info == null) info = new JKEventListenerEventInfo<T, TEventArg>();
                 info.Init(action, args);
                 eventList.Add(info);
             }
 
-            /// <summary>
-            /// 移除事件
-            /// </summary>
-            public void RemoveListener(Action<T, object[]> action, bool checkArgs = false, params object[] args)
+            public void TriggerEvent(T evetData)
             {
                 for (int i = 0; i < eventList.Count; i++)
                 {
-                    // 找到这个事件
-                    if (eventList[i].action.Equals(action))
+                    eventList[i].TriggerEvent(evetData);
+                }
+            }
+
+            /// <summary>
+            /// 移除事件
+            /// 即时同一个函数+参数注册过多次，无论如何该方法只会移除一个事件
+            /// </summary>
+            public void RemoveListener<TEventArg>(Action<T, TEventArg> action, TEventArg args=default(TEventArg))
+            {
+                for (int i = 0; i < eventList.Count; i++)
+                {
+                    JKEventListenerEventInfo<T, TEventArg> eventInfo = eventList[i] as JKEventListenerEventInfo<T, TEventArg>;
+                    if (eventInfo == null) continue; // 类型不符
+
+                    // 找到这个事件，查看是否相等
+                    if (eventInfo.action.Equals(action))
                     {
-                        // 是否需要检查参数
-                        if (checkArgs && args.Length > 0)
-                        {
-                            // 参数如果相等
-                            if (args.ArraryEquals(eventList[i].args))
-                            {
-                                // 移除
-                                eventList[i].Destory();
-                                eventList.RemoveAt(i);
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            // 移除
-                            eventList[i].Destory();
-                            eventList.RemoveAt(i);
-                            return;
-                        }
+                        // 移除
+                        eventInfo.Destory();
+                        eventList.RemoveAt(i);
+                        return;
                     }
                 }
             }
@@ -147,14 +150,6 @@ namespace JKFrame
                 }
                 eventList.Clear();
                 poolModul.PushObject(this);
-            }
-
-            public void TriggerEvent(T evetData)
-            {
-                for (int i = 0; i < eventList.Count; i++)
-                {
-                    eventList[i].TriggerEvent(evetData);
-                }
             }
         }
 
@@ -178,11 +173,11 @@ namespace JKFrame
         /// <summary>
         /// 添加事件
         /// </summary>
-        public void AddListener<T>(int eventTypeInt, Action<T, object[]> action, params object[] args)
+        public void AddListener<T, TEventArg>(int eventTypeInt, Action<T, TEventArg> action, TEventArg args)
         {
             if (Data.eventInfoDic.TryGetValue(eventTypeInt, out IJKEventListenerEventInfos info))
             {
-                (info as JKEventListenerEventInfos<T>).AddListener(action, args);
+                ((JKEventListenerEventInfos<T>)info).AddListener(action, args);
             }
             else
             {
@@ -195,27 +190,27 @@ namespace JKFrame
         /// <summary>
         /// 添加事件
         /// </summary>
-        public void AddListener<T>(JKEventType eventType, Action<T, object[]> action, params object[] args)
+        public void AddListener<T, TEventArg>(JKEventType eventType, Action<T, TEventArg> action, TEventArg args) 
         {
-            AddListener<T>((int)eventType, action, args);
+            AddListener((int)eventType, action, args);
         }
 
         /// <summary>
         /// 移除事件
         /// </summary>
-        public void RemoveListener<T>(int eventTypeInt, Action<T, object[]> action, bool checkArgs = false, params object[] args)
+        public void RemoveListener<T, TEventArg>(int eventTypeInt, Action<T, TEventArg> action) 
         {
             if (Data.eventInfoDic.TryGetValue(eventTypeInt,out IJKEventListenerEventInfos info))
             {
-                (info as JKEventListenerEventInfos<T>).RemoveListener(action, checkArgs, args);
+                ((JKEventListenerEventInfos<T>)info).RemoveListener(action);
             }
         }
         /// <summary>
         /// 移除事件
         /// </summary>
-        public void RemoveListener<T>(JKEventType eventType, Action<T, object[]> action, bool checkArgs = false, params object[] args)
+        public void RemoveListener<T, TEventArg>(JKEventType eventType, Action<T, TEventArg> action)
         {
-            RemoveListener((int)eventType, action, checkArgs, args);
+            RemoveListener((int)eventType, action);
         }
 
         /// <summary>

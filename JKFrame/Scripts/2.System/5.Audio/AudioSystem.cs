@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using System;
+using UnityEngine;
 
 namespace JKFrame
 {
@@ -49,7 +49,8 @@ namespace JKFrame
         public static void UnPauseBGAudio() => audioModule.UnPauseBGAudio();
 
         /// <summary>
-        /// 播放一次特效音乐
+        /// 播放一次特效音乐,并且绑定在某个游戏物体身上
+        /// 但是不用担心，游戏物体销毁时，会瞬间解除绑定，回收音效播放器
         /// </summary>
         /// <param name="clip">音效片段</param>
         /// <param name="autoReleaseClip">播放完毕时候自动回收audioClip，只有当基于Addressables时才有效</param>
@@ -57,9 +58,8 @@ namespace JKFrame
         /// <param name="volumeScale">音量 0-1</param>
         /// <param name="is3d">是否3D</param>
         /// <param name="callBack">回调函数-在音乐播放完成后执行</param>
-        /// <param name="callBacKTime">回调函数在音乐播放完成后执行的延迟时间</param>
-        public static void PlayOnShot(AudioClip clip, Component component = null, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, UnityAction callBack = null, float callBacKTime = 0)
-            => audioModule.PlayOnShot(clip, component, autoReleaseClip, volumeScale, is3d, callBack, callBacKTime);
+        public static void PlayOnShot(AudioClip clip, Component component = null, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)
+            => audioModule.PlayOnShot(clip, component, autoReleaseClip, volumeScale, is3d, callBack);
 
         /// <summary>
         /// 播放一次特效音乐
@@ -69,8 +69,7 @@ namespace JKFrame
         /// <param name="volumeScale">音量 0-1</param>
         /// <param name="is3d">是否3D</param>
         /// <param name="callBack">回调函数-在音乐播放完成后执行</param>
-        /// <param name="callBacKTime">回调函数在音乐播放完成后执行的延迟时间</param>
-        public static void PlayOnShot(AudioClip clip, Vector3 position, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, UnityAction callBack = null, float callBacKTime = 0)
-            => audioModule.PlayOnShot(clip, position, autoReleaseClip, volumeScale, is3d, callBack, callBacKTime);
+        public static void PlayOnShot(AudioClip clip, Vector3 position, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)
+            => audioModule.PlayOnShot(clip, position, autoReleaseClip, volumeScale, is3d, callBack);
     }
 }

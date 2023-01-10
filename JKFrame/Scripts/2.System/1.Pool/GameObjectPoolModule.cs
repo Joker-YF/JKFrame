@@ -93,7 +93,7 @@ namespace JKFrame
         /// <param name="maxCapacity">容量限制，超出时会销毁而不是进入对象池，-1代表无限</param>
         /// <param name="defaultQuantity">默认容量，填写会向池子中放入对应数量的对象，0代表不预先放入</param>
         /// <param name="prefab">填写默认容量时预先放入的对象</param>
-        public void InitObjectPool(int maxCapacity = -1, GameObject prefab = null, int defaultQuantity = 0)
+        public void InitObjectPool(GameObject prefab,int maxCapacity = -1, int defaultQuantity = 0)
         {
             InitObjectPool(prefab.name, maxCapacity, prefab, defaultQuantity);
         }
