@@ -10,12 +10,12 @@ namespace JKFrame
     {
         private static GameObjectPoolModule poolModule = new GameObjectPoolModule();
 
-        [SerializeField,LabelText("背景音乐播放器")]
+        [SerializeField, LabelText("背景音乐播放器")]
         private AudioSource BGAudioSource;
         [SerializeField, LabelText("效果播放器预制体")]
         private GameObject EffectAudioPlayPrefab;
-        [SerializeField,LabelText("对象池预设播放器数量")]
-        private int EffectAudioDefaultQuantity=20;
+        [SerializeField, LabelText("对象池预设播放器数量")]
+        private int EffectAudioDefaultQuantity = 20;
 
         // 场景中生效的所有特效音乐播放器
         private List<AudioSource> audioPlayList;
@@ -130,6 +130,7 @@ namespace JKFrame
         /// </summary>
         private void UpdateEffectAudioPlay()
         {
+            if (audioPlayList == null) return;
             // 倒序遍历
             for (int i = audioPlayList.Count - 1; i >= 0; i--)
             {
@@ -266,7 +267,11 @@ namespace JKFrame
             }
             // 从对象池中获取播放器
             GameObject audioPlay = poolModule.GetObject("AudioPlay", audioPlayRoot);
-            if (audioPlay.IsNull()) audioPlay = GameObject.Instantiate(EffectAudioPlayPrefab, audioPlayRoot);
+            if (audioPlay.IsNull())
+            {
+                audioPlay = GameObject.Instantiate(EffectAudioPlayPrefab, audioPlayRoot);
+                audioPlay.name = EffectAudioPlayPrefab.name;
+            }
             AudioSource audioSource = audioPlay.GetComponent<AudioSource>();
             SetEffectAudioPlay(audioSource, is3D ? 1f : 0f);
             audioPlayList.Add(audioSource);
@@ -289,7 +294,7 @@ namespace JKFrame
             if (audioSource != null)
             {
                 audioPlayList.Remove(audioSource);
-                audioSource.GameObjectPushPool();
+                poolModule.PushObject(audioSource.gameObject);
                 if (autoReleaseClip) ResSystem.UnloadAsset(clip);
                 callBak?.Invoke();
             }
@@ -300,7 +305,8 @@ namespace JKFrame
             // 初始化音乐播放器
             AudioSource audioSource = GetAudioPlay(is3d);
             if (component == null) audioSource.transform.SetParent(null);
-            else {
+            else
+            {
                 audioSource.transform.SetParent(component.transform);
                 // 宿主销毁时，释放父物体
                 component.OnDesotry(OnOwerDestory, audioSource);
@@ -309,7 +315,7 @@ namespace JKFrame
             // 播放一次音效
             audioSource.PlayOneShot(clip, volumeScale);
             // 播放器回收以及回调函数
-            callBack += ()=> PlayOverRemoveOwnerDesotryAction(component);         // 播放结束时移除宿主销毁Action
+            callBack += () => PlayOverRemoveOwnerDesotryAction(component);         // 播放结束时移除宿主销毁Action
             RecycleAudioPlay(audioSource, clip, autoReleaseClip, callBack);
         }
 
@@ -322,7 +328,7 @@ namespace JKFrame
         // 播放结束时移除宿主销毁Action
         private void PlayOverRemoveOwnerDesotryAction(Component owner)
         {
-            owner.RemoveOnDesotry<AudioSource>(OnOwerDestory);
+            if (owner != null) owner.RemoveOnDesotry<AudioSource>(OnOwerDestory);
         }
 
         public void PlayOnShot(AudioClip clip, Vector3 position, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)

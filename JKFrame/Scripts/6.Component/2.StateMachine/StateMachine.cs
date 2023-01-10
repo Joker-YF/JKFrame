@@ -56,8 +56,8 @@ namespace JKFrame
             currStateObj = GetState<T>();
             CurrStateType = stateType;
             currStateObj.Enter();
-            currStateObj.OnUpdate(currStateObj.Update);
-            currStateObj.OnLateUpdate(currStateObj.LateUpdate);
+            currStateObj.AddUpdate(currStateObj.Update);
+            currStateObj.AddUpdate(currStateObj.LateUpdate);
             currStateObj.AddFixedUpdate(currStateObj.FixedUpdate);
 
             return true;

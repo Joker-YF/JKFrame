@@ -23,17 +23,17 @@ namespace JKFrame
         }
         public static void RemoveEventListener<T, TEventArg>(this Component com, int customEventTypeInt, Action<T, TEventArg> action)
         {
-            JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.RemoveListener(customEventTypeInt, action);
+            JKEventListener lis = com.GetComponent<JKEventListener>();
+            if (lis != null) lis.RemoveListener(customEventTypeInt, action);
         }
         public static void RemoveEventListener<T, TEventArg>(this Component com, JKEventType eventType, Action<T, TEventArg> action)
         {
-            RemoveEventListener(com,(int)eventType,action);
+            RemoveEventListener(com, (int)eventType, action);
         }
         public static void RemoveAllListener(this Component com, int customEventTypeInt)
         {
-            JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.RemoveAllListener(customEventTypeInt);
+            JKEventListener lis = com.GetComponent<JKEventListener>();
+            if (lis != null) lis.RemoveAllListener(customEventTypeInt);
         }
         public static void RemoveAllListener(this Component com, JKEventType eventType)
         {
@@ -41,13 +41,13 @@ namespace JKFrame
         }
         public static void RemoveAllListener(this Component com)
         {
-            JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.RemoveAllListener();
+            JKEventListener lis = com.GetComponent<JKEventListener>();
+            if (lis != null) lis.RemoveAllListener();
         }
-        public static void TriggerCustomEvent<T>(this Component com,int customEventTypeInt,T eventData)
+        public static void TriggerCustomEvent<T>(this Component com, int customEventTypeInt, T eventData)
         {
             JKEventListener lis = GetOrAddJKEventListener(com);
-            lis.TriggerAction<T>(customEventTypeInt,eventData);
+            lis.TriggerAction<T>(customEventTypeInt, eventData);
         }
         #endregion
 
@@ -60,27 +60,27 @@ namespace JKFrame
         {
             AddEventListener(com, JKEventType.OnMouseExit, action, args);
         }
-        public static void OnClick<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnClick<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnClick, action, args);
         }
-        public static void OnClickDown<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnClickDown<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnClickDown, action, args);
         }
-        public static void OnClickUp<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnClickUp<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnClickUp, action, args);
         }
-        public static void OnDrag<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnDrag<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnDrag, action, args);
         }
-        public static void OnBeginDrag<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnBeginDrag<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnBeginDrag, action, args);
         }
-        public static void OnEndDrag<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnEndDrag<TEventArg>(this Component com, Action<PointerEventData, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnEndDrag, action, args);
         }
@@ -124,29 +124,29 @@ namespace JKFrame
 
         #region 碰撞相关事件
 
-        public static void OnCollisionEnter<TEventArg>(this Component com, Action<Collision, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnCollisionEnter<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
         {
             com.AddEventListener(JKEventType.OnCollisionEnter, action, args);
         }
 
 
-        public static void OnCollisionStay<TEventArg>(this Component com, Action<Collision, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnCollisionStay<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionStay, action, args);
         }
-        public static void OnCollisionExit<TEventArg>(this Component com, Action<Collision, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnCollisionExit<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionExit, action, args);
         }
-        public static void OnCollisionEnter2D<TEventArg>(this Component com, Action<Collision, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnCollisionEnter2D<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionEnter2D, action, args);
         }
-        public static void OnCollisionStay2D<TEventArg>(this Component com, Action<Collision, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnCollisionStay2D<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionStay2D, action, args);
         }
-        public static void OnCollisionExit2D<TEventArg>(this Component com, Action<Collision, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnCollisionExit2D<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionExit2D, action, args);
         }
@@ -177,27 +177,27 @@ namespace JKFrame
         #endregion
 
         #region 触发相关事件
-        public static void OnTriggerEnter<TEventArg>(this Component com, Action<Collider, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnTriggerEnter<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
         {
-            AddEventListener(com,JKEventType.OnTriggerEnter, action, args);
+            AddEventListener(com, JKEventType.OnTriggerEnter, action, args);
         }
-        public static void OnTriggerStay<TEventArg>(this Component com, Action<Collider, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnTriggerStay<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerStay, action, args);
         }
-        public static void OnTriggerExit<TEventArg>(this Component com, Action<Collider, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnTriggerExit<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerExit, action, args);
         }
-        public static void OnTriggerEnter2D<TEventArg>(this Component com, Action<Collider, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnTriggerEnter2D<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerEnter2D, action, args);
         }
-        public static void OnTriggerStay2D<TEventArg>(this Component com, Action<Collider, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnTriggerStay2D<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerStay2D, action, args);
         }
-        public static void OnTriggerExit2D<TEventArg>(this Component com, Action<Collider, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnTriggerExit2D<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerExit2D, action, args);
         }
@@ -228,7 +228,7 @@ namespace JKFrame
         #endregion
 
         #region 资源相关事件
-        public static void OnReleaseAddressableAsset<TEventArg>(this Component com, Action<GameObject, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnReleaseAddressableAsset<TEventArg>(this Component com, Action<GameObject, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnReleaseAddressableAsset, action, args);
         }
@@ -237,7 +237,7 @@ namespace JKFrame
             RemoveEventListener(com, JKEventType.OnReleaseAddressableAsset, action);
         }
 
-        public static void OnDesotry<TEventArg>(this Component com, Action<GameObject, TEventArg> action,TEventArg args = default(TEventArg))
+        public static void OnDesotry<TEventArg>(this Component com, Action<GameObject, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnDestory, action, args);
         }

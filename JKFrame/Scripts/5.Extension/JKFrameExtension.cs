@@ -70,7 +70,7 @@ namespace JKFrame
         /// <summary>
         /// 添加Update监听
         /// </summary>
-        public static void OnUpdate(this object obj, Action action)
+        public static void AddUpdate(this object obj, Action action)
         {
             MonoSystem.AddUpdateListener(action);
         }
@@ -85,7 +85,7 @@ namespace JKFrame
         /// <summary>
         /// 添加LateUpdate监听
         /// </summary>
-        public static void OnLateUpdate(this object obj, Action action)
+        public static void AddLateUpdate(this object obj, Action action)
         {
             MonoSystem.AddLateUpdateListener(action);
         }

@@ -31,7 +31,7 @@ namespace R
     }";
     private static string PropertyTemplate =
 @" 
-        public static ##类型## ##资源名称## { get => ResSystem.LoadAsset<##类型##>(nameof(##资源名称##)); }";
+        public static ##类型## ##资源名称## { get => ResSystem.LoadAsset<##类型##>(""##资源路径##""); }";
     private static string SubAssetPropertyTemplate =
 @"  
         public static ##类型## ##资源名称## { get => ResSystem.LoadAsset<##类型##>(""##资源路径##""); }";
@@ -39,7 +39,7 @@ namespace R
 @"  
         public static GameObject ##资源名称##_GameObject(Transform parent = null,string keyName=null,bool autoRelease = true)
         {
-            return ResSystem.InstantiateGameObject(""##资源名称##"", parent, keyName,autoRelease);
+            return ResSystem.InstantiateGameObject(""##资源路径##"", parent, keyName,autoRelease);
         }";
 
     public static void CleanResReferenceCode()
@@ -62,13 +62,13 @@ namespace R
         foreach (AddressableAssetGroup group in assets.groups)
         {
             if (group.name == "Built In Data") continue;
-            string name = group.name.Replace(" ","");   // 去除空格
+            string name = group.name.Replace(" ", "");   // 去除空格
             // 建立子类名称
             string groupStr = classTemplate.Replace("##类名##", name);
 
             // 找到子类全部资源以及类型
             List<AddressableAssetEntry> allAssetEntry = new List<AddressableAssetEntry>();
-            group.GatherAllAssets(allAssetEntry,true,true, true);
+            group.GatherAllAssets(allAssetEntry, true, true, true);
             string propertyStrs = "";   // 属性的字符串
             for (int i = 0; i < allAssetEntry.Count; i++)
             {
@@ -77,18 +77,20 @@ namespace R
                 {
                     string subAssetPropertyStr = SubAssetPropertyTemplate.Replace("##类型##", assetItem.MainAssetType.Name);
                     string assetName = assetItem.address.Replace("[", "_").Replace("]", ""); // 去除子资源中的括号
-                    subAssetPropertyStr = subAssetPropertyStr.Replace("##资源名称##", assetName);
+                    subAssetPropertyStr = subAssetPropertyStr.Replace("##资源名称##", assetName.Replace(" ", ""));
                     subAssetPropertyStr = subAssetPropertyStr.Replace("##资源路径##", assetItem.address);
                     propertyStrs += subAssetPropertyStr;
                 }
                 else
                 {
                     string propertyStr = PropertyTemplate.Replace("##类型##", assetItem.MainAssetType.Name);
-                    propertyStr = propertyStr.Replace("##资源名称##", assetItem.address);
+                    propertyStr = propertyStr.Replace("##资源名称##", assetItem.address.Replace(" ", ""));
+                    propertyStr = propertyStr.Replace("##资源路径##", assetItem.address);
                     propertyStrs += propertyStr;
                     if (assetItem.MainAssetType == typeof(GameObject))  // 游戏物体增加一个用于直接实例化的
                     {
-                        string gameObjectPropertyStr = GameObjectPropertyTemplate.Replace("##资源名称##", assetItem.address);
+                        string gameObjectPropertyStr = GameObjectPropertyTemplate.Replace("##资源名称##", assetItem.address.Replace(" ", ""));
+                        gameObjectPropertyStr = gameObjectPropertyStr.Replace("##资源路径##", assetItem.address);
                         propertyStrs += gameObjectPropertyStr;
                     }
                 }
