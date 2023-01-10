@@ -190,7 +190,7 @@ namespace JKFrame
                         foreach (var attribute in attributes)
                         {
                             UIWindowDataDic.Add(attribute.windowKey,
-                                new UIWindowData(attribute.windowKey, attribute.isCache, attribute.assetPath, attribute.layerNum));
+                                new UIWindowData(attribute.isCache, attribute.assetPath, attribute.layerNum));
                         }
 
                     }

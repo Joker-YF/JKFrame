@@ -43,14 +43,14 @@ namespace JKFrame
         }
         #endregion
 
-        private static Dictionary<string, UIWindowData> UIWindowDataDic=>JKFrameRoot.Setting.UIWindowDataDic;
+        private static Dictionary<string, UIWindowData> UIWindowDataDic => JKFrameRoot.Setting.UIWindowDataDic;
         [SerializeField] private UILayer[] uiLayers;
         [SerializeField] private RectTransform dragLayer;
         /// <summary>
         /// 拖拽层，位于所有UI的最上层
         /// </summary>
-        public static RectTransform DragLayer { get=> instance.dragLayer; }
-        private static UILayer[] UILayers { get=> instance.uiLayers; }
+        public static RectTransform DragLayer { get => instance.dragLayer; }
+        private static UILayer[] UILayers { get => instance.uiLayers; }
 
         [SerializeField] GameObject UITipsItemPrefab;
         [SerializeField] private RectTransform UITipsItemParent;
@@ -67,7 +67,7 @@ namespace JKFrame
         /// <param name="windowKey">自定义的名称，可以是资源路径或类型名称或其他自定义</param>
         /// <param name="windowData">窗口的重要数据</param>
         /// <param name="instantiateAtOnce">是否立刻实例化，前提是有缓存必要</param>
-        public static void AddUIWindowData(string windowKey,UIWindowData windowData, bool instantiateAtOnce=false)
+        public static void AddUIWindowData(string windowKey, UIWindowData windowData, bool instantiateAtOnce = false)
         {
             if (UIWindowDataDic.TryAdd(windowKey, windowData))
             {
@@ -75,7 +75,7 @@ namespace JKFrame
                 {
                     if (windowData.isCache)
                     {
-                        UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowData.windowKey, UILayers[windowData.layerNum].root);
+                        UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowKey, UILayers[windowData.layerNum].root);
                         window.Init();
                         window.gameObject.SetActive(false);
                     }
@@ -124,7 +124,7 @@ namespace JKFrame
         /// <returns>可能为Null</returns>
         public static UIWindowData GetUIWindowData(string windowKey)
         {
-            if (UIWindowDataDic.TryGetValue(windowKey,out UIWindowData windowData))
+            if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
             {
                 return windowData;
             }
@@ -135,7 +135,7 @@ namespace JKFrame
         /// 尝试获取UI窗口数据
         /// </summary>
         /// <param name="windowKey"></param>
-        public static bool TryGetUIWindowData(string windowKey,out UIWindowData windowData)
+        public static bool TryGetUIWindowData(string windowKey, out UIWindowData windowData)
         {
             return UIWindowDataDic.TryGetValue(windowKey, out windowData);
         }
@@ -148,9 +148,9 @@ namespace JKFrame
         /// <returns></returns>
         public static bool RemoveUIWindowData(string windowKey, bool destoryWidnow = false)
         {
-            if (TryGetUIWindowData(windowKey,out UIWindowData windowData))
+            if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
             {
-                if (windowData.instance!=null)
+                if (windowData.instance != null)
                 {
                     Destroy(windowData.instance.gameObject);
                 }
@@ -189,7 +189,7 @@ namespace JKFrame
         /// <typeparam name="T">要返回的窗口类型</typeparam>
         /// <param name="windowKey">窗口的Key</param>
         /// <param name="layer">层级 -1等于不设置</param>
-        public static T Show<T>(string windowKey,int layer = -1) where T : UI_WindowBase
+        public static T Show<T>(string windowKey, int layer = -1) where T : UI_WindowBase
         {
             return Show(windowKey, layer) as T;
         }
@@ -201,7 +201,7 @@ namespace JKFrame
         /// <param name="layer">层级 -1等于不设置</param>
         public static UI_WindowBase Show(Type type, int layer = -1)
         {
-            return Show(type.FullName,layer);
+            return Show(type.FullName, layer);
         }
 
         /// <summary>
@@ -211,12 +211,12 @@ namespace JKFrame
         /// <param name="layer">层级 -1等于不设置</param>
         public static UI_WindowBase Show(string windowKey, int layer = -1)
         {
-            if (UIWindowDataDic.TryGetValue(windowKey,out UIWindowData windowData))
+            if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
             {
                 return Show(windowData, layer);
             }
             // 资源库中没有意味着不允许显示
-            JKLog.Log("JKFrame:不存在windowKey的UIWindowData");
+            JKLog.Log($"JKFrame:不存在{windowKey}的UIWindowData");
             return null;
         }
 
@@ -252,7 +252,7 @@ namespace JKFrame
         /// <returns>没找到会为Null</returns>
         public static UI_WindowBase GetWindow(string windowKey)
         {
-            if (UIWindowDataDic.TryGetValue(windowKey,out UIWindowData windowData))
+            if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
             {
                 return windowData.instance;
             }
@@ -264,7 +264,7 @@ namespace JKFrame
         /// </summary>
         /// <param name="windowKey">窗口Key</param>
         /// <returns>没找到会为Null</returns>
-        public static T GetWindow<T>(string windowKey) where T: UI_WindowBase
+        public static T GetWindow<T>(string windowKey) where T : UI_WindowBase
         {
             return GetWindow(windowKey) as T;
         }
@@ -302,11 +302,11 @@ namespace JKFrame
         /// 尝试获取窗口
         /// </summary>
         /// <param name="windowKey"></param>
-        public static bool TryGetWindow(string windowKey,out UI_WindowBase window)
+        public static bool TryGetWindow(string windowKey, out UI_WindowBase window)
         {
             UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData);
             window = windowData.instance;
-            return window!=null;
+            return window != null;
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace JKFrame
         public static void DestroyWindow(string windowKey)
         {
             UI_WindowBase window = GetWindow(windowKey);
-            if (window!=null)
+            if (window != null)
             {
                 DestroyImmediate(window.gameObject);
             }
@@ -358,9 +358,9 @@ namespace JKFrame
         /// <param name="windowKey"></param>
         public static void Close(string windowKey)
         {
-            if (TryGetUIWindowData(windowKey,out UIWindowData windowData))
+            if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
             {
-                if (windowData.instance!=null)
+                if (windowData.instance != null)
                 {
                     windowData.instance.OnClose();
                     // 缓存则隐藏
