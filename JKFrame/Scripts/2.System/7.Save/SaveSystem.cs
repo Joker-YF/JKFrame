@@ -193,17 +193,17 @@ namespace JKFrame
             {            // 直接删除目录
                 Directory.Delete(saveDirPath, true);
             }
-
+            CheckAndCreateDir();
         }
 
         public static void DeleteAllSetting()
         {
             if (Directory.Exists(settingDirPath))
-            {   
+            {
                 // 直接删除目录
                 Directory.Delete(settingDirPath, true);
             }
-
+            CheckAndCreateDir();
         }
 
         public static void DeleteAll()
@@ -561,7 +561,7 @@ namespace JKFrame
         /// </summary>
         /// <typeparam name="T">加载后要转为的类型</typeparam>
         /// <param name="path">加载路径</param>
-        public static T LoadFile<T>(string path) where T : class
+        private static T LoadFile<T>(string path) where T : class
         {
             switch (JKFrameRoot.Setting.SaveSystemType)
             {

@@ -113,7 +113,6 @@ namespace JKFrame
         {
             if (LogConfig != null) LogConfig.InitOnEidtor();
             SetResourcesSystemType();
-            SetSaveSystemType();
             InitUIWindowDataDicOnEditor();
         }
 
