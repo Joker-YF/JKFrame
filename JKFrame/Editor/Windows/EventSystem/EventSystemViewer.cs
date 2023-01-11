@@ -6,13 +6,13 @@ using UnityEditor.UIElements;
 
 public class EventSystemViewer : EditorWindow
 {
-    [MenuItem("JKFrame/EventSystemViewer")]
-    public static void ShowExample()
-    {
-        //生成窗口
-        EventSystemViewer wnd = GetWindow<EventSystemViewer>();
-        wnd.titleContent = new GUIContent("EventSystemViewer");
-    }
+    //[MenuItem("JKFrame/EventSystemViewer")]
+    //public static void ShowExample()
+    //{
+    //    //生成窗口
+    //    EventSystemViewer wnd = GetWindow<EventSystemViewer>();
+    //    wnd.titleContent = new GUIContent("EventSystemViewer");
+    //}
 
     public void CreateGUI()
     {
