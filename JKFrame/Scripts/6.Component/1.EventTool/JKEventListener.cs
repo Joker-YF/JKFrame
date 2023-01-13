@@ -243,7 +243,6 @@ namespace JKFrame
         }
 
         #endregion
-
         /// <summary>
         /// 触发事件
         /// </summary>

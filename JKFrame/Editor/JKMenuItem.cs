@@ -19,7 +19,6 @@ public class JKMenuItem
     [MenuItem("JKFrame/生成资源引用代码")]
     public static void GenerateResReferenceCode()
     {
-
         GenerateResReferenceCodeTool.GenerateResReferenceCode();
     }
     [MenuItem("JKFrame/清理资源引用代码")]

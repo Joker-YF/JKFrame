@@ -9,37 +9,8 @@ namespace JKFrame
 {
     public static class ResSystem
     {
-        /// <summary>
-        /// 加载Unity资源  如AudioClip Sprite 预制体
-        /// 要注意，资源不在使用时候，需要调用一次Release
-        /// </summary>
-        /// <param name="assetName">资源名称</param>
-        public static T LoadAsset<T>(string assetName) where T : UnityEngine.Object
-        {
-            return Addressables.LoadAssetAsync<T>(assetName).WaitForCompletion();
-        }
 
 #region 普通class对象
-        /// <summary>
-        /// 获取实例-普通Class
-        /// 如果类型需要缓存，会从对象池中获取
-        /// 如果对象池没有或返回null
-        /// </summary>
-        public static T Get<T>() where T : class
-        {
-            return PoolSystem.GetObject<T>();
-        }
-
-        /// <summary>
-        /// 获取实例-普通Class
-        /// 如果类型需要缓存，会从对象池中获取
-        /// 如果对象池没有或返回null
-        /// </summary>
-        /// <param name="keyName">对象池中的名称</param>
-        public static T Get<T>(string keyName) where T : class
-        {
-            return PoolSystem.GetObject<T>(keyName);
-        }
         /// <summary>
         /// 获取实例-普通Class
         /// 如果类型需要缓存，会从对象池中获取
@@ -257,21 +228,31 @@ namespace JKFrame
         }
 
 
-#endregion
+        #endregion
 
-#region 游戏Asset
+        #region 游戏Asset
+        /// <summary>
+        /// 加载Unity资源  如AudioClip Sprite 预制体
+        /// 要注意，资源不在使用时候，需要调用一次Release
+        /// </summary>
+        /// <param name="assetName">资源名称</param>
+        public static T LoadAsset<T>(string assetName) where T : UnityEngine.Object
+        {
+            return Addressables.LoadAssetAsync<T>(assetName).WaitForCompletion();
+        }
+
         /// <summary>
         /// 异步加载Unity资源 AudioClip Sprite GameObject(预制体)
         /// </summary>
         /// <typeparam name="T">资源类型</typeparam>
         /// <param name="assetName">资源名称</param>
         /// <param name="callBack">回调函数</param>
-        public static void LoadAssetAsync<T>(string assetName, Action<T> callBack) where T : UnityEngine.Object
+        public static void LoadAssetAsync<T>(string assetName, Action<T> callBack = null) where T : UnityEngine.Object
         {
             MonoSystem.Start_Coroutine(DoLoadAssetAsync<T>(assetName, callBack));
         }
 
-        static IEnumerator DoLoadAssetAsync<T>(string assetName, Action<T> callBack) where T : UnityEngine.Object
+        static IEnumerator DoLoadAssetAsync<T>(string assetName, Action<T> callBack = null) where T : UnityEngine.Object
         {
             AsyncOperationHandle<T> request = Addressables.LoadAssetAsync<T>(assetName);
             yield return request;

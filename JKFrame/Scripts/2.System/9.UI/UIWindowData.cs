@@ -15,12 +15,12 @@ namespace JKFrame
         /// </summary>
         [LabelText("窗口实例")] public UI_WindowBase instance;
 
-        public UIWindowData() { }
         public UIWindowData(bool isCache, string assetPath, int layerNum)
         {
             this.isCache = isCache;
             this.assetPath = assetPath;
             this.layerNum = layerNum;
+            instance = null;
         }
     }
 }

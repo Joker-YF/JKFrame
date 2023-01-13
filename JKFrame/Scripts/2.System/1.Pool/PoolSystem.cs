@@ -99,7 +99,13 @@ namespace JKFrame
 #endif
                 return res;
             }
-            return false;
+            else
+            {
+                JKLog.Error("您正在将Null放置对象池");
+                return false;
+
+            }
+
         }
 
         /// <summary>

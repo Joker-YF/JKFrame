@@ -20,7 +20,7 @@ namespace JKFrame
 
         private void Awake()
         {
-            if (Instance != null)
+            if (Instance != null&&Instance!=this) // 防止Editor下的Instance已经存在，并且是自身
             {
                 Destroy(gameObject);
                 return;

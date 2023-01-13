@@ -10,11 +10,6 @@ namespace JKFrame
 {
     public static class ResSystem
     {
-        // 需要缓存的类型 
-        // Key：TypeNameOrAssetName
-        // Value：是否缓存
-        private static Dictionary<string, bool> wantCacheDic;
-
         #region 普通class对象
         /// <summary>
         /// 获取实例-普通Class
