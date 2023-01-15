@@ -480,7 +480,7 @@ namespace JKFrame
         /// </summary>
         public static T LoadSetting<T>(string fileName) where T : class
         {
-            return IOTool.LoadFile<T>(settingDirPath + "/" + fileName);
+            return LoadFile<T>(settingDirPath + "/" + fileName);
         }
         /// <summary>
         /// 加载设置，全局生效，不关乎任何一个存档

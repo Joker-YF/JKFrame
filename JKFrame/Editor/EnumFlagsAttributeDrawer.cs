@@ -1,13 +1,17 @@
-using UnityEngine;
 using UnityEditor;
-using JKFrame;
+using UnityEngine;
 
-[CustomPropertyDrawer(typeof(EnumFlags))]
-public class EnumFlagsAttributeDrawer : PropertyDrawer
+namespace JKFrame.Editor
 {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(EnumFlags))]
+    public class EnumFlagsAttributeDrawer : PropertyDrawer
     {
-        property.intValue = EditorGUI.MaskField(position, label, property.intValue
-                                                , property.enumNames);
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            property.intValue = EditorGUI.MaskField(position, label, property.intValue
+                                                    , property.enumNames);
+        }
     }
 }
+
+

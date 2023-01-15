@@ -8,6 +8,13 @@ namespace JKFrame
 {
     public static class JKLog
     {
+        static JKLog()
+        {
+            if (JKFrameRoot.Setting!=null)
+            {
+                Init(JKFrameRoot.Setting.LogConfig);
+            }
+        }
         public static void Init(LogSetting logSetting)
         {
 #if ENABLE_LOG

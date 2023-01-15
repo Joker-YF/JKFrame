@@ -21,12 +21,118 @@ namespace JKFrame
         {
             eventModule.AddEventListener(eventName, action);
         }
+
         /// <summary>
         /// 添加1个参数事件
         /// </summary>
-        public static void AddEventListener<TAction>(string eventName, TAction action) where TAction : MulticastDelegate
+        public static void AddEventListener<T>(string eventName, Action<T> action)
         {
-            eventModule.AddEventListener<TAction>(eventName, action);
+            eventModule.AddEventListener<Action<T>>(eventName, action);
+        }
+        /// <summary>
+        /// 添加2个参数事件
+        /// </summary>
+        public static void AddEventListener<T0,T1>(string eventName, Action<T0,T1> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加3个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1,T2>(string eventName, Action<T0, T1,T2> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加4个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2,T3>(string eventName, Action<T0, T1, T2,T3> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加5个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3,T4>(string eventName, Action<T0, T1, T2, T3,T4> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加6个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4,T5>(string eventName, Action<T0, T1, T2, T3, T4,T5> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加7个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5,T6>(string eventName, Action<T0, T1, T2, T3, T4, T5,T6> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加8个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6,T7>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6,T7> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加9个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7,T8>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7,T8> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加10个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加11个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加12个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加13个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T2> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加14个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加15个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14> action)
+        {
+            eventModule.AddEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 添加16个参数事件
+        /// </summary>
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15> action)
+        {
+            eventModule.AddEventListener(eventName, action);
         }
         #endregion
 
@@ -171,9 +277,114 @@ namespace JKFrame
         /// <summary>
         /// 移除1个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<TAction>(string eventName, TAction action)where TAction:MulticastDelegate
+        public static void RemoveEventListener<T>(string eventName, Action<T> action)
         {
-            eventModule.RemoveEventListener<TAction>(eventName, action);
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除2个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0,T1>(string eventName, Action<T0,T1> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除3个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1,T2>(string eventName, Action<T0, T1,T2> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除4个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2,T3>(string eventName, Action<T0, T1, T2,T3> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除5个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3,T4>(string eventName, Action<T0, T1, T2, T3,T4> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除6个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4,T5>(string eventName, Action<T0, T1, T2, T3, T4,T5> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除7个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5,T6>(string eventName, Action<T0, T1, T2, T3, T4, T5,T6> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除8个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6,T7>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6,T7> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除9个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7,T8>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7,T8> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除10个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除11个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除12个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除13个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除14个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除15个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
+        }
+        /// <summary>
+        /// 移除16个参数的事件监听
+        /// </summary>
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15> action)
+        {
+            eventModule.RemoveEventListener(eventName, action);
         }
         #endregion
 

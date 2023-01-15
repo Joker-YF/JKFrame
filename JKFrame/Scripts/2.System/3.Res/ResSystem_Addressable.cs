@@ -98,11 +98,11 @@ namespace JKFrame
 #region 游戏物体
         /// <summary>
         /// 初始化一个GameObject类型的对象池类型
-        /// </summary>
+        /// </summary>  
         /// <param name="keyName">资源名称</param>
         /// <param name="maxCapacity">容量限制，超出时会销毁而不是进入对象池，-1代表无限</param>
         /// <param name="defaultQuantity">默认容量，填写会向池子中放入对应数量的对象，0代表不预先放入</param>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         public static void InitGameObjectPoolForKeyName(string keyName, int maxCapacity = -1, string assetName = null, int defaultQuantity = 0)
         {
             if (defaultQuantity<=0 || assetName ==null)
@@ -122,7 +122,7 @@ namespace JKFrame
         /// </summary>
         /// <param name="maxCapacity">容量限制，超出时会销毁而不是进入对象池，-1代表无限</param>
         /// <param name="defaultQuantity">默认容量，填写会向池子中放入对应数量的对象，0代表不预先放入</param>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         public static void InitGameObjectPoolForAssetName(string assetName, int maxCapacity = -1, int defaultQuantity = 0)
         {
             InitGameObjectPoolForKeyName(assetName, maxCapacity, assetName, defaultQuantity);
@@ -151,7 +151,7 @@ namespace JKFrame
         /// 加载游戏物体
         /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
         /// </summary>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         /// <param name="keyName">对象池中的分组名称，可为Null</param>
         /// <param name="parent">父物体</param>
         /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
@@ -174,10 +174,10 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// 加载游戏物体
+        /// 加载游戏物体并获取组件
         /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
         /// </summary>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         /// <param name="keyName">对象池中的分组名称，可为Null</param>
         /// <param name="parent">父物体</param>
         /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
@@ -195,19 +195,42 @@ namespace JKFrame
         {
             Addressables.ReleaseInstance(obj);
         }
-
+        
         /// <summary>
         /// 异步加载游戏物体
         /// </summary>
+        /// <param name="assetName">AB资源名称</param>
+        /// <param name="callBack">实例化后的回调函数</param>
+        /// <param name="parent">父物体</param>
+        public static void InstantiateGameObjectAsync(string assetName, Action<GameObject> callBack = null, Transform parent = null, string keyName = null, bool autoRelease = true)
+        {
+            GameObject go;
+            if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
+            else go = PoolSystem.GetGameObject(keyName, parent);
+            // 对象池中有
+            if (!go.IsNull())
+            {
+                if (autoRelease) go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+                callBack?.Invoke(go);
+                return;
+            }
+            // 不通过缓存池
+            MonoSystem.Start_Coroutine(DoLoadGameObjectAsync(assetName, callBack, parent));
+
+        }
+
+        /// <summary>
+        /// 异步加载游戏物体并获取组件
+        /// </summary>
         /// <typeparam name="T">物体身上的组件</typeparam>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         /// <param name="callBack">实例化后的回调函数</param>
         /// <param name="parent">父物体</param>
         public static void InstantiateGameObjectAsync<T>(string assetName, Action<T> callBack = null, Transform parent = null, string keyName = null, bool autoRelease = true) where T : UnityEngine.Object
         {
             GameObject go;
             if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
-            else go = PoolSystem.GetGameObject(keyName,parent);
+            else go = PoolSystem.GetGameObject(keyName, parent);
             // 对象池中有
             if (!go.IsNull())
             {
@@ -219,13 +242,22 @@ namespace JKFrame
             MonoSystem.Start_Coroutine(DoLoadGameObjectAsync<T>(assetName, callBack, parent));
 
         }
-        static IEnumerator DoLoadGameObjectAsync<T>(string assetName, Action<T> callBack = null, Transform parent = null,  bool autoRelease = true) where T : UnityEngine.Object
+
+        static IEnumerator DoLoadGameObjectAsync(string assetName, Action<GameObject> callBack = null, Transform parent = null, bool autoRelease = true) 
+        {
+            AsyncOperationHandle<GameObject> request = Addressables.InstantiateAsync(assetName, parent);
+            yield return request;
+            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+            callBack?.Invoke(request.Result);
+        }
+        static IEnumerator DoLoadGameObjectAsync<T>(string assetName, Action<T> callBack = null, Transform parent = null, bool autoRelease = true) where T : UnityEngine.Object
         {
             AsyncOperationHandle<GameObject> request = Addressables.InstantiateAsync(assetName, parent);
             yield return request;
             if (autoRelease) request.Result.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
             callBack?.Invoke(request.Result.GetComponent<T>());
         }
+
 
 
         #endregion
@@ -235,7 +267,7 @@ namespace JKFrame
         /// 加载Unity资源  如AudioClip Sprite 预制体
         /// 要注意，资源不在使用时候，需要调用一次Release
         /// </summary>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         public static T LoadAsset<T>(string assetName) where T : UnityEngine.Object
         {
             return Addressables.LoadAssetAsync<T>(assetName).WaitForCompletion();
@@ -245,7 +277,7 @@ namespace JKFrame
         /// 异步加载Unity资源 AudioClip Sprite GameObject(预制体)
         /// </summary>
         /// <typeparam name="T">资源类型</typeparam>
-        /// <param name="assetName">资源名称</param>
+        /// <param name="assetName">AB资源名称</param>
         /// <param name="callBack">回调函数</param>
         public static void LoadAssetAsync<T>(string assetName, Action<T> callBack = null) where T : UnityEngine.Object
         {
@@ -264,15 +296,15 @@ namespace JKFrame
         /// </summary>
         /// <typeparam name="T">加载类型</typeparam>
         /// <param name="keyName">一般是lable</param>
-        /// <param name="callBack">注意这里是针对每一个资源的回调</param>
+        /// <param name="callBackOnEveryOne">注意这里是针对每一个资源的回调</param>
         /// <returns>所有资源</returns>
-        public static IList<T> LoadAssets<T>(string keyName, Action<T> callBack = null)
+        public static IList<T> LoadAssets<T>(string keyName, Action<T> callBackOnEveryOne = null)
         {
-            return Addressables.LoadAssetsAsync<T>(keyName, callBack).WaitForCompletion();
+            return Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne).WaitForCompletion();
         }
 
         /// <summary>
-        /// 加载指定Key的所有资源
+        /// 异步加载指定Key的所有资源
         /// </summary>
         /// <typeparam name="T">加载类型</typeparam>
         /// <param name="keyName">一般是lable</param>
