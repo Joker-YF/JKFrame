@@ -1,23 +1,21 @@
 
 #if ENABLE_ADDRESSABLES
-using JKFrame;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public static class GenerateResReferenceCodeTool
 {
-    static string scriptPath = Application.dataPath + "/JKFrame//Scripts/2.System/3.Res/R.cs";
+    static string scriptPath = Application.dataPath + "/JKFrame/R.cs";
     private static string fileStr =
 @"using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.Animations;
 using System;
+using UnityEngine.Playables;
 using JKFrame;
 namespace R
 {
@@ -44,7 +42,11 @@ namespace R
 
     public static void CleanResReferenceCode()
     {
-        if (File.Exists(scriptPath)) File.Delete(scriptPath);
+        if (File.Exists(scriptPath))
+        {
+            File.Delete(scriptPath);
+            AssetDatabase.Refresh();
+        }
         Debug.Log("清除资源代码脚本成功");
     }
     public static void GenerateResReferenceCode()
