@@ -189,15 +189,15 @@ namespace JKFrame
         {
             AddEventListener(com, JKEventType.OnTriggerExit, action, args);
         }
-        public static void OnTriggerEnter2D<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnTriggerEnter2D<TEventArg>(this Component com, Action<Collider2D, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerEnter2D, action, args);
         }
-        public static void OnTriggerStay2D<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnTriggerStay2D<TEventArg>(this Component com, Action<Collider2D, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerStay2D, action, args);
         }
-        public static void OnTriggerExit2D<TEventArg>(this Component com, Action<Collider, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnTriggerExit2D<TEventArg>(this Component com, Action<Collider2D, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnTriggerExit2D, action, args);
         }
