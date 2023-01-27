@@ -45,6 +45,7 @@ namespace JKFrame
             MonoSystem.Init();
             AudioSystem.Init();
             UISystem.Init();
+            SaveSystem.Init();
 #if ENABLE_LOG
             JKLog.Init(FrameSetting.LogConfig);
 #endif

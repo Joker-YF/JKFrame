@@ -53,7 +53,7 @@ namespace JKFrame
         /// 但是不用担心，游戏物体销毁时，会瞬间解除绑定，回收音效播放器
         /// </summary>
         /// <param name="clip">音效片段</param>
-        /// <param name="autoReleaseClip">播放完毕时候自动回收audioClip，只有当基于Addressables时才有效</param>
+        /// <param name="autoReleaseClip">播放完毕时候自动回收audioClip</param>
         /// <param name="component">挂载组件</param>
         /// <param name="volumeScale">音量 0-1</param>
         /// <param name="is3d">是否3D</param>
@@ -66,6 +66,7 @@ namespace JKFrame
         /// </summary>
         /// <param name="clip">音效片段</param>
         /// <param name="position">播放的位置</param>
+        /// <param name="autoReleaseClip">播放完毕时候自动回收audioClip</param>
         /// <param name="volumeScale">音量 0-1</param>
         /// <param name="is3d">是否3D</param>
         /// <param name="callBack">回调函数-在音乐播放完成后执行</param>

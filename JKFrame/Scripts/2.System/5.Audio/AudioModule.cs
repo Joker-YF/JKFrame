@@ -89,6 +89,8 @@ namespace JKFrame
                 UpdateLoop();
             }
         }
+        [SerializeField]
+        [OnValueChanged("UpdatePause")]
         private bool isPause = false;
         public bool IsPause
         {
@@ -97,15 +99,7 @@ namespace JKFrame
             {
                 if (isPause == value) return;
                 isPause = value;
-                if (isPause)
-                {
-                    BGAudioSource.Pause();
-                }
-                else
-                {
-                    BGAudioSource.UnPause();
-                }
-                UpdateEffectAudioPlay();
+                UpdatePause();
             }
         }
         /// <summary>
@@ -167,7 +161,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// 更新背景音乐静音情况
+        /// 更新全局音乐静音情况
         /// </summary>
         private void UpdateMute()
         {
@@ -183,6 +177,22 @@ namespace JKFrame
             BGAudioSource.loop = isLoop;
 
         }
+
+        /// <summary>
+        /// 更新背景音乐暂停
+        /// </summary>
+        private void UpdatePause()
+        {
+            if (isPause)
+            {
+                BGAudioSource.Pause();
+            }
+            else
+            {
+                BGAudioSource.UnPause();
+            }   
+
+        }
         #endregion
 
         public void Init()
@@ -192,6 +202,8 @@ namespace JKFrame
             poolModule.Init(poolRoot);
             poolModule.InitObjectPool(EffectAudioPlayPrefab, -1, EffectAudioDefaultQuantity);
             audioPlayList = new List<AudioSource>(EffectAudioDefaultQuantity);
+            audioPlayRoot = new GameObject("audioPlayRoot").transform;
+            audioPlayRoot.SetParent(transform);
             UpdateAllAudioPlay();
         }
 
@@ -219,17 +231,21 @@ namespace JKFrame
 
         private IEnumerator DoPlayBGAudioWithClips(AudioClip[] clips, float volume = -1)
         {
-            if (volume != -1)
-            {
-                BGVolume = volume;
-            }
+            if (volume != -1) BGVolume = volume;
             int currIndex = 0;
             while (true)
             {
                 AudioClip clip = clips[currIndex];
                 BGAudioSource.clip = clip;
                 BGAudioSource.Play();
-                yield return CoroutineTool.WaitForSeconds(clip.length);
+                float time = clip.length;
+                // 时间只要还好，一直检测
+                while (time>0)
+                {
+                    yield return CoroutineTool.WaitForFrames();
+                    if (!isPause) time -= Time.deltaTime;
+                }
+                // 到达这里说明倒计时结束，修改索引号，继续外侧While循环
                 currIndex++;
                 if (currIndex >= clips.Length) currIndex = 0;
             }
@@ -242,29 +258,26 @@ namespace JKFrame
         }
 
         public void PauseBGAudio()
-        {
-            BGAudioSource.Pause();
+        {   
+            IsPause = true;
         }
 
         public void UnPauseBGAudio()
         {
-            BGAudioSource.UnPause();
+            IsPause= false;
         }
 
         #endregion
 
         #region 特效音乐
-        private Transform audioPlayRoot = null;
+        private Transform audioPlayRoot;
+
         /// <summary>
         /// 获取音乐播放器
         /// </summary>
         /// <returns></returns>
         private AudioSource GetAudioPlay(bool is3D = true)
         {
-            if (audioPlayRoot == null)
-            {
-                audioPlayRoot = new GameObject("AudioPlayRoot").transform;
-            }
             // 从对象池中获取播放器
             GameObject audioPlay = poolModule.GetObject("AudioPlay", audioPlayRoot);
             if (audioPlay.IsNull())
@@ -308,10 +321,10 @@ namespace JKFrame
             else
             {
                 audioSource.transform.SetParent(component.transform);
+                audioSource.transform.localPosition = Vector3.zero;
                 // 宿主销毁时，释放父物体
                 component.OnDesotry(OnOwerDestory, audioSource);
             }
-            audioSource.transform.localPosition = Vector3.zero;
             // 播放一次音效
             audioSource.PlayOneShot(clip, volumeScale);
             // 播放器回收以及回调函数
@@ -322,7 +335,7 @@ namespace JKFrame
         // 宿主销毁时，提前回收
         private void OnOwerDestory(GameObject go, AudioSource audioSource)
         {
-            audioSource.transform.SetParent(null);
+            audioSource.transform.SetParent(audioPlayRoot);
         }
 
         // 播放结束时移除宿主销毁Action

@@ -9,32 +9,69 @@ namespace JKFrame
     /// 一个存档的数据
     /// </summary>
     [Serializable]
-    public class SaveItem
+    public class SaveItem : ISerializationCallbackReceiver
     {
-        public int saveID { get; private set; }
-        public DateTime lastSaveTime { get; private set; }
+        public int saveID;
+        public DateTime lastSaveTime;
+        [SerializeField]private string lastSaveTimeString; // Json不支持DateTime，用来持久化的
         public SaveItem(int saveID, DateTime lastSaveTime)
         {
             this.saveID = saveID;
-            this.lastSaveTime = lastSaveTime;
+            switch (JKFrameRoot.Setting.SaveSystemType)
+            {
+                case SaveSystemType.Binary:
+                    this.lastSaveTime = lastSaveTime;
+                    break;
+                case SaveSystemType.Json:
+                    this.lastSaveTime = lastSaveTime;
+                    lastSaveTimeString = lastSaveTime.ToString();
+                    Debug.Log(lastSaveTimeString);
+                    break;
+            }
         }
 
         public void UpdateTime(DateTime lastSaveTime)
         {
             this.lastSaveTime = lastSaveTime;
+            switch (JKFrameRoot.Setting.SaveSystemType)
+            {
+                case SaveSystemType.Binary:
+                    this.lastSaveTime = lastSaveTime;
+                    break;
+                case SaveSystemType.Json:
+                    this.lastSaveTime = lastSaveTime;
+                    lastSaveTimeString = lastSaveTime.ToString();
+                    break;
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            // 存档如果是Json格式，只会保存字符串，所以需要将字符串转为DateTime格式
+            switch (JKFrameRoot.Setting.SaveSystemType)
+            {
+                case SaveSystemType.Json:
+                    DateTime.TryParse(lastSaveTimeString, out lastSaveTime);
+                    break;
+            }
+        }
+
+        public void OnBeforeSerialize()
+        {
         }
     }
 
     /// <summary>
-    /// 存档管理器
+    /// 存档系统
     /// </summary>
     public static class SaveSystem
     {
+        #region 存档系统、存档系统数据类及所有用户存档、设置存档数据
         /// <summary>
-        /// 存档管理器的设置数据
+        /// 存档系统数据类
         /// </summary>
         [Serializable]
-        private class SaveManagerData
+        private class SaveSystemData
         {
             // 当前的存档ID
             public int currID = 0;
@@ -42,24 +79,35 @@ namespace JKFrame
             public List<SaveItem> saveItemList = new List<SaveItem>();
         }
 
-        private static SaveManagerData saveManagerData;
+        private static SaveSystemData saveSystemData;
 
         // 存档的保存
         private const string saveDirName = "saveData";
         // 设置的保存：1.全局数据的保存（分辨率、按键设置） 2.存档的设置保存。
-        // 常规情况下，存档管理器自行维护
+        // 常规情况下，存档系统自行维护
         private const string settingDirName = "setting";
 
         // 存档文件夹路径
-        private static readonly string saveDirPath;
-        private static readonly string settingDirPath;
+        private static string saveDirPath;
+        private static string settingDirPath;
 
         // 存档中对象的缓存字典 
         // <存档ID,<文件名称，实际的对象>>
         private static Dictionary<int, Dictionary<string, object>> cacheDic = new Dictionary<int, Dictionary<string, object>>();
 
-        // 初始化的事情
+#if UNITY_EDITOR
         static SaveSystem()
+        {
+            if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                return;
+            }
+            Init();
+        }
+#endif
+
+        // 初始化的事情
+        public static void Init()
         {
             saveDirPath = Application.persistentDataPath + "/" + saveDirName;
             settingDirPath = Application.persistentDataPath + "/" + settingDirName;
@@ -72,44 +120,24 @@ namespace JKFrame
             }
 #endif
             CheckAndCreateDir();
-            // 初始化SaveManagerData
-            InitSaveManagerData();
+            // 初始化SaveSystemData
+            InitSaveSystemData();
         }
+        #endregion
 
-        private static void CheckAndCreateDir()
-        {
-            // 确保路径的存在
-            if (Directory.Exists(saveDirPath) == false)
-            {
-                Directory.CreateDirectory(saveDirPath);
-            }
-            if (Directory.Exists(settingDirPath) == false)
-            {
-                Directory.CreateDirectory(settingDirPath);
-            }
-        }
-
-        #region 存档设置
+        #region 初始化、更新（写入本地）、获取、删除所有用户存档
         /// <summary>
-        /// 获取存档管理器数据
+        /// 获取存档系统数据
         /// </summary>
         /// <returns></returns>
-        private static void InitSaveManagerData()
+        private static void InitSaveSystemData()
         {
-            saveManagerData = LoadFile<SaveManagerData>(saveDirPath + "/SaveMangerData");
-            if (saveManagerData == null)
+            saveSystemData = LoadFile<SaveSystemData>(saveDirPath + "/SaveSystemData");
+            if (saveSystemData == null)
             {
-                saveManagerData = new SaveManagerData();
-                UpdateSaveManagerData();
+                saveSystemData = new SaveSystemData();
+                UpdateSaveSystemData();
             }
-        }
-
-        /// <summary>
-        /// 更新存档管理器数据
-        /// </summary>
-        public static void UpdateSaveManagerData()
-        {
-            SaveFile(saveManagerData, saveDirPath + "/SaveMangerData");
         }
 
         /// <summary>
@@ -119,7 +147,7 @@ namespace JKFrame
         /// <returns></returns>
         public static List<SaveItem> GetAllSaveItem()
         {
-            return saveManagerData.saveItemList;
+            return saveSystemData.saveItemList;
         }
 
         /// <summary>
@@ -129,11 +157,11 @@ namespace JKFrame
         /// <returns></returns>
         public static List<SaveItem> GetAllSaveItemByCreatTime()
         {
-            List<SaveItem> saveItems = new List<SaveItem>(saveManagerData.saveItemList.Count);
+            List<SaveItem> saveItems = new List<SaveItem>(saveSystemData.saveItemList.Count);
 
-            for (int i = 0; i < saveManagerData.saveItemList.Count; i++)
+            for (int i = 0; i < saveSystemData.saveItemList.Count; i++)
             {
-                saveItems.Add(saveManagerData.saveItemList[saveManagerData.saveItemList.Count - (i + 1)]);
+                saveItems.Add(saveSystemData.saveItemList[saveSystemData.saveItemList.Count - (i + 1)]);
             }
             return saveItems;
         }
@@ -145,10 +173,10 @@ namespace JKFrame
         /// <returns></returns>
         public static List<SaveItem> GetAllSaveItemByUpdateTime()
         {
-            List<SaveItem> saveItems = new List<SaveItem>(saveManagerData.saveItemList.Count);
-            for (int i = 0; i < saveManagerData.saveItemList.Count; i++)
+            List<SaveItem> saveItems = new List<SaveItem>(saveSystemData.saveItemList.Count);
+            for (int i = 0; i < saveSystemData.saveItemList.Count; i++)
             {
-                saveItems.Add(saveManagerData.saveItemList[i]);
+                saveItems.Add(saveSystemData.saveItemList[i]);
             }
             OrderByUpdateTimeComparer orderBy = new OrderByUpdateTimeComparer();
             saveItems.Sort(orderBy);
@@ -178,14 +206,15 @@ namespace JKFrame
         {
             if (isDescending)
             {
-                return saveManagerData.saveItemList.OrderByDescending(orderFunc).ToList();
+                return saveSystemData.saveItemList.OrderByDescending(orderFunc).ToList();
             }
             else
             {
-                return saveManagerData.saveItemList.OrderBy(orderFunc).ToList();
+                return saveSystemData.saveItemList.OrderBy(orderFunc).ToList();
             }
 
         }
+
 
         public static void DeleteAllSaveItem()
         {
@@ -194,17 +223,9 @@ namespace JKFrame
                 Directory.Delete(saveDirPath, true);
             }
             CheckAndCreateDir();
+            InitSaveSystemData();
         }
 
-        public static void DeleteAllSetting()
-        {
-            if (Directory.Exists(settingDirPath))
-            {
-                // 直接删除目录
-                Directory.Delete(settingDirPath, true);
-            }
-            CheckAndCreateDir();
-        }
 
         public static void DeleteAll()
         {
@@ -215,17 +236,17 @@ namespace JKFrame
 
         #endregion
 
-        #region 关于存档
+        #region 创建、获取、删除某一项用户存档
         /// <summary>
         /// 获取SaveItem
         /// </summary>
         public static SaveItem GetSaveItem(int id)
         {
-            for (int i = 0; i < saveManagerData.saveItemList.Count; i++)
+            for (int i = 0; i < saveSystemData.saveItemList.Count; i++)
             {
-                if (saveManagerData.saveItemList[i].saveID == id)
+                if (saveSystemData.saveItemList[i].saveID == id)
                 {
-                    return saveManagerData.saveItemList[i];
+                    return saveSystemData.saveItemList[i];
                 }
             }
             return null;
@@ -237,11 +258,11 @@ namespace JKFrame
         /// <returns></returns>
         public static SaveItem CreateSaveItem()
         {
-            SaveItem saveItem = new SaveItem(saveManagerData.currID, DateTime.Now);
-            saveManagerData.saveItemList.Add(saveItem);
-            saveManagerData.currID += 1;
-            // 更新SaveManagerData 写入磁盘
-            UpdateSaveManagerData();
+            SaveItem saveItem = new SaveItem(saveSystemData.currID, DateTime.Now);
+            saveSystemData.saveItemList.Add(saveItem);
+            saveSystemData.currID += 1;
+            // 更新SaveSystemData 写入磁盘
+            UpdateSaveSystemData();
             return saveItem;
         }
 
@@ -258,33 +279,22 @@ namespace JKFrame
                 // 把这个存档下的文件递归删除
                 Directory.Delete(itemDir, true);
             }
-            saveManagerData.saveItemList.Remove(GetSaveItem(saveID));
+            saveSystemData.saveItemList.Remove(GetSaveItem(saveID));
             // 移除缓存
             RemoveCache(saveID);
-            // 更新SaveManagerData 写入磁盘
-            UpdateSaveManagerData();
+            // 更新SaveSystemData 写入磁盘
+            UpdateSaveSystemData();
         }
         /// <summary>
         /// 删除存档
         /// </summary>
         public static void DeleteSaveItem(SaveItem saveItem)
         {
-            string itemDir = GetSavePath(saveItem.saveID, false);
-            // 如果路径存在 且 有效
-            if (itemDir != null)
-            {
-                // 把这个存档下的文件递归删除
-                Directory.Delete(itemDir, true);
-            }
-            saveManagerData.saveItemList.Remove(saveItem);
-            // 移除缓存
-            RemoveCache(saveItem.saveID);
-            // 更新SaveManagerData 写入磁盘
-            UpdateSaveManagerData();
+            DeleteSaveItem(saveItem.saveID);
         }
         #endregion
 
-        #region 关于缓存
+        #region 更新、获取、删除用户存档缓存
         /// <summary>
         /// 设置缓存
         /// </summary>
@@ -354,7 +364,7 @@ namespace JKFrame
 
         #endregion
 
-        #region 关于对象
+        #region 保存、获取、删除用户存档中某一对象
         /// <summary>
         /// 保存对象至某个存档中
         /// </summary>
@@ -371,8 +381,8 @@ namespace JKFrame
             SaveFile(saveObject, savePath);
             // 更新存档时间
             GetSaveItem(saveID).UpdateTime(DateTime.Now);
-            // 更新SaveManagerData 写入磁盘
-            UpdateSaveManagerData();
+            // 更新SaveSystemData 写入磁盘
+            UpdateSaveSystemData();
 
             // 更新缓存
             SetCache(saveID, saveFileName, saveObject);
@@ -394,8 +404,8 @@ namespace JKFrame
             SaveFile(saveObject, savePath);
             // 更新存档时间
             saveItem.UpdateTime(DateTime.Now);
-            // 更新SaveManagerData 写入磁盘
-            UpdateSaveManagerData();
+            // 更新SaveSystemData 写入磁盘
+            UpdateSaveSystemData();
 
             // 更新缓存
             SetCache(saveItem.saveID, saveFileName, saveObject);
@@ -474,7 +484,7 @@ namespace JKFrame
         }
         #endregion
 
-        #region 全局数据
+        #region 保存、获取全局设置存档
         /// <summary>
         /// 加载设置，全局生效，不关乎任何一个存档
         /// </summary>
@@ -505,9 +515,43 @@ namespace JKFrame
             SaveSetting(saveObject, saveObject.GetType().Name);
         }
 
+
+        public static void DeleteAllSetting()
+        {
+            if (Directory.Exists(settingDirPath))
+            {
+                // 直接删除目录
+                Directory.Delete(settingDirPath, true);
+            }
+            CheckAndCreateDir();
+        }
         #endregion
 
-        #region 工具函数
+        #region 内部工具函数
+
+        /// <summary>
+        /// 更新存档系统数据
+        /// </summary>
+        private static void UpdateSaveSystemData()
+        {
+            SaveFile(saveSystemData, saveDirPath + "/SaveSystemData");
+        }
+
+        /// <summary>
+        /// 检查路径并创建目录
+        /// </summary>
+        private static void CheckAndCreateDir()
+        {
+            // 确保路径的存在
+            if (Directory.Exists(saveDirPath) == false)
+            {
+                Directory.CreateDirectory(saveDirPath);
+            }
+            if (Directory.Exists(settingDirPath) == false)
+            {
+                Directory.CreateDirectory(settingDirPath);
+            }
+        }
 
         /// <summary>
         /// 获取某个存档的路径
