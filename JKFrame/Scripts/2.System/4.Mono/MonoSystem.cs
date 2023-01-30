@@ -97,30 +97,25 @@ namespace JKFrame
         /// <summary>
         /// 启动一个协程序
         /// </summary>
-        public static Coroutine Start_Coroutine(IEnumerator routine)
+        public static Coroutine Start_Coroutine(IEnumerator coroutine)
         {
-            return instance.StartCoroutine(routine);
+            return instance.StartCoroutine(coroutine);
         }
 
         /// <summary>
         /// 启动一个协程序并且绑定某个对象
         /// </summary>
-        public static Coroutine Start_Coroutine(object obj,IEnumerator routine)
+        public static Coroutine Start_Coroutine(object obj,IEnumerator coroutine)
         {
-            Coroutine coroutine = null;
-            if (instance.coroutineDic.TryGetValue(obj,out List<Coroutine> coroutineList))
-            {
-                coroutine = instance.StartCoroutine(routine);
-                coroutineList.Add(coroutine);
-            }
-            else
+            Coroutine _coroutine = instance.StartCoroutine(coroutine);
+            if (!instance.coroutineDic.TryGetValue(obj,out List<Coroutine> coroutineList))
             {
                 coroutineList = poolModule.GetObject<List<Coroutine>>();
                 if (coroutineList == null) coroutineList = new List<Coroutine>();
-                coroutineList.Add(coroutine);
-                instance.coroutineDic.Add(obj,coroutineList);
+                instance.coroutineDic.Add(obj, coroutineList);
             }
-            return coroutine;
+            coroutineList.Add(_coroutine);
+            return _coroutine;
         }
 
         /// <summary>
