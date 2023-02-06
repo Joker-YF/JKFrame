@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1657696711}
   - component: {fileID: 1657696710}
   - component: {fileID: 6029324473076240864}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UISystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 4081342566049753021}
   - component: {fileID: 1141209989180464678}
   - component: {fileID: 8385329369925736353}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Layout0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 23
 --- !u!1 &362881156978034976
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 1120337822023644061}
   - component: {fileID: 8849874512448374089}
   - component: {fileID: 1390487538669073251}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 8593087385479084827}
   - component: {fileID: 7491465063636272187}
   - component: {fileID: 2001873209579708813}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Layout4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 23
 --- !u!1 &2350436240888515581
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 6082065427338214586}
   - component: {fileID: 7100579899713781443}
   - component: {fileID: 6573071895554130514}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Layout1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 23
 --- !u!1 &3537296298513487678
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 8069669075606212087}
   - component: {fileID: 8928788047315816328}
   - component: {fileID: 2139881306172775873}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 5048333664613580757}
   - component: {fileID: 4259630523049482509}
   - component: {fileID: 6066443418592990689}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 2539879437349246923}
   - component: {fileID: 1192954968086890143}
   - component: {fileID: 5299498809312262115}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5692054572725190667}
   - component: {fileID: 6087791291824049245}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UITipsLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +812,7 @@ GameObject:
   - component: {fileID: 5792477773102748304}
   - component: {fileID: 607047195547475346}
   - component: {fileID: 3928610369427524767}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DragLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -888,7 +888,7 @@ GameObject:
   - component: {fileID: 1413165872596567487}
   - component: {fileID: 429598126826601728}
   - component: {fileID: 11106836973554853}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Layout3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 23
 --- !u!1 &5428058166735082406
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 6536267891402734866}
   - component: {fileID: 6220994715086994164}
   - component: {fileID: 5935537646889387183}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Layout2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 23
 --- !u!1 &5808869914173048016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1042,7 @@ GameObject:
   - component: {fileID: 1390557527363706918}
   - component: {fileID: 2928749777669004249}
   - component: {fileID: 8376867584065289907}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1217,6 +1217,7 @@ MonoBehaviour:
   effectVolume: 0.5
   isMute: 0
   isLoop: 1
+  isPause: 0
 --- !u!82 &6029324473013266667
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1324,7 +1325,7 @@ GameObject:
   - component: {fileID: 7244273141470109199}
   - component: {fileID: 4629318150483705934}
   - component: {fileID: 383712221527020664}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Codice.CM.Common;
+using Codice.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -125,20 +127,7 @@ namespace JKFrame
         }
         #endregion
 
-        #region 初始化、更新（写入本地）、获取、删除所有用户存档
-        /// <summary>
-        /// 获取存档系统数据
-        /// </summary>
-        /// <returns></returns>
-        private static void InitSaveSystemData()
-        {
-            saveSystemData = LoadFile<SaveSystemData>(saveDirPath + "/SaveSystemData");
-            if (saveSystemData == null)
-            {
-                saveSystemData = new SaveSystemData();
-                UpdateSaveSystemData();
-            }
-        }
+        #region 获取、删除所有用户存档
 
         /// <summary>
         /// 获取所有存档
@@ -253,6 +242,15 @@ namespace JKFrame
         }
 
         /// <summary>
+        /// 获取SaveItem
+        /// </summary>
+        public static SaveItem GetSaveItem(SaveItem saveItem)
+        {
+            GetSaveItem(saveItem.saveID);
+            return null;
+        }
+
+        /// <summary>
         /// 添加一个存档
         /// </summary>
         /// <returns></returns>
@@ -356,10 +354,19 @@ namespace JKFrame
             cacheDic.Remove(saveID);
         }
 
+        /// <summary>
+        /// 移除缓存中的某一个对象
+        /// </summary>
+        private static void RemoveCache(int saveID, string fileName)
+        {
+            cacheDic[saveID].Remove(fileName);
+        }
+
         public static void CleanCache()
         {
             cacheDic.Clear();
         }
+
 
 
         #endregion
@@ -396,20 +403,7 @@ namespace JKFrame
         /// <param name="saveFileName">保存的文件名称</param>
         public static void SaveObject(object saveObject, string saveFileName, SaveItem saveItem)
         {
-            // 存档所在的文件夹路径
-            string dirPath = GetSavePath(saveItem.saveID, true);
-            // 具体的对象要保存的路径
-            string savePath = dirPath + "/" + saveFileName;
-            // 具体的保存
-            SaveFile(saveObject, savePath);
-            // 更新存档时间
-            saveItem.UpdateTime(DateTime.Now);
-            // 更新SaveSystemData 写入磁盘
-            UpdateSaveSystemData();
-
-            // 更新缓存
-            SetCache(saveItem.saveID, saveFileName, saveObject);
-
+            SaveObject(saveObject, saveFileName, saveItem.saveID);
         }
         /// <summary>
         /// 保存对象至某个存档中
@@ -477,11 +471,58 @@ namespace JKFrame
         /// 从某个具体的存档中加载某个对象
         /// </summary>
         /// <typeparam name="T">要返回的实际类型</typeparam>
-        /// <param name="id">存档ID</param>
+        /// <param name="saveItem">存档项</param>
         public static T LoadObject<T>(SaveItem saveItem) where T : class
         {
             return LoadObject<T>(typeof(T).Name, saveItem.saveID);
         }
+
+        /// <summary>
+        /// 删除某个存档中的某个对象
+        /// </summary>
+        /// <param name="saveID">存档的ID</param>
+        public static void DeleteObject<T>(string saveFileName, int saveID) where T : class
+        {
+            //清空缓存中对象
+            if (GetCache<T>(saveID,saveFileName) != null)
+            {
+                RemoveCache(saveID, saveFileName);
+            }
+            // 存档对象所在的文件路径
+            string dirPath = GetSavePath(saveID);
+            string savePath = dirPath + "/" + saveFileName;
+            //删除对应的文件
+            File.Delete(savePath);
+
+        }
+
+        /// <summary>
+        /// 删除某个存档中的某个对象
+        /// </summary>
+        /// <param name="saveID">存档的ID</param>
+        public static void DeleteObject<T>(string saveFileName, SaveItem saveItem) where T : class
+        {
+            DeleteObject<T>(saveFileName, saveItem.saveID);
+        }
+
+        /// <summary>
+        /// 删除某个存档中的某个对象
+        /// </summary>
+        /// <param name="saveID">存档的ID</param>
+        public static void DeleteObject<T>(int saveID) where T : class
+        {
+            DeleteObject<T>(typeof(T).Name, saveID);
+        }
+
+        /// <summary>
+        /// 删除某个存档中的某个对象
+        /// </summary>
+        /// <param name="saveID">存档的ID</param>
+        public static void DeleteObject<T>(SaveItem saveItem) where T : class
+        {
+            DeleteObject<T>(typeof(T).Name, saveItem.saveID);
+        }
+
         #endregion
 
         #region 保存、获取全局设置存档
@@ -528,6 +569,19 @@ namespace JKFrame
         #endregion
 
         #region 内部工具函数
+        /// <summary>
+        /// 获取存档系统数据
+        /// </summary>
+        /// <returns></returns>
+        private static void InitSaveSystemData()
+        {
+            saveSystemData = LoadFile<SaveSystemData>(saveDirPath + "/SaveSystemData");
+            if (saveSystemData == null)
+            {
+                saveSystemData = new SaveSystemData();
+                UpdateSaveSystemData();
+            }
+        }
 
         /// <summary>
         /// 更新存档系统数据

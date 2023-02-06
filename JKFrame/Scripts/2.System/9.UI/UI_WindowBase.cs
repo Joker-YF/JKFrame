@@ -8,6 +8,11 @@ namespace JKFrame
     /// </summary>
     public class UI_WindowBase : MonoBehaviour
     {
+        protected bool uiEnable;
+        public bool UIEnable { get => uiEnable; }
+        protected int currentLayer;
+        public int CurrentLayer { get => currentLayer; }
+
         // 窗口类型
         public Type Type { get { return this.GetType(); } }
 
@@ -21,23 +26,19 @@ namespace JKFrame
         /// </summary>
         public virtual void OnShow()
         {
+            uiEnable = true;
+            Debug.Log(uiEnable);
             OnUpdateLanguage();
             RegisterEventListener();
         }
 
         /// <summary>
-        /// 关闭
-        /// </summary>
-        public void Close()
-        {
-            UISystem.Close(Type);
-            OnClose();
-        }
-        /// <summary>
         /// 关闭时额外执行的内容
         /// </summary>
         public virtual void OnClose()
         {
+            uiEnable = false;
+            Debug.Log(uiEnable);
             CancelEventListener();
         }
 

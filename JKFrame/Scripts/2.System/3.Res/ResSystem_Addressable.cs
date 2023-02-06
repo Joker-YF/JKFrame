@@ -151,6 +151,30 @@ namespace JKFrame
         /// 加载游戏物体
         /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
         /// </summary>
+        /// <param name="keyName">对象池中的分组名称，可为Null</param>
+        /// <param name="parent">父物体</param>
+        /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
+        public static GameObject InstantiateGameObject(Transform parent, string keyName, bool autoRelease = true)
+        {
+            GameObject go;
+            go = PoolSystem.GetGameObject(keyName, parent);
+            if (go.IsNull() == false) return go;
+            else
+            {
+                go = Addressables.InstantiateAsync(keyName, parent).WaitForCompletion();
+                if (autoRelease)
+                {
+                    go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+                }
+                go.name = keyName;
+            }
+            return go;
+        }
+
+        /// <summary>
+        /// 加载游戏物体
+        /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
+        /// </summary>
         /// <param name="assetName">AB资源名称</param>
         /// <param name="keyName">对象池中的分组名称，可为Null</param>
         /// <param name="parent">父物体</param>
@@ -171,6 +195,20 @@ namespace JKFrame
                 go.name = assetName;
             }
             return go;
+        }
+
+        /// <summary>
+        /// 加载游戏物体并获取组件
+        /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
+        /// </summary>
+        /// <param name="keyName">对象池中的分组名称，可为Null</param>
+        /// <param name="parent">父物体</param>
+        /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
+        public static T InstantiateGameObject<T>(Transform parent, string keyName, bool autoRelease = true) where T : Component
+        {
+            GameObject go = InstantiateGameObject(parent, keyName, autoRelease);
+            if (go.IsNull() == false) return go.GetComponent<T>();
+            else return null;
         }
 
         /// <summary>

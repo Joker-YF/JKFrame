@@ -28,17 +28,23 @@ namespace JKFrame
                 count += 1;
                 Update();
             }
-            public void OnWindowClose()
+            public void OnWindowClose(bool update = true)
             {
                 count -= 1;
-                Update();
+                if (update) Update();
             }
             private void Update()
             {
+                Debug.Log(count);
                 if (enableMask == false) return;
                 maskImage.raycastTarget = count != 0;
                 int posIndex = root.childCount - 2;
                 maskImage.transform.SetSiblingIndex(posIndex < 0 ? 0 : posIndex);
+            }
+            public void Reset()
+            {
+                count = 0;
+                Update();
             }
         }
         #endregion
@@ -226,6 +232,11 @@ namespace JKFrame
             // 实例化实例或者获取到实例，保证窗口实例存在
             if (windowData.instance != null)
             {
+                // 原本就激活使用状态，避免内部计数问题，进行一次层关闭
+                if (windowData.instance.UIEnable)
+                {
+                    UILayers[layerNum].OnWindowClose(false);
+                }
                 windowData.instance.gameObject.SetActive(true);
                 windowData.instance.transform.SetParent(UILayers[layerNum].root);
                 windowData.instance.transform.SetAsLastSibling();
@@ -360,29 +371,42 @@ namespace JKFrame
         {
             if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
             {
-                if (windowData.instance != null)
+                if (windowData.instance != null && CloseWindow(windowData))
                 {
-                    windowData.instance.OnClose();
-                    // 缓存则隐藏
-                    if (windowData.isCache)
-                    {
-                        windowData.instance.transform.SetAsFirstSibling();
-                        windowData.instance.gameObject.SetActive(false);
-                    }
-                    // 不缓存则销毁
-                    else
-                    {
-#if ENABLE_ADDRESSABLES
-                        ResSystem.UnloadInstance(windowData.instance.gameObject);
-#endif
-                        DestroyImmediate(windowData.instance.gameObject);
-                        windowData.instance = null;
-                    }
                     UILayers[windowData.layerNum].OnWindowClose();
                 }
-                else JKLog.Warning("JKFrame:您需要关闭的窗口不存在");
+                else JKLog.Warning("JKFrame:您需要关闭的窗口不存在或已经关闭");
             }
             else JKLog.Warning("JKFrame:未查询到UIWindowData");
+        }
+
+
+        private static bool CloseWindow(UIWindowData windowData)
+        {
+            if (windowData.instance.UIEnable)
+            {
+                windowData.instance.OnClose();
+                // 缓存则隐藏
+                if (windowData.isCache)
+                {
+                    windowData.instance.transform.SetAsFirstSibling();
+                    windowData.instance.gameObject.SetActive(false);
+                }
+                // 不缓存则销毁
+                else
+                {
+#if ENABLE_ADDRESSABLES
+                    ResSystem.UnloadInstance(windowData.instance.gameObject);
+#endif
+                    DestroyImmediate(windowData.instance.gameObject);
+                    windowData.instance = null;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -397,8 +421,12 @@ namespace JKFrame
                 if (enumerator.Current.Value.instance != null
                     && enumerator.Current.Value.instance.gameObject.activeInHierarchy == true)
                 {
-                    enumerator.Current.Value.instance.Close();
+                    CloseWindow(enumerator.Current.Value);
                 }
+            }
+            for (int i = 0; i < UILayers.Length; i++)
+            {
+                UILayers[i].Reset();
             }
         }
         #endregion

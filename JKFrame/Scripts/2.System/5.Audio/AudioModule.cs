@@ -8,7 +8,7 @@ namespace JKFrame
 {
     public class AudioModule : MonoBehaviour
     {
-        private static GameObjectPoolModule poolModule = new GameObjectPoolModule();
+        private static GameObjectPoolModule poolModule;
 
         [SerializeField, LabelText("背景音乐播放器")]
         private AudioSource BGAudioSource;
@@ -199,6 +199,7 @@ namespace JKFrame
         {
             Transform poolRoot = new GameObject("AudioPlayerPoolRoot").transform;
             poolRoot.SetParent(transform);
+            poolModule = new GameObjectPoolModule();
             poolModule.Init(poolRoot);
             poolModule.InitObjectPool(EffectAudioPlayPrefab, -1, EffectAudioDefaultQuantity);
             audioPlayList = new List<AudioSource>(EffectAudioDefaultQuantity);
