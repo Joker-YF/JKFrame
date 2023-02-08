@@ -35,7 +35,6 @@ namespace JKFrame
             }
             private void Update()
             {
-                Debug.Log(count);
                 if (enableMask == false) return;
                 maskImage.raycastTarget = count != 0;
                 int posIndex = root.childCount - 2;
