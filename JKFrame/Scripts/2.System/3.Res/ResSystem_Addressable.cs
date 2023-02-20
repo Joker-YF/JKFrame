@@ -151,7 +151,7 @@ namespace JKFrame
         /// 加载游戏物体
         /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
         /// </summary>
-        /// <param name="keyName">对象池中的分组名称，可为Null</param>
+        /// <param name="keyName">对象池中的分组名称</param>
         /// <param name="parent">父物体</param>
         /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
         public static GameObject InstantiateGameObject(Transform parent, string keyName, bool autoRelease = true)
@@ -192,7 +192,7 @@ namespace JKFrame
                 {
                     go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
                 }
-                go.name = assetName;
+                go.name = keyName!=null?keyName:assetName;
             }
             return go;
         }
@@ -201,7 +201,7 @@ namespace JKFrame
         /// 加载游戏物体并获取组件
         /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
         /// </summary>
-        /// <param name="keyName">对象池中的分组名称，可为Null</param>
+        /// <param name="keyName">对象池中的分组名称</param>
         /// <param name="parent">父物体</param>
         /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
         public static T InstantiateGameObject<T>(Transform parent, string keyName, bool autoRelease = true) where T : Component

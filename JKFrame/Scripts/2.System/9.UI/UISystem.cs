@@ -60,7 +60,7 @@ namespace JKFrame
         [SerializeField] GameObject UITipsItemPrefab;
         [SerializeField] private RectTransform UITipsItemParent;
 
-        #region 窗口数据
+        #region 动态加载/移除窗口数据
         // UI系统的窗口数据中主要包含：预制体路径、是否缓存、当前窗口对象实例等重要信息
         // 为了方便使用，所以窗口数据必须先存放于UIWindowDataDic中，才能通过UI系统显示、关闭等
 
@@ -80,7 +80,8 @@ namespace JKFrame
                 {
                     if (windowData.isCache)
                     {
-                        UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowKey, UILayers[windowData.layerNum].root);
+                        UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowData.assetPath, UILayers[windowData.layerNum].root, windowKey);
+                        windowData.instance = window;
                         window.Init();
                         window.gameObject.SetActive(false);
                     }
@@ -136,6 +137,16 @@ namespace JKFrame
             return null;
         }
 
+        public static UIWindowData GetUIWindowData(Type windowType)
+        {
+            return GetUIWindowData(windowType.FullName);
+        }
+
+        public static UIWindowData GetUIWindowData<T>()
+        {
+            return GetUIWindowData(typeof(T));
+        }
+
         /// <summary>
         /// 尝试获取UI窗口数据
         /// </summary>
@@ -146,12 +157,11 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// 移除UI窗口数据
+        /// 移除UI窗口数据,已存在的窗口会被强行删除
         /// </summary>
         /// <param name="windowKey"></param>
-        /// <param name="destoryWidnow">如果存在窗口，则销毁的窗口的实例</param>
         /// <returns></returns>
-        public static bool RemoveUIWindowData(string windowKey, bool destoryWidnow = false)
+        public static bool RemoveUIWindowData(string windowKey)
         {
             if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
             {
@@ -177,7 +187,7 @@ namespace JKFrame
         }
         #endregion
 
-        #region 窗口
+        #region UI窗口生命周期管理
         /// <summary>
         /// 显示窗口
         /// </summary>
@@ -218,14 +228,14 @@ namespace JKFrame
         {
             if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
             {
-                return Show(windowData, layer);
+                return Show(windowData, windowKey, layer);
             }
             // 资源库中没有意味着不允许显示
             JKLog.Log($"JKFrame:不存在{windowKey}的UIWindowData");
             return null;
         }
 
-        private static UI_WindowBase Show(UIWindowData windowData, int layer = -1)
+        private static UI_WindowBase Show(UIWindowData windowData, string windowKey, int layer = -1)
         {
             int layerNum = layer == -1 ? windowData.layerNum : layer;
             // 实例化实例或者获取到实例，保证窗口实例存在
@@ -243,7 +253,7 @@ namespace JKFrame
             }
             else
             {
-                UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowData.assetPath, UILayers[layerNum].root);
+                UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowData.assetPath, UILayers[layerNum].root, windowKey);
                 windowData.instance = window;
                 window.Init();
                 window.OnShow();

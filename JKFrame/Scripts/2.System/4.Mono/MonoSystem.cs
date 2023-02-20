@@ -22,6 +22,7 @@ namespace JKFrame
             instance = JKFrameRoot.RootTransform.GetComponent<MonoSystem>();
         }
 
+        #region 生命周期函数
         /// <summary>
         /// 添加Update监听
         /// </summary>
@@ -89,7 +90,7 @@ namespace JKFrame
             fixedUpdateEvent?.Invoke();
         }
 
-
+        #endregion
         #region 协程
         private Dictionary<object, List<Coroutine>> coroutineDic = new Dictionary<object, List<Coroutine>>();
         private static ObjectPoolModule poolModule = new ObjectPoolModule();

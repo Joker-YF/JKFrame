@@ -138,15 +138,15 @@ namespace JKFrame
         {
             AddEventListener(com, JKEventType.OnCollisionExit, action, args);
         }
-        public static void OnCollisionEnter2D<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnCollisionEnter2D<TEventArg>(this Component com, Action<Collision2D, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionEnter2D, action, args);
         }
-        public static void OnCollisionStay2D<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnCollisionStay2D<TEventArg>(this Component com, Action<Collision2D, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionStay2D, action, args);
         }
-        public static void OnCollisionExit2D<TEventArg>(this Component com, Action<Collision, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnCollisionExit2D<TEventArg>(this Component com, Action<Collision2D, TEventArg> action, TEventArg args = default(TEventArg))
         {
             AddEventListener(com, JKEventType.OnCollisionExit2D, action, args);
         }
@@ -237,14 +237,15 @@ namespace JKFrame
             RemoveEventListener(com, JKEventType.OnReleaseAddressableAsset, action);
         }
 
-        public static void OnDesotry<TEventArg>(this Component com, Action<GameObject, TEventArg> action, TEventArg args = default(TEventArg))
+        public static void OnDestroy<TEventArg>(this Component com, Action<GameObject, TEventArg> action, TEventArg args = default(TEventArg))
         {
-            AddEventListener(com, JKEventType.OnDestory, action, args);
+            AddEventListener(com, JKEventType.OnDestroy, action, args);
         }
-        public static void RemoveOnDesotry<TEventArg>(this Component com, Action<GameObject, TEventArg> action)
+        public static void RemoveOnDestroy<TEventArg>(this Component com, Action<GameObject, TEventArg> action)
         {
-            RemoveEventListener(com, JKEventType.OnDestory, action);
+            RemoveEventListener(com, JKEventType.OnDestroy, action);
         }
+
         #endregion
     }
 }

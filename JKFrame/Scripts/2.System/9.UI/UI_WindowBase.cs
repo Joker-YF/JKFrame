@@ -27,7 +27,6 @@ namespace JKFrame
         public virtual void OnShow()
         {
             uiEnable = true;
-            Debug.Log(uiEnable);
             OnUpdateLanguage();
             RegisterEventListener();
         }

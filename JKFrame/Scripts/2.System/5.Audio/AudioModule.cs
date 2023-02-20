@@ -324,7 +324,7 @@ namespace JKFrame
                 audioSource.transform.SetParent(component.transform);
                 audioSource.transform.localPosition = Vector3.zero;
                 // 宿主销毁时，释放父物体
-                component.OnDesotry(OnOwerDestory, audioSource);
+                component.OnDestroy(OnOwerDestory, audioSource);
             }
             // 播放一次音效
             audioSource.PlayOneShot(clip, volumeScale);
@@ -342,7 +342,7 @@ namespace JKFrame
         // 播放结束时移除宿主销毁Action
         private void PlayOverRemoveOwnerDesotryAction(Component owner)
         {
-            if (owner != null) owner.RemoveOnDesotry<AudioSource>(OnOwerDestory);
+            if (owner != null) owner.RemoveOnDestroy<AudioSource>(OnOwerDestory);
         }
 
         public void PlayOnShot(AudioClip clip, Vector3 position, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)

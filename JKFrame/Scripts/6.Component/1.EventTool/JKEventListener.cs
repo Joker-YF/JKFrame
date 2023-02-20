@@ -30,7 +30,7 @@ namespace JKFrame
         OnTriggerStay2D = -10019,
         OnTriggerExit2D = -10020,
         OnReleaseAddressableAsset = -10021,
-        OnDestory = -10022,
+        OnDestroy = -10022,
     }
 
     public interface IMouseEvent : IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -364,7 +364,7 @@ namespace JKFrame
         private void OnDestroy()
         {
             TriggerAction(JKEventType.OnReleaseAddressableAsset, gameObject);
-            TriggerAction(JKEventType.OnDestory, gameObject);
+            TriggerAction(JKEventType.OnDestroy, gameObject);
 
             // 销毁所有数据，并将一些数据放回对象池中
             RemoveAllListener();

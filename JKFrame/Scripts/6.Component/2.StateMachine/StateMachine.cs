@@ -26,9 +26,11 @@ namespace JKFrame
         /// 初始化
         /// </summary>
         /// <param name="owner">宿主</param>
-        public void Init(IStateMachineOwner owner)
+        /// <typeparam name="T">初始状态类型</typeparam>
+        public void Init<T>(IStateMachineOwner owner) where T : StateBase, new()
         {
             this.owner = owner;
+            ChangeState<T>();
         }
 
         /// <summary>
@@ -70,9 +72,7 @@ namespace JKFrame
         {
             Type stateType = typeof(T);
             if (stateDic.ContainsKey(stateType)) return stateDic[stateType];
-
-            StateBase state = PoolSystem.GetObject<T>();
-            if (state == null) state = new T();
+            StateBase state = ResSystem.GetOrNew<T>();
             state.Init(owner);
             stateDic.Add(stateType, state);
             return state;

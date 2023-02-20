@@ -32,105 +32,105 @@ namespace JKFrame
         /// <summary>
         /// 添加2个参数事件
         /// </summary>
-        public static void AddEventListener<T0,T1>(string eventName, Action<T0,T1> action)
+        public static void AddEventListener<T0, T1>(string eventName, Action<T0, T1> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加3个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1,T2>(string eventName, Action<T0, T1,T2> action)
+        public static void AddEventListener<T0, T1, T2>(string eventName, Action<T0, T1, T2> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加4个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2,T3>(string eventName, Action<T0, T1, T2,T3> action)
+        public static void AddEventListener<T0, T1, T2, T3>(string eventName, Action<T0, T1, T2, T3> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加5个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3,T4>(string eventName, Action<T0, T1, T2, T3,T4> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4>(string eventName, Action<T0, T1, T2, T3, T4> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加6个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4,T5>(string eventName, Action<T0, T1, T2, T3, T4,T5> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5>(string eventName, Action<T0, T1, T2, T3, T4, T5> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加7个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5,T6>(string eventName, Action<T0, T1, T2, T3, T4, T5,T6> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加8个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6,T7>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6,T7> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加9个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7,T8>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7,T8> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加10个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加11个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加12个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加13个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T2> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T2> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加14个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加15个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
         /// <summary>
         /// 添加16个参数事件
         /// </summary>
-        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15> action)
+        public static void AddEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> action)
         {
             eventModule.AddEventListener(eventName, action);
         }
@@ -177,50 +177,50 @@ namespace JKFrame
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3,T4>(eventName, arg0, arg1, arg2, arg3,arg4);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4>(eventName, arg0, arg1, arg2, arg3, arg4);
         }
         /// <summary>
         /// 触发6个参数的事件
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4,T5>(eventName, arg0, arg1, arg2, arg3, arg4,arg5);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5>(eventName, arg0, arg1, arg2, arg3, arg4, arg5);
         }
         /// <summary>
         /// 触发7个参数的事件
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5,T6>(eventName, arg0, arg1, arg2, arg3, arg4, arg5,arg6);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         }
         /// <summary>
         /// 触发8个参数的事件
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6,T7>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6,arg7);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
         /// <summary>
         /// 触发9个参数的事件
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7,T8>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7,arg8);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
         /// <summary>
         /// 触发10个参数的事件
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7,T8,T9>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7,arg8,arg9);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
         /// 触发11个参数的事件
         /// </summary>
-        public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
+        public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
 
@@ -237,7 +237,7 @@ namespace JKFrame
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,arg12);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace JKFrame
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12,arg13);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace JKFrame
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13,arg14);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace JKFrame
         /// </summary>
         public static void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
         {
-            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14,arg15);
+            eventModule.EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(eventName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         #endregion
@@ -284,105 +284,105 @@ namespace JKFrame
         /// <summary>
         /// 移除2个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0,T1>(string eventName, Action<T0,T1> action)
+        public static void RemoveEventListener<T0, T1>(string eventName, Action<T0, T1> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除3个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1,T2>(string eventName, Action<T0, T1,T2> action)
+        public static void RemoveEventListener<T0, T1, T2>(string eventName, Action<T0, T1, T2> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除4个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2,T3>(string eventName, Action<T0, T1, T2,T3> action)
+        public static void RemoveEventListener<T0, T1, T2, T3>(string eventName, Action<T0, T1, T2, T3> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除5个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3,T4>(string eventName, Action<T0, T1, T2, T3,T4> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4>(string eventName, Action<T0, T1, T2, T3, T4> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除6个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4,T5>(string eventName, Action<T0, T1, T2, T3, T4,T5> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5>(string eventName, Action<T0, T1, T2, T3, T4, T5> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除7个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5,T6>(string eventName, Action<T0, T1, T2, T3, T4, T5,T6> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除8个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6,T7>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6,T7> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除9个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7,T8>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7,T8> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除10个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除11个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除12个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除13个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除14个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除15个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }
         /// <summary>
         /// 移除16个参数的事件监听
         /// </summary>
-        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15> action)
+        public static void RemoveEventListener<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> action)
         {
             eventModule.RemoveEventListener(eventName, action);
         }

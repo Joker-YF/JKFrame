@@ -8,7 +8,7 @@ namespace JKFrame
 {
     public static class ResSystem
     {
-        #region 普通class对象
+#region 普通class对象
         /// <summary>
         /// 获取实例-普通Class
         /// 如果类型需要缓存，会从对象池中获取
@@ -111,9 +111,9 @@ namespace JKFrame
             PoolSystem.InitObjectPool(type, maxCapacity);
         }
 
-        #endregion
+#endregion
 
-        #region 游戏对象
+#region 游戏对象
 
         /// <summary>
         /// 卸载游戏对象，这里是使用对象池的方式
@@ -205,7 +205,7 @@ namespace JKFrame
             if (!prefab.IsNull())
             {
                 go = GameObject.Instantiate(prefab, parent);
-                go.name = assetName;
+                go.name = keyName!=null?keyName:assetName;
                 //UnloadAsset(prefab);
             }
             return go;
@@ -303,8 +303,8 @@ namespace JKFrame
             //UnloadAsset(prefab);
             callBack?.Invoke(go.GetComponent<T>());
         }
-        #endregion
-        #region 游戏Asset
+#endregion
+#region 游戏Asset
         /// <summary>
         /// 加载Unity资源  如AudioClip Sprite 预制体
         /// </summary>
@@ -373,7 +373,7 @@ namespace JKFrame
         {
             Resources.UnloadUnusedAssets();
         }
-        #endregion
+#endregion
 
 
     }
