@@ -53,7 +53,8 @@ namespace JKFrame
         }
 
 
-        private interface IJKEventListenerEventInfo<T>{
+        private interface IJKEventListenerEventInfo<T>
+        {
             void TriggerEvent(T eventData);
             void Destory();
         }
@@ -61,13 +62,13 @@ namespace JKFrame
         /// <summary>
         /// 某个事件中一个事件的数据包装类
         /// </summary>
-        private class JKEventListenerEventInfo<T,TEventArg>: IJKEventListenerEventInfo<T> 
+        private class JKEventListenerEventInfo<T, TEventArg> : IJKEventListenerEventInfo<T>
         {
             // T：事件本身的参数（PointerEventData、Collision）
             // object[]:事件的参数
             public Action<T, TEventArg> action;
             public TEventArg arg;
-            public void Init(Action<T, TEventArg> action, TEventArg args=default(TEventArg))
+            public void Init(Action<T, TEventArg> action, TEventArg args = default(TEventArg))
             {
                 this.action = action;
                 this.arg = args;
@@ -101,7 +102,7 @@ namespace JKFrame
             /// <summary>
             /// 添加事件
             /// </summary>
-            public void AddListener<TEventArg>(Action<T, TEventArg> action, TEventArg args=default(TEventArg)) 
+            public void AddListener<TEventArg>(Action<T, TEventArg> action, TEventArg args = default(TEventArg))
             {
                 JKEventListenerEventInfo<T, TEventArg> info = poolModul.GetObject<JKEventListenerEventInfo<T, TEventArg>>();
                 if (info == null) info = new JKEventListenerEventInfo<T, TEventArg>();
@@ -121,7 +122,7 @@ namespace JKFrame
             /// 移除事件
             /// 即时同一个函数+参数注册过多次，无论如何该方法只会移除一个事件
             /// </summary>
-            public void RemoveListener<TEventArg>(Action<T, TEventArg> action, TEventArg args=default(TEventArg))
+            public void RemoveListener<TEventArg>(Action<T, TEventArg> action, TEventArg args = default(TEventArg))
             {
                 for (int i = 0; i < eventList.Count; i++)
                 {
@@ -158,7 +159,7 @@ namespace JKFrame
         private JKEventListenerData data;
         private JKEventListenerData Data
         {
-            get 
+            get
             {
                 if (data == null)
                 {
@@ -182,7 +183,7 @@ namespace JKFrame
             else
             {
                 JKEventListenerEventInfos<T> infos = poolModul.GetObject<JKEventListenerEventInfos<T>>();
-                if (infos==null) infos = new JKEventListenerEventInfos<T>();
+                if (infos == null) infos = new JKEventListenerEventInfos<T>();
                 infos.AddListener(action, args);
                 Data.eventInfoDic.Add(eventTypeInt, infos);
             }
@@ -190,7 +191,7 @@ namespace JKFrame
         /// <summary>
         /// 添加事件
         /// </summary>
-        public void AddListener<T, TEventArg>(JKEventType eventType, Action<T, TEventArg> action, TEventArg args) 
+        public void AddListener<T, TEventArg>(JKEventType eventType, Action<T, TEventArg> action, TEventArg args)
         {
             AddListener((int)eventType, action, args);
         }
@@ -198,9 +199,9 @@ namespace JKFrame
         /// <summary>
         /// 移除事件
         /// </summary>
-        public void RemoveListener<T, TEventArg>(int eventTypeInt, Action<T, TEventArg> action) 
+        public void RemoveListener<T, TEventArg>(int eventTypeInt, Action<T, TEventArg> action)
         {
-            if (Data.eventInfoDic.TryGetValue(eventTypeInt,out IJKEventListenerEventInfos info))
+            if (Data.eventInfoDic.TryGetValue(eventTypeInt, out IJKEventListenerEventInfos info))
             {
                 ((JKEventListenerEventInfos<T>)info).RemoveListener(action);
             }

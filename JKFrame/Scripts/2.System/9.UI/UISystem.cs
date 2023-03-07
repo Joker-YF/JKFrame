@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace JKFrame
 {
     /// <summary>
-    /// UI¸ù½Úµã
+    /// UIæ ¹èŠ‚ç‚¹
     /// </summary>
     public class UISystem : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace JKFrame
         {
             instance = JKFrameRoot.RootTransform.GetComponentInChildren<UISystem>();
         }
-        #region ÄÚ²¿Àà
+        #region å†…éƒ¨ç±»
         [Serializable]
         private class UILayer
         {
@@ -52,7 +52,7 @@ namespace JKFrame
         [SerializeField] private UILayer[] uiLayers;
         [SerializeField] private RectTransform dragLayer;
         /// <summary>
-        /// ÍÏ×§²ã£¬Î»ÓÚËùÓĞUIµÄ×îÉÏ²ã
+        /// æ‹–æ‹½å±‚ï¼Œä½äºæ‰€æœ‰UIçš„æœ€ä¸Šå±‚
         /// </summary>
         public static RectTransform DragLayer { get => instance.dragLayer; }
         private static UILayer[] UILayers { get => instance.uiLayers; }
@@ -60,18 +60,18 @@ namespace JKFrame
         [SerializeField] GameObject UITipsItemPrefab;
         [SerializeField] private RectTransform UITipsItemParent;
 
-        #region ¶¯Ì¬¼ÓÔØ/ÒÆ³ı´°¿ÚÊı¾İ
-        // UIÏµÍ³µÄ´°¿ÚÊı¾İÖĞÖ÷Òª°üº¬£ºÔ¤ÖÆÌåÂ·¾¶¡¢ÊÇ·ñ»º´æ¡¢µ±Ç°´°¿Ú¶ÔÏóÊµÀıµÈÖØÒªĞÅÏ¢
-        // ÎªÁË·½±ãÊ¹ÓÃ£¬ËùÒÔ´°¿ÚÊı¾İ±ØĞëÏÈ´æ·ÅÓÚUIWindowDataDicÖĞ£¬²ÅÄÜÍ¨¹ıUIÏµÍ³ÏÔÊ¾¡¢¹Ø±ÕµÈ
+        #region åŠ¨æ€åŠ è½½/ç§»é™¤çª—å£æ•°æ®
+        // UIç³»ç»Ÿçš„çª—å£æ•°æ®ä¸­ä¸»è¦åŒ…å«ï¼šé¢„åˆ¶ä½“è·¯å¾„ã€æ˜¯å¦ç¼“å­˜ã€å½“å‰çª—å£å¯¹è±¡å®ä¾‹ç­‰é‡è¦ä¿¡æ¯
+        // ä¸ºäº†æ–¹ä¾¿ä½¿ç”¨ï¼Œæ‰€ä»¥çª—å£æ•°æ®å¿…é¡»å…ˆå­˜æ”¾äºUIWindowDataDicä¸­ï¼Œæ‰èƒ½é€šè¿‡UIç³»ç»Ÿæ˜¾ç¤ºã€å…³é—­ç­‰
 
         /// <summary>
-        /// ³õÊ¼»¯UIÔªËØÊı¾İ
-        /// Ö»Ö´ĞĞOnInit£¬²»Ö´ĞĞOnShow
-        /// »á×Ô¶¯SetActive(false)
+        /// åˆå§‹åŒ–UIå…ƒç´ æ•°æ®
+        /// åªæ‰§è¡ŒOnInitï¼Œä¸æ‰§è¡ŒOnShow
+        /// ä¼šè‡ªåŠ¨SetActive(false)
         /// </summary>
-        /// <param name="windowKey">×Ô¶¨ÒåµÄÃû³Æ£¬¿ÉÒÔÊÇ×ÊÔ´Â·¾¶»òÀàĞÍÃû³Æ»òÆäËû×Ô¶¨Òå</param>
-        /// <param name="windowData">´°¿ÚµÄÖØÒªÊı¾İ</param>
-        /// <param name="instantiateAtOnce">ÊÇ·ñÁ¢¿ÌÊµÀı»¯£¬Ç°ÌáÊÇÓĞ»º´æ±ØÒª</param>
+        /// <param name="windowKey">è‡ªå®šä¹‰çš„åç§°ï¼Œå¯ä»¥æ˜¯èµ„æºè·¯å¾„æˆ–ç±»å‹åç§°æˆ–å…¶ä»–è‡ªå®šä¹‰</param>
+        /// <param name="windowData">çª—å£çš„é‡è¦æ•°æ®</param>
+        /// <param name="instantiateAtOnce">æ˜¯å¦ç«‹åˆ»å®ä¾‹åŒ–ï¼Œå‰ææ˜¯æœ‰ç¼“å­˜å¿…è¦</param>
         public static void AddUIWindowData(string windowKey, UIWindowData windowData, bool instantiateAtOnce = false)
         {
             if (UIWindowDataDic.TryAdd(windowKey, windowData))
@@ -87,21 +87,21 @@ namespace JKFrame
                     }
                     else
                     {
-                        JKLog.Warning("JKFrame:UIWindowDataÖĞµÄisCache=false£¬µ«instantiateAtOnce=true!ÌáÇ°ÊµÀı»¯¶ÔÓÚ²»ĞèÒª»º´æµÄ´°¿ÚÀ´ËµÃ»ÓĞÒâÒå");
+                        JKLog.Warning("JKFrame:UIWindowDataä¸­çš„isCache=falseï¼Œä½†instantiateAtOnce=true!æå‰å®ä¾‹åŒ–å¯¹äºä¸éœ€è¦ç¼“å­˜çš„çª—å£æ¥è¯´æ²¡æœ‰æ„ä¹‰");
                     }
                 }
             }
         }
 
         /// <summary>
-        /// ³õÊ¼»¯UIÔªËØÊı¾İ
+        /// åˆå§‹åŒ–UIå…ƒç´ æ•°æ®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="windowData"></param>
         /// <param name="instantiateAtOnce">
-        /// Á¢¿ÌÊµÀı»¯£¬µ«ÊÇ£º
-        /// Ö»Ö´ĞĞOnInit£¬²»Ö´ĞĞOnShow
-        /// »á×Ô¶¯SetActive(false)
+        /// ç«‹åˆ»å®ä¾‹åŒ–ï¼Œä½†æ˜¯ï¼š
+        /// åªæ‰§è¡ŒOnInitï¼Œä¸æ‰§è¡ŒOnShow
+        /// ä¼šè‡ªåŠ¨SetActive(false)
         /// </param>
         public static void AddUIWindowData(Type type, UIWindowData windowData, bool instantiateAtOnce = false)
         {
@@ -109,14 +109,14 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³õÊ¼»¯UIÔªËØÊı¾İ
+        /// åˆå§‹åŒ–UIå…ƒç´ æ•°æ®
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="windowData"></param>
         /// <param name="instantiateAtOnce">
-        /// Á¢¿ÌÊµÀı»¯£¬µ«ÊÇ£º
-        /// Ö»Ö´ĞĞOnInit£¬²»Ö´ĞĞOnShow
-        /// »á×Ô¶¯SetActive(false)
+        /// ç«‹åˆ»å®ä¾‹åŒ–ï¼Œä½†æ˜¯ï¼š
+        /// åªæ‰§è¡ŒOnInitï¼Œä¸æ‰§è¡ŒOnShow
+        /// ä¼šè‡ªåŠ¨SetActive(false)
         /// </param>
         public static void AddUIWindowData<T>(UIWindowData windowData, bool instantiateAtOnce = false)
         {
@@ -124,10 +124,10 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// »ñÈ¡UI´°¿ÚÊı¾İ
+        /// è·å–UIçª—å£æ•°æ®
         /// </summary>
         /// <param name="windowKey"></param>
-        /// <returns>¿ÉÄÜÎªNull</returns>
+        /// <returns>å¯èƒ½ä¸ºNull</returns>
         public static UIWindowData GetUIWindowData(string windowKey)
         {
             if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
@@ -148,7 +148,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³¢ÊÔ»ñÈ¡UI´°¿ÚÊı¾İ
+        /// å°è¯•è·å–UIçª—å£æ•°æ®
         /// </summary>
         /// <param name="windowKey"></param>
         public static bool TryGetUIWindowData(string windowKey, out UIWindowData windowData)
@@ -157,7 +157,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ÒÆ³ıUI´°¿ÚÊı¾İ,ÒÑ´æÔÚµÄ´°¿Ú»á±»Ç¿ĞĞÉ¾³ı
+        /// ç§»é™¤UIçª—å£æ•°æ®,å·²å­˜åœ¨çš„çª—å£ä¼šè¢«å¼ºè¡Œåˆ é™¤
         /// </summary>
         /// <param name="windowKey"></param>
         /// <returns></returns>
@@ -174,7 +174,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Çå³ıËùÓĞUI´°¿ÚÊı¾İ
+        /// æ¸…é™¤æ‰€æœ‰UIçª—å£æ•°æ®
         /// </summary>
         public static void ClearUIWindowData()
         {
@@ -187,61 +187,61 @@ namespace JKFrame
         }
         #endregion
 
-        #region UI´°¿ÚÉúÃüÖÜÆÚ¹ÜÀí
+        #region UIçª—å£ç”Ÿå‘½å‘¨æœŸç®¡ç†
         /// <summary>
-        /// ÏÔÊ¾´°¿Ú
+        /// æ˜¾ç¤ºçª—å£
         /// </summary>
-        /// <typeparam name="T">´°¿ÚÀàĞÍ</typeparam>
-        /// <param name="layer">²ã¼¶ -1µÈÓÚ²»ÉèÖÃ</param>
+        /// <typeparam name="T">çª—å£ç±»å‹</typeparam>
+        /// <param name="layer">å±‚çº§ -1ç­‰äºä¸è®¾ç½®</param>
         public static T Show<T>(int layer = -1) where T : UI_WindowBase
         {
             return Show(typeof(T), layer) as T;
         }
 
         /// <summary>
-        /// ÏÔÊ¾´°¿Ú
+        /// æ˜¾ç¤ºçª—å£
         /// </summary>
-        /// <typeparam name="T">Òª·µ»ØµÄ´°¿ÚÀàĞÍ</typeparam>
-        /// <param name="windowKey">´°¿ÚµÄKey</param>
-        /// <param name="layer">²ã¼¶ -1µÈÓÚ²»ÉèÖÃ</param>
+        /// <typeparam name="T">è¦è¿”å›çš„çª—å£ç±»å‹</typeparam>
+        /// <param name="windowKey">çª—å£çš„Key</param>
+        /// <param name="layer">å±‚çº§ -1ç­‰äºä¸è®¾ç½®</param>
         public static T Show<T>(string windowKey, int layer = -1) where T : UI_WindowBase
         {
             return Show(windowKey, layer) as T;
         }
 
         /// <summary>
-        /// ÏÔÊ¾´°¿Ú
+        /// æ˜¾ç¤ºçª—å£
         /// </summary>
-        /// <param name="type">´°¿ÚÀàĞÍ</param>
-        /// <param name="layer">²ã¼¶ -1µÈÓÚ²»ÉèÖÃ</param>
+        /// <param name="type">çª—å£ç±»å‹</param>
+        /// <param name="layer">å±‚çº§ -1ç­‰äºä¸è®¾ç½®</param>
         public static UI_WindowBase Show(Type type, int layer = -1)
         {
             return Show(type.FullName, layer);
         }
 
         /// <summary>
-        /// ÏÔÊ¾´°¿Ú
+        /// æ˜¾ç¤ºçª—å£
         /// </summary>
-        /// <param name="windowKey">´°¿ÚµÄkey</param>
-        /// <param name="layer">²ã¼¶ -1µÈÓÚ²»ÉèÖÃ</param>
+        /// <param name="windowKey">çª—å£çš„key</param>
+        /// <param name="layer">å±‚çº§ -1ç­‰äºä¸è®¾ç½®</param>
         public static UI_WindowBase Show(string windowKey, int layer = -1)
         {
             if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
             {
                 return Show(windowData, windowKey, layer);
             }
-            // ×ÊÔ´¿âÖĞÃ»ÓĞÒâÎ¶×Å²»ÔÊĞíÏÔÊ¾
-            JKLog.Log($"JKFrame:²»´æÔÚ{windowKey}µÄUIWindowData");
+            // èµ„æºåº“ä¸­æ²¡æœ‰æ„å‘³ç€ä¸å…è®¸æ˜¾ç¤º
+            JKLog.Log($"JKFrame:ä¸å­˜åœ¨{windowKey}çš„UIWindowData");
             return null;
         }
 
         private static UI_WindowBase Show(UIWindowData windowData, string windowKey, int layer = -1)
         {
             int layerNum = layer == -1 ? windowData.layerNum : layer;
-            // ÊµÀı»¯ÊµÀı»òÕß»ñÈ¡µ½ÊµÀı£¬±£Ö¤´°¿ÚÊµÀı´æÔÚ
+            // å®ä¾‹åŒ–å®ä¾‹æˆ–è€…è·å–åˆ°å®ä¾‹ï¼Œä¿è¯çª—å£å®ä¾‹å­˜åœ¨
             if (windowData.instance != null)
             {
-                // Ô­±¾¾Í¼¤»îÊ¹ÓÃ×´Ì¬£¬±ÜÃâÄÚ²¿¼ÆÊıÎÊÌâ£¬½øĞĞÒ»´Î²ã¹Ø±Õ
+                // åŸæœ¬å°±æ¿€æ´»ä½¿ç”¨çŠ¶æ€ï¼Œé¿å…å†…éƒ¨è®¡æ•°é—®é¢˜ï¼Œè¿›è¡Œä¸€æ¬¡å±‚å…³é—­
                 if (windowData.instance.UIEnable)
                 {
                     UILayers[layerNum].OnWindowClose(false);
@@ -264,12 +264,12 @@ namespace JKFrame
         }
         #endregion
 
-        #region »ñÈ¡ÓëÏú»Ù´°¿Ú
+        #region è·å–ä¸é”€æ¯çª—å£
         /// <summary>
-        /// »ñÈ¡´°¿Ú
+        /// è·å–çª—å£
         /// </summary>
-        /// <param name="windowKey">´°¿ÚKey</param>
-        /// <returns>Ã»ÕÒµ½»áÎªNull</returns>
+        /// <param name="windowKey">çª—å£Key</param>
+        /// <returns>æ²¡æ‰¾åˆ°ä¼šä¸ºNull</returns>
         public static UI_WindowBase GetWindow(string windowKey)
         {
             if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
@@ -280,10 +280,10 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// »ñÈ¡´°¿Ú
+        /// è·å–çª—å£
         /// </summary>
-        /// <param name="windowKey">´°¿ÚKey</param>
-        /// <returns>Ã»ÕÒµ½»áÎªNull</returns>
+        /// <param name="windowKey">çª—å£Key</param>
+        /// <returns>æ²¡æ‰¾åˆ°ä¼šä¸ºNull</returns>
         public static T GetWindow<T>(string windowKey) where T : UI_WindowBase
         {
             return GetWindow(windowKey) as T;
@@ -291,35 +291,35 @@ namespace JKFrame
 
 
         /// <summary>
-        /// »ñÈ¡´°¿Ú
+        /// è·å–çª—å£
         /// </summary>
-        /// <returns>Ã»ÕÒµ½»áÎªNull</returns>
+        /// <returns>æ²¡æ‰¾åˆ°ä¼šä¸ºNull</returns>
         public static T GetWindow<T>() where T : UI_WindowBase
         {
             return GetWindow(typeof(T).FullName) as T;
         }
 
         /// <summary>
-        /// »ñÈ¡´°¿Ú
+        /// è·å–çª—å£
         /// </summary>
-        /// <returns>Ã»ÕÒµ½»áÎªNull</returns>
+        /// <returns>æ²¡æ‰¾åˆ°ä¼šä¸ºNull</returns>
         public static UI_WindowBase GetWindow(Type windowType)
         {
             return GetWindow(windowType.FullName);
         }
 
         /// <summary>
-        /// »ñÈ¡´°¿Ú
+        /// è·å–çª—å£
         /// </summary>
-        /// <param name="windowKey">´°¿ÚKey</param>
-        /// <returns>Ã»ÕÒµ½»áÎªNull</returns>
+        /// <param name="windowKey">çª—å£Key</param>
+        /// <returns>æ²¡æ‰¾åˆ°ä¼šä¸ºNull</returns>
         public static T GetWindow<T>(Type windowType) where T : UI_WindowBase
         {
             return GetWindow(windowType.FullName) as T;
         }
 
         /// <summary>
-        /// ³¢ÊÔ»ñÈ¡´°¿Ú
+        /// å°è¯•è·å–çª—å£
         /// </summary>
         /// <param name="windowKey"></param>
         public static bool TryGetWindow(string windowKey, out UI_WindowBase window)
@@ -330,7 +330,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³¢ÊÔ»ñÈ¡´°¿Ú
+        /// å°è¯•è·å–çª—å£
         /// </summary>
         /// <param name="windowKey"></param>
         public static bool TryGetWindow<T>(string windowKey, out T window) where T : UI_WindowBase
@@ -341,7 +341,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Ïú»Ù´°¿Ú
+        /// é”€æ¯çª—å£
         /// </summary>
         public static void DestroyWindow(string windowKey)
         {
@@ -353,27 +353,27 @@ namespace JKFrame
         }
         #endregion
 
-        #region ¹Ø±Õ´°¿Ú
+        #region å…³é—­çª—å£
         /// <summary>
-        /// ¹Ø±Õ´°¿Ú
+        /// å…³é—­çª—å£
         /// </summary>
-        /// <typeparam name="T">´°¿ÚÀàĞÍ</typeparam>
+        /// <typeparam name="T">çª—å£ç±»å‹</typeparam>
         public static void Close<T>()
         {
             Close(typeof(T));
         }
 
         /// <summary>
-        /// ¹Ø±Õ´°¿Ú
+        /// å…³é—­çª—å£
         /// </summary>
-        /// <typeparam name="Type">´°¿ÚÀàĞÍ</typeparam>
+        /// <typeparam name="Type">çª—å£ç±»å‹</typeparam>
         public static void Close(Type type)
         {
             Close(type.FullName);
         }
 
         /// <summary>
-        /// ¹Ø±Õ´°¿Ú
+        /// å…³é—­çª—å£
         /// </summary>
         /// <param name="windowKey"></param>
         public static void Close(string windowKey)
@@ -384,9 +384,9 @@ namespace JKFrame
                 {
                     UILayers[windowData.layerNum].OnWindowClose();
                 }
-                else JKLog.Warning("JKFrame:ÄúĞèÒª¹Ø±ÕµÄ´°¿Ú²»´æÔÚ»òÒÑ¾­¹Ø±Õ");
+                else JKLog.Warning("JKFrame:æ‚¨éœ€è¦å…³é—­çš„çª—å£ä¸å­˜åœ¨æˆ–å·²ç»å…³é—­");
             }
-            else JKLog.Warning("JKFrame:Î´²éÑ¯µ½UIWindowData");
+            else JKLog.Warning("JKFrame:æœªæŸ¥è¯¢åˆ°UIWindowData");
         }
 
 
@@ -395,13 +395,13 @@ namespace JKFrame
             if (windowData.instance.UIEnable)
             {
                 windowData.instance.OnClose();
-                // »º´æÔòÒş²Ø
+                // ç¼“å­˜åˆ™éšè—
                 if (windowData.isCache)
                 {
                     windowData.instance.transform.SetAsFirstSibling();
                     windowData.instance.gameObject.SetActive(false);
                 }
-                // ²»»º´æÔòÏú»Ù
+                // ä¸ç¼“å­˜åˆ™é”€æ¯
                 else
                 {
 #if ENABLE_ADDRESSABLES
@@ -419,11 +419,11 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ¹Ø±ÕÈ«²¿´°¿Ú
+        /// å…³é—­å…¨éƒ¨çª—å£
         /// </summary>
         public static void CloseAllWindow()
         {
-            // ´¦Àí»º´æÖĞËùÓĞ×´Ì¬µÄÂß¼­
+            // å¤„ç†ç¼“å­˜ä¸­æ‰€æœ‰çŠ¶æ€çš„é€»è¾‘
             var enumerator = UIWindowDataDic.GetEnumerator();
             while (enumerator.MoveNext())
             {

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,31 +6,31 @@ namespace JKFrame
 {
     public class ObjectPoolModule
     {
-        #region ObjectPoolModule³ÖÓĞµÄÊı¾İ¼°³õÊ¼»¯·½·¨
+        #region ObjectPoolModuleæŒæœ‰çš„æ•°æ®åŠåˆå§‹åŒ–æ–¹æ³•
         /// <summary>
-        /// ÆÕÍ¨Àà ¶ÔÏóÈİÆ÷
+        /// æ™®é€šç±» å¯¹è±¡å®¹å™¨
         /// </summary>
         public Dictionary<string, ObjectPoolData> poolDic { get; private set; } = new Dictionary<string, ObjectPoolData>();
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
         public void InitObjectPool<T>(string keyName, int maxCapacity = -1, int defaultQuantity = 0) where T : new()
         {
-            //ÉèÖÃµÄ¶ÔÏó³ØÒÑ¾­´æÔÚ
+            //è®¾ç½®çš„å¯¹è±¡æ± å·²ç»å­˜åœ¨
             if (poolDic.TryGetValue(keyName, out ObjectPoolData poolData))
             {
-                //¸üĞÂÈİÁ¿ÏŞÖÆ
+                //æ›´æ–°å®¹é‡é™åˆ¶
                 poolData.maxCapacity = maxCapacity;
-                //µ×²ãQueue×Ô¶¯À©ÈİÕâÀï²»¹Ü
+                //åº•å±‚Queueè‡ªåŠ¨æ‰©å®¹è¿™é‡Œä¸ç®¡
 
-                //ÔÚÖ¸¶¨Ä¬ÈÏÈİÁ¿Ê±²ÅÓĞÒâÒå
+                //åœ¨æŒ‡å®šé»˜è®¤å®¹é‡æ—¶æ‰æœ‰æ„ä¹‰
                 if (defaultQuantity != 0)
                 {
                     int nowCapacity = poolData.PoolQueue.Count;
-                    // Éú³É²îÖµÈİÁ¿¸öÊıµÄÎïÌå·ÅÈë¶ÔÏó³Ø
+                    // ç”Ÿæˆå·®å€¼å®¹é‡ä¸ªæ•°çš„ç‰©ä½“æ”¾å…¥å¯¹è±¡æ± 
                     for (int i = 0; i < defaultQuantity - nowCapacity; i++)
                     {
                         T obj = new T();
@@ -39,16 +39,16 @@ namespace JKFrame
                 }
 
             }
-            //ÉèÖÃµÄ¶ÔÏó³Ø²»´æÔÚ
+            //è®¾ç½®çš„å¯¹è±¡æ± ä¸å­˜åœ¨
             else
             {
-                //´´½¨¶ÔÏó³Ø
+                //åˆ›å»ºå¯¹è±¡æ± 
                 poolData = CreateObjectPoolData(keyName, maxCapacity);
 
-                //ÔÚÖ¸¶¨Ä¬ÈÏÈİÁ¿ºÍÄ¬ÈÏ¶ÔÏóÊ±²ÅÓĞÒâÒå
+                //åœ¨æŒ‡å®šé»˜è®¤å®¹é‡å’Œé»˜è®¤å¯¹è±¡æ—¶æ‰æœ‰æ„ä¹‰
                 if (defaultQuantity != 0)
                 {
-                    // Éú³ÉÈİÁ¿¸öÊıµÄÎïÌå·ÅÈë¶ÔÏó³Ø
+                    // ç”Ÿæˆå®¹é‡ä¸ªæ•°çš„ç‰©ä½“æ”¾å…¥å¯¹è±¡æ± 
                     for (int i = 0; i < defaultQuantity; i++)
                     {
                         T obj = new T();
@@ -59,67 +59,67 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
         public void InitObjectPool<T>(int maxCapacity = -1, int defaultQuantity = 0) where T : new()
         {
             InitObjectPool<T>(typeof(T).FullName, maxCapacity, defaultQuantity);
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø
+        /// åˆå§‹åŒ–å¯¹è±¡æ± 
         /// </summary>
-        /// <param name="keyName">×ÊÔ´Ãû³Æ</param>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
+        /// <param name="keyName">èµ„æºåç§°</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
         public void InitObjectPool(string keyName, int maxCapacity = -1)
         {
-            //ÉèÖÃµÄ¶ÔÏó³ØÒÑ¾­´æÔÚ
+            //è®¾ç½®çš„å¯¹è±¡æ± å·²ç»å­˜åœ¨
             if (poolDic.TryGetValue(keyName, out ObjectPoolData poolData))
             {
-                //¸üĞÂÈİÁ¿ÏŞÖÆ
+                //æ›´æ–°å®¹é‡é™åˆ¶
                 poolData.maxCapacity = maxCapacity;
-                //µ×²ãQueue×Ô¶¯À©ÈİÕâÀï²»¹Ü
+                //åº•å±‚Queueè‡ªåŠ¨æ‰©å®¹è¿™é‡Œä¸ç®¡
             }
-            //ÉèÖÃµÄ¶ÔÏó³Ø²»´æÔÚ
+            //è®¾ç½®çš„å¯¹è±¡æ± ä¸å­˜åœ¨
             else
             {
-                //´´½¨¶ÔÏó³Ø
+                //åˆ›å»ºå¯¹è±¡æ± 
                 CreateObjectPoolData(keyName, maxCapacity);
             }
         }
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø
+        /// åˆå§‹åŒ–å¯¹è±¡æ± 
         /// </summary>
-        /// <param name="type">×ÊÔ´ÀàĞÍ</param>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
+        /// <param name="type">èµ„æºç±»å‹</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
         public void InitObjectPool(System.Type type, int maxCapacity = -1)
         {
             InitObjectPool(type.FullName, maxCapacity);
         }
 
         /// <summary>
-        /// ´´½¨Ò»ÌõĞÂµÄ¶ÔÏó³ØÊı¾İ
+        /// åˆ›å»ºä¸€æ¡æ–°çš„å¯¹è±¡æ± æ•°æ®
         /// </summary>
         private ObjectPoolData CreateObjectPoolData(string layerName, int capacity = -1)
         {
-            // ½»ÓÉObject¶ÔÏó³ØÄÃµ½poolDataµÄÀà
+            // äº¤ç”±Objectå¯¹è±¡æ± æ‹¿åˆ°poolDataçš„ç±»
             ObjectPoolData poolData = this.GetObject<ObjectPoolData>();
 
-            //Object¶ÔÏó³ØÖĞÃ»ÓĞÔÙnew
+            //Objectå¯¹è±¡æ± ä¸­æ²¡æœ‰å†new
             if (poolData == null)
             {
                 poolData = new ObjectPoolData(capacity);
             }
 
-            //¶ÔÄÃµ½µÄpoolData¸±±¾½øĞĞ³õÊ¼»¯£¨¸²¸ÇÖ®Ç°µÄÊı¾İ£©
+            //å¯¹æ‹¿åˆ°çš„poolDataå‰¯æœ¬è¿›è¡Œåˆå§‹åŒ–ï¼ˆè¦†ç›–ä¹‹å‰çš„æ•°æ®ï¼‰
             poolData.maxCapacity = capacity;
             poolDic.Add(layerName, poolData);
             return poolData;
         }
         #endregion
-        #region ObjectPoolÏà¹Ø¹¦ÄÜ
+        #region ObjectPoolç›¸å…³åŠŸèƒ½
         public object GetObject(string keyName)
         {
             object obj = null;

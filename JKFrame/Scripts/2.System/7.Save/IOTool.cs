@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,17 +11,17 @@ namespace JKFrame
         private static BinaryFormatter binaryFormatter = new BinaryFormatter();
 
         /// <summary>
-        /// ±£´æJson
+        /// ä¿å­˜Json
         /// </summary>
-        /// <param name="jsonString">JsonµÄ×Ö·û´®</param>
-        /// <param name="path">Â·¾¶</param>
-        public static void SaveJson(string jsonString,string path)
-        { 
+        /// <param name="jsonString">Jsonçš„å­—ç¬¦ä¸²</param>
+        /// <param name="path">è·¯å¾„</param>
+        public static void SaveJson(string jsonString, string path)
+        {
             File.WriteAllText(path, jsonString);
         }
 
         /// <summary>
-        /// ¶ÁÈ¡JsonÎªÖ¸¶¨µÄÀàĞÍ¶ÔÏó
+        /// è¯»å–Jsonä¸ºæŒ‡å®šçš„ç±»å‹å¯¹è±¡
         /// </summary>
         public static T LoadJson<T>(string path) where T : class
         {
@@ -33,23 +33,23 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ±£´æÎÄ¼ş
+        /// ä¿å­˜æ–‡ä»¶
         /// </summary>
-        /// <param name="saveObject">±£´æµÄ¶ÔÏó</param>
-        /// <param name="path">±£´æµÄÂ·¾¶</param>
+        /// <param name="saveObject">ä¿å­˜çš„å¯¹è±¡</param>
+        /// <param name="path">ä¿å­˜çš„è·¯å¾„</param>
         public static void SaveFile(object saveObject, string path)
         {
             FileStream f = new FileStream(path, FileMode.OpenOrCreate);
-            // ¶ş½øÖÆµÄ·½Ê½°Ñ¶ÔÏóĞ´½øÎÄ¼ş
+            // äºŒè¿›åˆ¶çš„æ–¹å¼æŠŠå¯¹è±¡å†™è¿›æ–‡ä»¶
             binaryFormatter.Serialize(f, saveObject);
             f.Dispose();
         }
 
         /// <summary>
-        /// ¼ÓÔØÎÄ¼ş
+        /// åŠ è½½æ–‡ä»¶
         /// </summary>
-        /// <typeparam name="T">¼ÓÔØºóÒª×ªÎªµÄÀàĞÍ</typeparam>
-        /// <param name="path">¼ÓÔØÂ·¾¶</param>
+        /// <typeparam name="T">åŠ è½½åè¦è½¬ä¸ºçš„ç±»å‹</typeparam>
+        /// <param name="path">åŠ è½½è·¯å¾„</param>
         public static T LoadFile<T>(string path) where T : class
         {
             if (!File.Exists(path))
@@ -57,7 +57,7 @@ namespace JKFrame
                 return null;
             }
             FileStream file = new FileStream(path, FileMode.Open);
-            // ½«ÄÚÈİ½âÂë³É¶ÔÏó
+            // å°†å†…å®¹è§£ç æˆå¯¹è±¡
             T obj = (T)binaryFormatter.Deserialize(file);
             file.Dispose();
             return obj;

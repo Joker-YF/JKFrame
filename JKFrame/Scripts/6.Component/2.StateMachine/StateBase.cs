@@ -1,10 +1,23 @@
-﻿namespace JKFrame
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using UnityEditorInternal;
+
+namespace JKFrame
 {
     /// <summary>
     /// 状态基类
     /// </summary>
     public abstract class StateBase
     {
+        protected StateMachine stateMachine;
+
+        /// <summary>
+        /// 初始化内部数据，系统使用
+        /// </summary>
+        /// <param name="stateMachine"></param>
+        public void InitInternalData(StateMachine stateMachine)
+        {
+            this.stateMachine = stateMachine;
+        }
         /// <summary>
         /// 初始化状态
         /// 只在状态第一次创建时执行
@@ -42,5 +55,21 @@
         public virtual void LateUpdate() { }
         public virtual void FixedUpdate() { }
 
+        public bool TryGetShareData<T>(string key, out T data)
+        {
+            return stateMachine.TryGetShareData<T>(key, out data);
+        }
+        public void AddShareData(string key, T data)
+        {
+            stateMachine.AddShareData(key, data);
+        }
+        public void RemoveData(string key)
+        {
+            stateMachine.RemoveShareData(key);
+        }
+        public bool ContainsData(string key)
+        {
+            return stateMachine.ContainsShareData(key);
+        }
     }
 }

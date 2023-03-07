@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace JKFrame
 {
@@ -7,7 +7,7 @@ namespace JKFrame
     [InitializeOnLoad]
 #endif
     /// <summary>
-    /// ¿ò¼Ü¸ù½Úµã
+    /// æ¡†æ¶æ ¹èŠ‚ç‚¹
     /// </summary>
     public class JKFrameRoot : MonoBehaviour
     {
@@ -15,12 +15,12 @@ namespace JKFrame
         private static JKFrameRoot Instance;
         public static Transform RootTransform { get; private set; }
         public static JKFrameSetting Setting { get => Instance.FrameSetting; }
-        // ¿ò¼Ü²ãÃæµÄÅäÖÃÎÄ¼ş
+        // æ¡†æ¶å±‚é¢çš„é…ç½®æ–‡ä»¶
         [SerializeField] JKFrameSetting FrameSetting;
 
         private void Awake()
         {
-            if (Instance != null&&Instance!=this) // ·ÀÖ¹EditorÏÂµÄInstanceÒÑ¾­´æÔÚ£¬²¢ÇÒÊÇ×ÔÉí
+            if (Instance != null && Instance != this) // é˜²æ­¢Editorä¸‹çš„Instanceå·²ç»å­˜åœ¨ï¼Œå¹¶ä¸”æ˜¯è‡ªèº«
             {
                 Destroy(gameObject);
                 return;
@@ -32,7 +32,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³õÊ¼»¯
+        /// åˆå§‹åŒ–
         /// </summary>
         private void Init()
         {
@@ -55,7 +55,7 @@ namespace JKFrame
 
         #region Editor
 #if UNITY_EDITOR
-        // ±à¼­Æ÷×¨ÊôÊÂ¼şÏµÍ³
+        // ç¼–è¾‘å™¨ä¸“å±äº‹ä»¶ç³»ç»Ÿ
         public static EventModule EditorEventModule;
         static JKFrameRoot()
         {
@@ -68,7 +68,7 @@ namespace JKFrame
         [InitializeOnLoadMethod]
         public static void InitForEditor()
         {
-            // µ±Ç°ÊÇ·ñÒª½øĞĞ²¥·Å»ò×¼±¸²¥·ÅÖĞ
+            // å½“å‰æ˜¯å¦è¦è¿›è¡Œæ’­æ”¾æˆ–å‡†å¤‡æ’­æ”¾ä¸­
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 return;
@@ -79,7 +79,7 @@ namespace JKFrame
                 Instance = GameObject.FindObjectOfType<JKFrameRoot>();
                 if (Instance == null) return;
                 Instance.FrameSetting.InitOnEditor();
-                // ³¡¾°µÄËùÓĞ´°¿Ú¶¼½øĞĞÒ»´ÎShow
+                // åœºæ™¯çš„æ‰€æœ‰çª—å£éƒ½è¿›è¡Œä¸€æ¬¡Show
                 UI_WindowBase[] window = Instance.transform.GetComponentsInChildren<UI_WindowBase>();
                 foreach (UI_WindowBase win in window)
                 {

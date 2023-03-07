@@ -1,4 +1,4 @@
-using JKFrame;
+Ôªøusing JKFrame;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +12,7 @@ public class UITipsItem : MonoBehaviour
     public void Init(string info)
     {
         infoText.text = info;
-        // œ‘œ÷≥ˆ¿¥
+        // ÊòæÁé∞Âá∫Êù•
         StartCoroutine(Show());
     }
 
@@ -25,8 +25,8 @@ public class UITipsItem : MonoBehaviour
 
         bg.color = bgColor;
         infoText.color = textColor;
-        while (bgColor.a <1)
-        { 
+        while (bgColor.a < 1)
+        {
             yield return null;
             bgColor.a += Time.deltaTime;
             textColor.a += Time.deltaTime;

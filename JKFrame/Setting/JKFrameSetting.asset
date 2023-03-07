@@ -23,10 +23,10 @@ MonoBehaviour:
     SerializationNodes:
     - Name: LogConfig
       Entry: 7
-      Data: 0|JKFrame.JKFrameSetting+LogSetting, Assembly-CSharp
+      Data: 0|JKFrame.JKFrameSetting+LogSetting, JKFrame
     - Name: enableLog
       Entry: 5
-      Data: false
+      Data: true
     - Name: writeTime
       Entry: 5
       Data: true
@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: false
     - Name: writeTrace
       Entry: 5
-      Data: false
+      Data: true
     - Name: enableSave
       Entry: 5
       Data: false
@@ -54,7 +54,7 @@ MonoBehaviour:
     - Name: UIWindowDataDic
       Entry: 7
       Data: 1|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[JKFrame.UIWindowData,
-        Assembly-CSharp]], mscorlib
+        JKFrame]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 2|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
@@ -73,10 +73,7 @@ MonoBehaviour:
       Data: TestWindow
     - Name: $v
       Entry: 7
-      Data: 3|JKFrame.UIWindowData, Assembly-CSharp
-    - Name: windowKey
-      Entry: 1
-      Data: TestWindow
+      Data: 3|JKFrame.UIWindowData, JKFrame
     - Name: isCache
       Entry: 5
       Data: false
@@ -103,10 +100,7 @@ MonoBehaviour:
       Data: DD2
     - Name: $v
       Entry: 7
-      Data: 4|JKFrame.UIWindowData, Assembly-CSharp
-    - Name: windowKey
-      Entry: 1
-      Data: DD2
+      Data: 4|JKFrame.UIWindowData, JKFrame
     - Name: isCache
       Entry: 5
       Data: false

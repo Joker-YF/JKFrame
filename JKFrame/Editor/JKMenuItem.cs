@@ -6,7 +6,7 @@ public class JKMenuItem
     [MenuItem("JKFrame/打开存档路径")]
     public static void OpenArchivedDirPath()
     {
-        string path = Application.persistentDataPath.Replace("/","\\");
+        string path = Application.persistentDataPath.Replace("/", "\\");
         System.Diagnostics.Process.Start("explorer.exe", path);
     }
     [MenuItem("JKFrame/打开框架文档")]

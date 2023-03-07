@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JK.Log;
@@ -10,7 +10,7 @@ namespace JKFrame
     {
         static JKLog()
         {
-            if (JKFrameRoot.Setting!=null)
+            if (JKFrameRoot.Setting != null)
             {
                 Init(JKFrameRoot.Setting.LogConfig);
             }
@@ -18,7 +18,7 @@ namespace JKFrame
         public static void Init(LogSetting logSetting)
         {
 #if ENABLE_LOG
-            JK.Log.JKLog.Init(LoggerType.Unity, logSetting.writeTime, logSetting.writeThreadID, logSetting.writeTrace, logSetting.enableSave, Application.persistentDataPath + logSetting.savePath+"/", logSetting.customSaveFileName, logSetting.saveLogTypes,5);
+            JK.Log.JKLog.Init(LoggerType.Unity, logSetting.writeTime, logSetting.writeThreadID, logSetting.writeTrace, logSetting.enableSave, Application.persistentDataPath + logSetting.savePath + "/", logSetting.customSaveFileName, logSetting.saveLogTypes, 5);
 #endif
         }
 

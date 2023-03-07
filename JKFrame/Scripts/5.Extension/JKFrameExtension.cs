@@ -46,7 +46,15 @@ namespace JKFrame
         /// </summary>
         public static void GameObjectPushPool(this GameObject go)
         {
-            PoolSystem.PushGameObject(go);
+            if (go.IsNull())
+            {
+                JKLog.Error("将空物体放入对象池");
+            }
+            else
+            {
+                PoolSystem.PushGameObject(go);
+            }
+
         }
 
         /// <summary>

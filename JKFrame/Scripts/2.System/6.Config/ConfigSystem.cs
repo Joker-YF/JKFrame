@@ -1,18 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 namespace JKFrame
 {
     /// <summary>
-    /// ÅäÖÃÏµÍ³
+    /// é…ç½®ç³»ç»Ÿ
     /// </summary>
     public static class ConfigSystem
     {
 #if ENABLE_ADDRESSABLES
         /// <summary>
-        /// »ñÈ¡Ä³¸öÀàĞÍÏÂµÄ ÅäÖÃÎÄ¼ş
-        /// AddressablesÖĞµÄname£¬configTypeName_id
+        /// è·å–æŸä¸ªç±»å‹ä¸‹çš„ é…ç½®æ–‡ä»¶
+        /// Addressablesä¸­çš„nameï¼ŒconfigTypeName_id
         /// </summary>
         public static T GetConfig<T>(string configName) where T : ConfigBase
         {
@@ -20,8 +20,8 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// »ñÈ¡Ä³Ò»¸öÅäÖÃÀàĞÍÏÂµÄÈ«²¿ÅäÖÃ
-        /// AddressableÖĞÄ³Ò»¸öGroupNameÏÂµÄÈ«²¿ÅäÖÃÎÄ¼ş
+        /// è·å–æŸä¸€ä¸ªé…ç½®ç±»å‹ä¸‹çš„å…¨éƒ¨é…ç½®
+        /// Addressableä¸­æŸä¸€ä¸ªGroupNameä¸‹çš„å…¨éƒ¨é…ç½®æ–‡ä»¶
         /// </summary>
         public static List<T> GetConfigList<T>(string configTypeName) where T : ConfigBase
         {
@@ -30,15 +30,15 @@ namespace JKFrame
 #else
 
         /// <summary>
-        /// »ñÈ¡Ä³Ò»¸öÂ·¾¶ÏÂµÄÈ«²¿ÅäÖÃ
+        /// è·å–æŸä¸€ä¸ªè·¯å¾„ä¸‹çš„å…¨éƒ¨é…ç½®
         /// </summary>
         public static T[] GetConfigs<T>(string path) where T : ConfigBase
         {
             return ResSystem.LoadAssets<T>(path);
         }
         /// <summary>
-        /// »ñÈ¡Ä³Ò»¸öÂ·¾¶ÏÂµÄÈ«²¿ÅäÖÃ
-        /// ²¢ÇÒ×ªÎªList£¨ÓĞ¶îÍâĞÔÄÜÏûºÄ£¬¾¡¿ÉÄÜÊ¹ÓÃ GetConfigs<T>()£©
+        /// è·å–æŸä¸€ä¸ªè·¯å¾„ä¸‹çš„å…¨éƒ¨é…ç½®
+        /// å¹¶ä¸”è½¬ä¸ºListï¼ˆæœ‰é¢å¤–æ€§èƒ½æ¶ˆè€—ï¼Œå°½å¯èƒ½ä½¿ç”¨ GetConfigs<T>()ï¼‰
         /// </summary>
         public static List<T> GetConfigList<T>(string path) where T : ConfigBase
         {

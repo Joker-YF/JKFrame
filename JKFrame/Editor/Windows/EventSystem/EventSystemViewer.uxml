@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:GroupBox name="EventSystemViewer" />
+    <ui:Foldout text="runtime事件中心" name="RuntimeEvent" style="flex-direction: column; flex-wrap: nowrap;">
+        <ui:VisualElement name="Itemname" style="flex-direction: row;">
+            <ui:Label text="名称" display-tooltip-when-elided="true" name="Name" style="-unity-text-align: upper-left; height: 15px; width: 31px;" />
+            <ui:Label text="数量" display-tooltip-when-elided="true" name="Count" style="-unity-text-align: upper-right; height: 15px; width: 356px; flex-direction: column; align-items: flex-end;" />
+        </ui:VisualElement>
+        <ui:ListView focusable="true" />
+    </ui:Foldout>
+    <ui:Foldout text="Editor事件中心" name="EditorEvent">
+        <ui:VisualElement name="Itemname" style="flex-direction: row;">
+            <ui:Label text="名称" display-tooltip-when-elided="true" name="Name" style="-unity-text-align: upper-left; height: 15px; width: 31px;" />
+            <ui:Label text="数量" display-tooltip-when-elided="true" name="Count" style="-unity-text-align: upper-right; height: 15px; width: 356px; flex-direction: column; align-items: flex-end;" />
+        </ui:VisualElement>
+        <ui:ListView focusable="true" />
+    </ui:Foldout>
+</ui:UXML>

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +6,11 @@ namespace JKFrame
 {
     public class GameObjectPoolModule
     {
-        #region GameObjectPoolModule³ÖÓĞµÄÊı¾İ¼°³õÊ¼»¯·½·¨
-        // ¸ù½Úµã
+        #region GameObjectPoolModuleæŒæœ‰çš„æ•°æ®åŠåˆå§‹åŒ–æ–¹æ³•
+        // æ ¹èŠ‚ç‚¹
         private Transform poolRootTransform;
         /// <summary>
-        /// GameObject¶ÔÏóÈİÆ÷
+        /// GameObjectå¯¹è±¡å®¹å™¨
         /// </summary>
         public Dictionary<string, GameObjectPoolData> poolDic { get; private set; } = new Dictionary<string, GameObjectPoolData>();
         public void Init(Transform poolRootTransform)
@@ -19,33 +19,33 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="keyName">×ÊÔ´Ãû³Æ</param>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
-        /// <param name="prefab">ÌîĞ´Ä¬ÈÏÈİÁ¿Ê±Ô¤ÏÈ·ÅÈëµÄ¶ÔÏó</param>
+        /// <param name="keyName">èµ„æºåç§°</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
+        /// <param name="prefab">å¡«å†™é»˜è®¤å®¹é‡æ—¶é¢„å…ˆæ”¾å…¥çš„å¯¹è±¡</param>
         public void InitObjectPool(string keyName, int maxCapacity = -1, GameObject prefab = null, int defaultQuantity = 0)
         {
             if (defaultQuantity > maxCapacity && maxCapacity != -1)
             {
-                JKLog.Error("Ä¬ÈÏÈİÁ¿³¬³ö×î´óÈİÁ¿ÏŞÖÆ");
+                JKLog.Error("é»˜è®¤å®¹é‡è¶…å‡ºæœ€å¤§å®¹é‡é™åˆ¶");
                 return;
             }
-            //ÉèÖÃµÄ¶ÔÏó³ØÒÑ¾­´æÔÚ
+            //è®¾ç½®çš„å¯¹è±¡æ± å·²ç»å­˜åœ¨
             if (poolDic.TryGetValue(keyName, out GameObjectPoolData poolData))
             {
-                //¸üĞÂÈİÁ¿ÏŞÖÆ
+                //æ›´æ–°å®¹é‡é™åˆ¶
                 poolData.maxCapacity = maxCapacity;
-                //µ×²ãQueue×Ô¶¯À©ÈİÕâÀï²»¹Ü
+                //åº•å±‚Queueè‡ªåŠ¨æ‰©å®¹è¿™é‡Œä¸ç®¡
 
-                //ÔÚÖ¸¶¨Ä¬ÈÏÈİÁ¿ºÍÄ¬ÈÏ¶ÔÏóÊ±²ÅÓĞÒâÒå
+                //åœ¨æŒ‡å®šé»˜è®¤å®¹é‡å’Œé»˜è®¤å¯¹è±¡æ—¶æ‰æœ‰æ„ä¹‰
                 if (defaultQuantity > 0)
                 {
                     if (prefab.IsNull() == false)
                     {
                         int nowCapacity = poolData.PoolQueue.Count;
-                        // Éú³É²îÖµÈİÁ¿¸öÊıµÄÎïÌå·ÅÈë¶ÔÏó³Ø
+                        // ç”Ÿæˆå·®å€¼å®¹é‡ä¸ªæ•°çš„ç‰©ä½“æ”¾å…¥å¯¹è±¡æ± 
                         for (int i = 0; i < defaultQuantity - nowCapacity; i++)
                         {
                             GameObject go = GameObject.Instantiate(prefab);
@@ -55,23 +55,23 @@ namespace JKFrame
                     }
                     else
                     {
-                        JKLog.Error("Ä¬ÈÏ¶ÔÏóÎ´Ö¸¶¨");
+                        JKLog.Error("é»˜è®¤å¯¹è±¡æœªæŒ‡å®š");
                     }
                 }
 
             }
-            //ÉèÖÃµÄ¶ÔÏó³Ø²»´æÔÚ
+            //è®¾ç½®çš„å¯¹è±¡æ± ä¸å­˜åœ¨
             else
             {
-                //´´½¨¶ÔÏó³Ø
+                //åˆ›å»ºå¯¹è±¡æ± 
                 poolData = CreateGameObjectPoolData(keyName, maxCapacity);
 
-                //ÔÚÖ¸¶¨Ä¬ÈÏÈİÁ¿ºÍÄ¬ÈÏ¶ÔÏóÊ±²ÅÓĞÒâÒå
+                //åœ¨æŒ‡å®šé»˜è®¤å®¹é‡å’Œé»˜è®¤å¯¹è±¡æ—¶æ‰æœ‰æ„ä¹‰
                 if (defaultQuantity != 0)
                 {
                     if (prefab.IsNull() == false)
                     {
-                        // Éú³ÉÈİÁ¿¸öÊıµÄÎïÌå·ÅÈë¶ÔÏó³Ø
+                        // ç”Ÿæˆå®¹é‡ä¸ªæ•°çš„ç‰©ä½“æ”¾å…¥å¯¹è±¡æ± 
                         for (int i = 0; i < defaultQuantity; i++)
                         {
                             GameObject go = GameObject.Instantiate(prefab);
@@ -81,47 +81,47 @@ namespace JKFrame
                     }
                     else
                     {
-                        JKLog.Error("Ä¬ÈÏÈİÁ¿»òÄ¬ÈÏ¶ÔÏóÎ´Ö¸¶¨");
+                        JKLog.Error("é»˜è®¤å®¹é‡æˆ–é»˜è®¤å¯¹è±¡æœªæŒ‡å®š");
                     }
                 }
             }
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
-        /// <param name="prefab">ÌîĞ´Ä¬ÈÏÈİÁ¿Ê±Ô¤ÏÈ·ÅÈëµÄ¶ÔÏó</param>
-        public void InitObjectPool(GameObject prefab,int maxCapacity = -1, int defaultQuantity = 0)
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
+        /// <param name="prefab">å¡«å†™é»˜è®¤å®¹é‡æ—¶é¢„å…ˆæ”¾å…¥çš„å¯¹è±¡</param>
+        public void InitObjectPool(GameObject prefab, int maxCapacity = -1, int defaultQuantity = 0)
         {
             InitObjectPool(prefab.name, maxCapacity, prefab, defaultQuantity);
         }
 
         /// <summary>
-        /// ´´½¨Ò»ÌõĞÂµÄ¶ÔÏó³ØÊı¾İ
+        /// åˆ›å»ºä¸€æ¡æ–°çš„å¯¹è±¡æ± æ•°æ®
         /// </summary>
         private GameObjectPoolData CreateGameObjectPoolData(string layerName, int maxCapacity = -1)
         {
-            //½»ÓÉObject¶ÔÏó³ØÄÃµ½poolDataµÄÀà
+            //äº¤ç”±Objectå¯¹è±¡æ± æ‹¿åˆ°poolDataçš„ç±»
             GameObjectPoolData poolData = PoolSystem.GetObject<GameObjectPoolData>();
 
-            //Object¶ÔÏó³ØÖĞÃ»ÓĞÔÙnew
+            //Objectå¯¹è±¡æ± ä¸­æ²¡æœ‰å†new
             if (poolData == null) poolData = new GameObjectPoolData(maxCapacity);
 
-            //¶ÔÄÃµ½µÄpoolData¸±±¾½øĞĞ³õÊ¼»¯£¨¸²¸ÇÖ®Ç°µÄÊı¾İ£©
+            //å¯¹æ‹¿åˆ°çš„poolDataå‰¯æœ¬è¿›è¡Œåˆå§‹åŒ–ï¼ˆè¦†ç›–ä¹‹å‰çš„æ•°æ®ï¼‰
             poolData.Init(layerName, poolRootTransform, maxCapacity);
             poolDic.Add(layerName, poolData);
             return poolData;
         }
         #endregion
 
-        #region GameObjectPoolÏà¹Ø¹¦ÄÜ
+        #region GameObjectPoolç›¸å…³åŠŸèƒ½
 
         public GameObject GetObject(string keyName, Transform parent = null)
         {
             GameObject obj = null;
-            // ¼ì²éÓĞÃ»ÓĞÕâÒ»²ã
+            // æ£€æŸ¥æœ‰æ²¡æœ‰è¿™ä¸€å±‚
             if (poolDic.TryGetValue(keyName, out GameObjectPoolData poolData) && poolData.PoolQueue.Count > 0)
             {
                 obj = poolData.GetObj(parent);
@@ -135,7 +135,7 @@ namespace JKFrame
         }
         public bool PushObject(string keyName, GameObject obj)
         {
-            // ÏÖÔÚÓĞÃ»ÓĞÕâÒ»²ã
+            // ç°åœ¨æœ‰æ²¡æœ‰è¿™ä¸€å±‚
             if (poolDic.TryGetValue(keyName, out GameObjectPoolData poolData))
             {
                 return poolData.PushObj(obj);

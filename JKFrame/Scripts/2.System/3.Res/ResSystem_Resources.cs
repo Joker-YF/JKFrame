@@ -1,4 +1,4 @@
-#if ENABLE_ADDRESSABLES == false
+ï»¿#if ENABLE_ADDRESSABLES == false
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ namespace JKFrame
 {
     public static class ResSystem
     {
-#region ÆÕÍ¨class¶ÔÏó
+#region æ™®é€šclasså¯¹è±¡
         /// <summary>
-        /// »ñÈ¡ÊµÀı-ÆÕÍ¨Class
-        /// Èç¹ûÀàĞÍĞèÒª»º´æ£¬»á´Ó¶ÔÏó³ØÖĞ»ñÈ¡
-        /// Èç¹û¶ÔÏó³ØÃ»ÓĞ»ò·µ»Ønull
+        /// è·å–å®ä¾‹-æ™®é€šClass
+        /// å¦‚æœç±»å‹éœ€è¦ç¼“å­˜ï¼Œä¼šä»å¯¹è±¡æ± ä¸­è·å–
+        /// å¦‚æœå¯¹è±¡æ± æ²¡æœ‰æˆ–è¿”å›null
         /// </summary>
         public static T Get<T>() where T : class
         {
@@ -20,19 +20,19 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// »ñÈ¡ÊµÀı-ÆÕÍ¨Class
-        /// Èç¹ûÀàĞÍĞèÒª»º´æ£¬»á´Ó¶ÔÏó³ØÖĞ»ñÈ¡
-        /// Èç¹û¶ÔÏó³ØÃ»ÓĞ»ò·µ»Ønull
+        /// è·å–å®ä¾‹-æ™®é€šClass
+        /// å¦‚æœç±»å‹éœ€è¦ç¼“å­˜ï¼Œä¼šä»å¯¹è±¡æ± ä¸­è·å–
+        /// å¦‚æœå¯¹è±¡æ± æ²¡æœ‰æˆ–è¿”å›null
         /// </summary>
-        /// <param name="keyName">¶ÔÏó³ØÖĞµÄÃû³Æ</param>
+        /// <param name="keyName">å¯¹è±¡æ± ä¸­çš„åç§°</param>
         public static T Get<T>(string keyName) where T : class
         {
             return PoolSystem.GetObject<T>(keyName);
         }
         /// <summary>
-        /// »ñÈ¡ÊµÀı-ÆÕÍ¨Class
-        /// Èç¹ûÀàĞÍĞèÒª»º´æ£¬»á´Ó¶ÔÏó³ØÖĞ»ñÈ¡
-        /// Èç¹û¶ÔÏó³ØÃ»ÓĞ»ònewÒ»¸ö·µ»Ø
+        /// è·å–å®ä¾‹-æ™®é€šClass
+        /// å¦‚æœç±»å‹éœ€è¦ç¼“å­˜ï¼Œä¼šä»å¯¹è±¡æ± ä¸­è·å–
+        /// å¦‚æœå¯¹è±¡æ± æ²¡æœ‰æˆ–newä¸€ä¸ªè¿”å›
         /// <summary>
         public static T GetOrNew<T>() where T : class, new()
         {
@@ -43,11 +43,11 @@ namespace JKFrame
 
 
         /// <summary>
-        /// »ñÈ¡ÊµÀı-ÆÕÍ¨Class
-        /// Èç¹ûÀàĞÍĞèÒª»º´æ£¬»á´Ó¶ÔÏó³ØÖĞ»ñÈ¡
-        /// Èç¹û¶ÔÏó³ØÃ»ÓĞ»ònewÒ»¸ö·µ»Ø
+        /// è·å–å®ä¾‹-æ™®é€šClass
+        /// å¦‚æœç±»å‹éœ€è¦ç¼“å­˜ï¼Œä¼šä»å¯¹è±¡æ± ä¸­è·å–
+        /// å¦‚æœå¯¹è±¡æ± æ²¡æœ‰æˆ–newä¸€ä¸ªè¿”å›
         /// <summary>
-        /// <param name="keyName">¶ÔÏó³ØÖĞµÄÃû³Æ</param>
+        /// <param name="keyName">å¯¹è±¡æ± ä¸­çš„åç§°</param>
         public static T GetOrNew<T>(string keyName) where T : class, new()
         {
             T obj = PoolSystem.GetObject<T>(keyName);
@@ -56,7 +56,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Ğ¶ÔØÆÕÍ¨¶ÔÏó£¬ÕâÀïÊÇÊ¹ÓÃ¶ÔÏó³ØµÄ·½Ê½
+        /// å¸è½½æ™®é€šå¯¹è±¡ï¼Œè¿™é‡Œæ˜¯ä½¿ç”¨å¯¹è±¡æ± çš„æ–¹å¼
         /// </summary>
         public static void PushObjectInPool(System.Object obj)
         {
@@ -64,8 +64,8 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ÆÕÍ¨¶ÔÏó£¨·ÇGameObject£©·ÅÖÃ¶ÔÏó³ØÖĞ
-        /// »ùÓÚKeyName´æ·Å
+        /// æ™®é€šå¯¹è±¡ï¼ˆéGameObjectï¼‰æ”¾ç½®å¯¹è±¡æ± ä¸­
+        /// åŸºäºKeyNameå­˜æ”¾
         /// </summary>
         public static void PushObjectInPool(object obj, string keyName)
         {
@@ -73,39 +73,39 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="keyName">×ÊÔ´Ãû³Æ</param>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
+        /// <param name="keyName">èµ„æºåç§°</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
         public static void InitObjectPool<T>(string keyName, int maxCapacity = -1, int defaultQuantity = 0) where T : new()
         {
             PoolSystem.InitObjectPool<T>(keyName, maxCapacity, defaultQuantity);
         }
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
         public static void InitObjectPool<T>(int maxCapacity = -1, int defaultQuantity = 0) where T : new()
         {
             PoolSystem.InitObjectPool<T>(maxCapacity, defaultQuantity);
         }
         /// <summary>
-        /// ³õÊ¼»¯Ò»¸öÆÕÍ¨C#¶ÔÏó³ØÀàĞÍ
+        /// åˆå§‹åŒ–ä¸€ä¸ªæ™®é€šC#å¯¹è±¡æ± ç±»å‹
         /// </summary>
         /// <param name="keyName">keyName</param>
-        /// <param name="maxCapacity">ÈİÁ¿£¬³¬³öÊ±»á¶ªÆú¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
+        /// <param name="maxCapacity">å®¹é‡ï¼Œè¶…å‡ºæ—¶ä¼šä¸¢å¼ƒè€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
         public static void InitObjectPool(string keyName, int maxCapacity = -1)
         {
             PoolSystem.InitObjectPool(keyName, maxCapacity);
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø
+        /// åˆå§‹åŒ–å¯¹è±¡æ± 
         /// </summary>
-        /// <param name="type">×ÊÔ´ÀàĞÍ</param>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
+        /// <param name="type">èµ„æºç±»å‹</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
         public static void InitObjectPool(System.Type type, int maxCapacity = -1)
         {
             PoolSystem.InitObjectPool(type, maxCapacity);
@@ -113,10 +113,10 @@ namespace JKFrame
 
 #endregion
 
-#region ÓÎÏ·¶ÔÏó
+#region æ¸¸æˆå¯¹è±¡
 
         /// <summary>
-        /// Ğ¶ÔØÓÎÏ·¶ÔÏó£¬ÕâÀïÊÇÊ¹ÓÃ¶ÔÏó³ØµÄ·½Ê½
+        /// å¸è½½æ¸¸æˆå¯¹è±¡ï¼Œè¿™é‡Œæ˜¯ä½¿ç”¨å¯¹è±¡æ± çš„æ–¹å¼
         /// </summary>
         public static void PushGameObjectInPool(GameObject gameObject)
         {
@@ -124,10 +124,10 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ÓÎÏ·ÎïÌå·ÅÖÃ¶ÔÏó³ØÖĞ
+        /// æ¸¸æˆç‰©ä½“æ”¾ç½®å¯¹è±¡æ± ä¸­
         /// </summary>
-        /// <param name="keyName">¶ÔÏó³ØÖĞµÄkey</param>
-        /// <param name="obj">·ÅÈëµÄÎïÌå</param>
+        /// <param name="keyName">å¯¹è±¡æ± ä¸­çš„key</param>
+        /// <param name="obj">æ”¾å…¥çš„ç‰©ä½“</param>
         public static void PushGameObjectInPool(string keyName, GameObject gameObject)
         {
             PoolSystem.PushGameObject(keyName, gameObject);
@@ -135,12 +135,12 @@ namespace JKFrame
 
 
         /// <summary>
-        /// ³õÊ¼»¯Ò»¸öGameObjectÀàĞÍµÄ¶ÔÏó³ØÀàĞÍ
+        /// åˆå§‹åŒ–ä¸€ä¸ªGameObjectç±»å‹çš„å¯¹è±¡æ± ç±»å‹
         /// </summary>
-        /// <param name="keyName">¶ÔÏó³ØÖĞµÄ±êÊ¶</param>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
-        /// <param name="prefab">ÌîĞ´Ä¬ÈÏÈİÁ¿Ê±Ô¤ÏÈ·ÅÈëµÄ¶ÔÏó</param>
+        /// <param name="keyName">å¯¹è±¡æ± ä¸­çš„æ ‡è¯†</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
+        /// <param name="prefab">å¡«å†™é»˜è®¤å®¹é‡æ—¶é¢„å…ˆæ”¾å…¥çš„å¯¹è±¡</param>
         public static void InitGameObjectPool(string keyName, int maxCapacity = -1, string assetPath = null, int defaultQuantity = 0)
         {
             GameObject prefab = LoadAsset<GameObject>(assetPath);
@@ -149,11 +149,11 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ³õÊ¼»¯¶ÔÏó³Ø²¢ÉèÖÃÈİÁ¿
+        /// åˆå§‹åŒ–å¯¹è±¡æ± å¹¶è®¾ç½®å®¹é‡
         /// </summary>
-        /// <param name="maxCapacity">ÈİÁ¿ÏŞÖÆ£¬³¬³öÊ±»áÏú»Ù¶ø²»ÊÇ½øÈë¶ÔÏó³Ø£¬-1´ú±íÎŞÏŞ</param>
-        /// <param name="defaultQuantity">Ä¬ÈÏÈİÁ¿£¬ÌîĞ´»áÏò³Ø×ÓÖĞ·ÅÈë¶ÔÓ¦ÊıÁ¿µÄ¶ÔÏó£¬0´ú±í²»Ô¤ÏÈ·ÅÈë</param>
-        /// <param name="assetPath">×ÊÔ´Â·¾¶</param>
+        /// <param name="maxCapacity">å®¹é‡é™åˆ¶ï¼Œè¶…å‡ºæ—¶ä¼šé”€æ¯è€Œä¸æ˜¯è¿›å…¥å¯¹è±¡æ± ï¼Œ-1ä»£è¡¨æ— é™</param>
+        /// <param name="defaultQuantity">é»˜è®¤å®¹é‡ï¼Œå¡«å†™ä¼šå‘æ± å­ä¸­æ”¾å…¥å¯¹åº”æ•°é‡çš„å¯¹è±¡ï¼Œ0ä»£è¡¨ä¸é¢„å…ˆæ”¾å…¥</param>
+        /// <param name="assetPath">èµ„æºè·¯å¾„</param>
         public static void InitGameObjectPool(string assetPath, int maxCapacity = -1, int defaultQuantity = 0)
         {
             GameObject prefab = LoadAsset<GameObject>(assetPath);
@@ -165,8 +165,8 @@ namespace JKFrame
 
         /// <summary>
         /// <summary>
-        /// ¼ÓÔØÓÎÏ·ÎïÌå
-        /// »á×Ô¶¯¿¼ÂÇÊÇ·ñÔÚ¶ÔÏó³ØÖĞ´æÔÚ
+        /// åŠ è½½æ¸¸æˆç‰©ä½“
+        /// ä¼šè‡ªåŠ¨è€ƒè™‘æ˜¯å¦åœ¨å¯¹è±¡æ± ä¸­å­˜åœ¨
         /// <param name="assetPath"></param>
         /// <param name="parent"></param>
         /// <param name="keyName"></param>
@@ -188,11 +188,11 @@ namespace JKFrame
 
 
         /// <summary>
-        /// ¼ÓÔØÓÎÏ·ÎïÌå
-        /// »á×Ô¶¯¿¼ÂÇÊÇ·ñÔÚ¶ÔÏó³ØÖĞ´æÔÚ
+        /// åŠ è½½æ¸¸æˆç‰©ä½“
+        /// ä¼šè‡ªåŠ¨è€ƒè™‘æ˜¯å¦åœ¨å¯¹è±¡æ± ä¸­å­˜åœ¨
         /// </summary>
-        /// <param name="assetPath">×ÊÔ´Â·¾¶</param>
-        /// <param name="parent">¸¸ÎïÌå</param>
+        /// <param name="assetPath">èµ„æºè·¯å¾„</param>
+        /// <param name="parent">çˆ¶ç‰©ä½“</param>
         public static GameObject InstantiateGameObject(string assetPath, Transform parent = null, string keyName = null)
         {
             string assetName = GetAssetNameByPath(assetPath);
@@ -212,10 +212,10 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ¼ÓÔØÓÎÏ·ÎïÌå²¢»ñÈ¡×é¼ş
+        /// åŠ è½½æ¸¸æˆç‰©ä½“å¹¶è·å–ç»„ä»¶
         /// </summary>
-        /// <param name="path">×ÊÔ´Â·¾¶</param>
-        /// <param name="parent">¸¸ÎïÌå</param>
+        /// <param name="path">èµ„æºè·¯å¾„</param>
+        /// <param name="parent">çˆ¶ç‰©ä½“</param>
         public static T InstantiateGameObject<T>(Transform parent, string keyName) where T : UnityEngine.Component
         {
             GameObject go = InstantiateGameObject(parent, keyName);
@@ -227,10 +227,10 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ¼ÓÔØÓÎÏ·ÎïÌå²¢»ñÈ¡×é¼ş
+        /// åŠ è½½æ¸¸æˆç‰©ä½“å¹¶è·å–ç»„ä»¶
         /// </summary>
-        /// <param name="path">×ÊÔ´Â·¾¶</param>
-        /// <param name="parent">¸¸ÎïÌå</param>
+        /// <param name="path">èµ„æºè·¯å¾„</param>
+        /// <param name="parent">çˆ¶ç‰©ä½“</param>
         public static T InstantiateGameObject<T>(string assetPath, Transform parent = null, string keyName = null) where T : UnityEngine.Component
         {
             GameObject go = InstantiateGameObject(assetPath, parent, keyName);
@@ -242,44 +242,44 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Òì²½ÊµÀı»¯ÓÎÏ·ÎïÌå
+        /// å¼‚æ­¥å®ä¾‹åŒ–æ¸¸æˆç‰©ä½“
         /// </summary>
         public static void InstantiateGameObjectAsync(string assetPath, Action<GameObject> callBack = null, Transform parent = null, string keyName = null)
         {
-            // ÇĞ¸îÂ·¾¶»ñÈ¡Êµ¼ÊµÄ×ÊÔ´Ãû³Æ
+            // åˆ‡å‰²è·¯å¾„è·å–å®é™…çš„èµ„æºåç§°
             string assetName = GetAssetNameByPath(assetPath);
             GameObject go;
             if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
             else go = PoolSystem.GetGameObject(keyName, parent);
-            // ¶ÔÏó³ØÓĞ
+            // å¯¹è±¡æ± æœ‰
             if (!go.IsNull())
             {
                 callBack?.Invoke(go);
                 return;
             }
-            // ²»Í¨¹ı»º´æ³Ø
+            // ä¸é€šè¿‡ç¼“å­˜æ± 
             MonoSystem.Start_Coroutine(DoInstantiateGameObjectAsync(assetPath, callBack, parent));
         }
 
 
         /// <summary>
-        /// Òì²½ÊµÀı»¯ÓÎÏ·ÎïÌå²¢»ñÈ¡×é¼ş
+        /// å¼‚æ­¥å®ä¾‹åŒ–æ¸¸æˆç‰©ä½“å¹¶è·å–ç»„ä»¶
         /// </summary>
-        /// <typeparam name="T">ÓÎÏ·ÎïÌåÉÏµÄ×é¼ş</typeparam>
+        /// <typeparam name="T">æ¸¸æˆç‰©ä½“ä¸Šçš„ç»„ä»¶</typeparam>
         public static void InstantiateGameObjectAsync<T>(string assetPath, Action<T> callBack = null, Transform parent = null, string keyName = null) where T : UnityEngine.Component
         {
             string assetName = GetAssetNameByPath(assetPath);
-            // »º´æ×ÖµäÀïÃæÓĞ
+            // ç¼“å­˜å­—å…¸é‡Œé¢æœ‰
             GameObject go;
             if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
             else go = PoolSystem.GetGameObject(keyName, parent);
-            // ¶ÔÏóÓĞ
+            // å¯¹è±¡æœ‰
             if (!go.IsNull())
             {
                 callBack?.Invoke(go.GetComponent<T>());
                 return;
             }
-            // ²»Í¨¹ı»º´æ³Ø
+            // ä¸é€šè¿‡ç¼“å­˜æ± 
             MonoSystem.Start_Coroutine(DoInstantiateGameObjectAsync<T>(assetPath, callBack, parent));
         }
 
@@ -304,18 +304,18 @@ namespace JKFrame
             callBack?.Invoke(go.GetComponent<T>());
         }
 #endregion
-#region ÓÎÏ·Asset
+#region æ¸¸æˆAsset
         /// <summary>
-        /// ¼ÓÔØUnity×ÊÔ´  ÈçAudioClip Sprite Ô¤ÖÆÌå
+        /// åŠ è½½Unityèµ„æº  å¦‚AudioClip Sprite é¢„åˆ¶ä½“
         /// </summary>
-        /// <typeparam name="T">×ÊÔ´ÀàĞÍ</typeparam>
+        /// <typeparam name="T">èµ„æºç±»å‹</typeparam>
         public static T LoadAsset<T>(string assetPath) where T : UnityEngine.Object
         {
             return Resources.Load<T>(assetPath);
         }
 
         /// <summary>
-        /// Í¨¹ıpath»ñÈ¡×ÊÔ´Ãû³Æ
+        /// é€šè¿‡pathè·å–èµ„æºåç§°
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -324,11 +324,11 @@ namespace JKFrame
             return assetPath.Substring(assetPath.LastIndexOf("/") + 1);
         }
         /// <summary>
-        /// Òì²½¼ÓÔØUnity×ÊÔ´ AudioClip Sprite GameObject(Ô¤ÖÆÌå)
+        /// å¼‚æ­¥åŠ è½½Unityèµ„æº AudioClip Sprite GameObject(é¢„åˆ¶ä½“)
         /// </summary>
-        /// <typeparam name="T">¾ßÌåÀàĞÍ</typeparam>
-        /// <param name="path">×ÊÔ´Â·¾¶</param>
-        /// <param name="callBack">¼ÓÔØÍê³ÉºóµÄ»Øµ÷</param>
+        /// <typeparam name="T">å…·ä½“ç±»å‹</typeparam>
+        /// <param name="path">èµ„æºè·¯å¾„</param>
+        /// <param name="callBack">åŠ è½½å®Œæˆåçš„å›è°ƒ</param>
         public static void LoadAssetAsync<T>(string assetPath, Action<T> callBack) where T : UnityEngine.Object
         {
             MonoSystem.Start_Coroutine(DoLoadAssetAsync<T>(assetPath, callBack));
@@ -342,7 +342,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ¼ÓÔØÖ¸¶¨Â·¾¶µÄËùÓĞ×ÊÔ´
+        /// åŠ è½½æŒ‡å®šè·¯å¾„çš„æ‰€æœ‰èµ„æº
         /// </summary>
         public static UnityEngine.Object[] LoadAssets(string assetPath)
         {
@@ -350,7 +350,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// ¼ÓÔØÖ¸¶¨Â·¾¶µÄËùÓĞ×ÊÔ´
+        /// åŠ è½½æŒ‡å®šè·¯å¾„çš„æ‰€æœ‰èµ„æº
         /// </summary>
         public static T[] LoadAssets<T>(string assetPath) where T : UnityEngine.Object
         {
@@ -358,7 +358,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Ğ¶ÔØ×ÊÔ´
+        /// å¸è½½èµ„æº
         /// </summary>
         public static void UnloadAsset(UnityEngine.Object assetToUnload)
         {
@@ -367,7 +367,7 @@ namespace JKFrame
 
 
         /// <summary>
-        /// Ğ¶ÔØÈ«²¿Î´Ê¹ÓÃµÄ×ÊÔ´
+        /// å¸è½½å…¨éƒ¨æœªä½¿ç”¨çš„èµ„æº
         /// </summary>
         public static void UnloadUnusedAssets()
         {

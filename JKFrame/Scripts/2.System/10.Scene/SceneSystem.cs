@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,7 +18,7 @@ namespace JKFrame
 
         public static Scene LoadScene(string sceneName, LoadSceneParameters loadSceneParameters)
         {
-             return SceneManager.LoadScene(sceneName, loadSceneParameters);
+            return SceneManager.LoadScene(sceneName, loadSceneParameters);
         }
 
         public static Scene LoadScene(int sceneBuildIndex, LoadSceneParameters loadSceneParameters)
@@ -27,12 +27,12 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Òì²½¼ÓÔØ³¡¾°
-        /// Äú¿ÉÒÔÑ¡ÔñEventSystem¼àÌı"LoadingSceneProgress"¡¢"LoadSceneSucceed"µÈÊÂ¼ş¼àÌı³¡¾°½ø¶È
-        /// Ò²¿ÉÒÔÍ¨¹ıcallBack²ÎÊı
+        /// å¼‚æ­¥åŠ è½½åœºæ™¯
+        /// æ‚¨å¯ä»¥é€‰æ‹©EventSystemç›‘å¬"LoadingSceneProgress"ã€"LoadSceneSucceed"ç­‰äº‹ä»¶ç›‘å¬åœºæ™¯è¿›åº¦
+        /// ä¹Ÿå¯ä»¥é€šè¿‡callBackå‚æ•°
         /// </summary>
-        /// <param name="sceneName">³¡¾°Ãû³Æ</param>
-        /// <param name="callBack">»Øµ÷º¯Êı,×¢Òâ£ºÃ¿´Î½ø¶È¸üĞÂ¶¼»áµ÷ÓÃÒ»´Î,²ÎÊıÎª0-1µÄ½ø¶È</param>
+        /// <param name="sceneName">åœºæ™¯åç§°</param>
+        /// <param name="callBack">å›è°ƒå‡½æ•°,æ³¨æ„ï¼šæ¯æ¬¡è¿›åº¦æ›´æ–°éƒ½ä¼šè°ƒç”¨ä¸€æ¬¡,å‚æ•°ä¸º0-1çš„è¿›åº¦</param>
         public static void LoadSceneAsync(string sceneName, Action<float> callBack = null, LoadSceneMode mode = LoadSceneMode.Single)
         {
             MonoSystem.Start_Coroutine(DoLoadSceneAsync(sceneName, callBack, mode));
@@ -44,12 +44,12 @@ namespace JKFrame
             float progress = 0;
             while (progress < 1)
             {
-                // »Øµ÷¼ÓÔØ½ø¶È
-                if (progress != ao.progress) 
+                // å›è°ƒåŠ è½½è¿›åº¦
+                if (progress != ao.progress)
                 {
                     progress = ao.progress;
                     callBack?.Invoke(progress);
-                    // °Ñ¼ÓÔØ½ø¶È·Ö·¢µ½ÊÂ¼şÖĞĞÄ
+                    // æŠŠåŠ è½½è¿›åº¦åˆ†å‘åˆ°äº‹ä»¶ä¸­å¿ƒ
                     EventSystem.EventTrigger("LoadingSceneProgress", ao.progress);
                     if (progress == 1)
                     {
@@ -62,12 +62,12 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// Òì²½¼ÓÔØ³¡¾°
-        /// Äú¿ÉÒÔÑ¡ÔñEventSystem¼àÌı"LoadingSceneProgress"¡¢"LoadSceneSucceed"µÈÊÂ¼ş¼àÌı³¡¾°½ø¶È
-        /// Ò²¿ÉÒÔÍ¨¹ıcallBack²ÎÊı
+        /// å¼‚æ­¥åŠ è½½åœºæ™¯
+        /// æ‚¨å¯ä»¥é€‰æ‹©EventSystemç›‘å¬"LoadingSceneProgress"ã€"LoadSceneSucceed"ç­‰äº‹ä»¶ç›‘å¬åœºæ™¯è¿›åº¦
+        /// ä¹Ÿå¯ä»¥é€šè¿‡callBackå‚æ•°
         /// </summary>
-        /// <param name="sceneBuildIndex">³¡¾°Index</param>
-        /// <param name="callBack">»Øµ÷º¯Êı</param>
+        /// <param name="sceneBuildIndex">åœºæ™¯Index</param>
+        /// <param name="callBack">å›è°ƒå‡½æ•°</param>
         public static void LoadSceneAsync(int sceneBuildIndex, Action<float> callBack = null, LoadSceneMode mode = LoadSceneMode.Single)
         {
             MonoSystem.Start_Coroutine(DoLoadSceneAsync(sceneBuildIndex, callBack, mode));
@@ -81,7 +81,7 @@ namespace JKFrame
             {
                 progress = ao.progress;
                 callBack?.Invoke(progress);
-                // °Ñ¼ÓÔØ½ø¶È·Ö·¢µ½ÊÂ¼şÖĞĞÄ
+                // æŠŠåŠ è½½è¿›åº¦åˆ†å‘åˆ°äº‹ä»¶ä¸­å¿ƒ
                 EventSystem.EventTrigger("LoadingSceneProgress", ao.progress);
                 if (progress == 1)
                 {

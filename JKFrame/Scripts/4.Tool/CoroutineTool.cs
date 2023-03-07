@@ -1,11 +1,11 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace JKFrame
 {
     /// <summary>
-    /// 协程工具，避免GC
+    /// 鍗忕▼宸ュ叿锛岄伩鍏岹C
     /// </summary>
     public static class CoroutineTool
     {
@@ -40,7 +40,7 @@ namespace JKFrame
             }
         }
 
-        public static IEnumerator WaitForFrames(int count=1)
+        public static IEnumerator WaitForFrames(int count = 1)
         {
             for (int i = 0; i < count; i++)
             {

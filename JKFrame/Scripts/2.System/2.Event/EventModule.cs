@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 
 namespace JKFrame
@@ -8,12 +8,12 @@ namespace JKFrame
         private static ObjectPoolModule objectPoolModule = new ObjectPoolModule();
 
         private Dictionary<string, IEventInfo> eventInfoDic = new Dictionary<string, IEventInfo>();
-        #region ÄÚ²¿½Ó¿Ú¡¢ÄÚ²¿Àà
+        #region å†…éƒ¨æ¥å£ã€å†…éƒ¨ç±»
 
         private interface IEventInfo { void Destory(); }
 
         /// <summary>
-        /// ÎŞ²Î-ÊÂ¼şĞÅÏ¢
+        /// æ— å‚-äº‹ä»¶ä¿¡æ¯
         /// </summary>
         private class EventInfo : IEventInfo
         {
@@ -21,15 +21,15 @@ namespace JKFrame
             public void Init(Action action) { this.action = action; }
             public void Destory()
             {
-                action =null;
+                action = null;
                 objectPoolModule.PushObject(this);
             }
         }
 
         /// <summary>
-        /// ¶à²ÎActionÊÂ¼şĞÅÏ¢
+        /// å¤šå‚Actionäº‹ä»¶ä¿¡æ¯
         /// </summary>
-        private class MultipleParameterEventInfo<TAction>:IEventInfo where TAction : MulticastDelegate
+        private class MultipleParameterEventInfo<TAction> : IEventInfo where TAction : MulticastDelegate
         {
             public TAction action;
             public void Init(TAction action) { this.action = action; }
@@ -40,18 +40,18 @@ namespace JKFrame
             }
         };
         #endregion
-        #region Ìí¼ÓÊÂ¼şµÄ¼àÌı£¬ÄãÏëÒª¹ØĞÄÄ³¸öÊÂ¼ş£¬µ±Õâ¸öÊÂ¼ş´¥Ê±£¬»áÖ´ĞĞÄã´«µİ¹ıÀ´µÄAction
+        #region æ·»åŠ äº‹ä»¶çš„ç›‘å¬ï¼Œä½ æƒ³è¦å…³å¿ƒæŸä¸ªäº‹ä»¶ï¼Œå½“è¿™ä¸ªäº‹ä»¶è§¦æ—¶ï¼Œä¼šæ‰§è¡Œä½ ä¼ é€’è¿‡æ¥çš„Action
         /// <summary>
-        /// Ìí¼ÓÎŞ²ÎÊÂ¼ş
+        /// æ·»åŠ æ— å‚äº‹ä»¶
         /// </summary>
-        public void AddEventListener(string eventName, Action action) 
+        public void AddEventListener(string eventName, Action action)
         {
-            // ÓĞÃ»ÓĞ¶ÔÓ¦µÄÊÂ¼ş¿ÉÒÔ¼àÌı
+            // æœ‰æ²¡æœ‰å¯¹åº”çš„äº‹ä»¶å¯ä»¥ç›‘å¬
             if (eventInfoDic.ContainsKey(eventName))
             {
                 (eventInfoDic[eventName] as EventInfo).action += action;
             }
-            // Ã»ÓĞµÄ»°£¬ĞèÒªĞÂÔö µ½×ÖµäÖĞ£¬²¢Ìí¼Ó¶ÔÓ¦µÄAction
+            // æ²¡æœ‰çš„è¯ï¼Œéœ€è¦æ–°å¢ åˆ°å­—å…¸ä¸­ï¼Œå¹¶æ·»åŠ å¯¹åº”çš„Action
             else
             {
                 EventInfo eventInfo = objectPoolModule.GetObject<EventInfo>();
@@ -63,11 +63,11 @@ namespace JKFrame
 
 
         // <summary>
-        // Ìí¼Ó1²ÎÊÂ¼ş¼àÌı
+        // æ·»åŠ 1å‚äº‹ä»¶ç›‘å¬
         // </summary>
         public void AddEventListener<TAction>(string eventName, TAction action) where TAction : MulticastDelegate
         {
-            // ÓĞÃ»ÓĞ¶ÔÓ¦µÄÊÂ¼ş¿ÉÒÔ¼àÌı
+            // æœ‰æ²¡æœ‰å¯¹åº”çš„äº‹ä»¶å¯ä»¥ç›‘å¬
             if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo))
             {
                 MultipleParameterEventInfo<TAction> info = (MultipleParameterEventInfo<TAction>)eventInfo;
@@ -85,9 +85,9 @@ namespace JKFrame
         }
         #endregion
 
-        #region ´¥·¢ÎŞ·µ»ØÖµÊÂ¼ş£¬Ö®ËùÒÔÕâÃ´¶àº¯Êı£¬ÊÇ±ÜÃâÊ¹ÓÃparams²úÉúÊı×éGC¡¢×°ÏäÎÊÌâ
+        #region è§¦å‘æ— è¿”å›å€¼äº‹ä»¶ï¼Œä¹‹æ‰€ä»¥è¿™ä¹ˆå¤šå‡½æ•°ï¼Œæ˜¯é¿å…ä½¿ç”¨paramsäº§ç”Ÿæ•°ç»„GCã€è£…ç®±é—®é¢˜
         /// <summary>
-        /// ´¥·¢ÎŞ²ÎµÄÊÂ¼ş
+        /// è§¦å‘æ— å‚çš„äº‹ä»¶
         /// </summary>
         public void EventTrigger(string eventName)
         {
@@ -97,164 +97,164 @@ namespace JKFrame
             }
         }
         /// <summary>
-        /// ´¥·¢1¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘1ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
         public void EventTrigger<T>(string eventName, T arg)
         {
-            if (eventInfoDic.TryGetValue(eventName,out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T>>)eventInfo).action?.Invoke(arg);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T>>)eventInfo).action?.Invoke(arg);
         }
         /// <summary>
-        /// ´¥·¢2¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘2ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0,T1>(string eventName, T0 arg0,T1 arg1)
+        public void EventTrigger<T0, T1>(string eventName, T0 arg0, T1 arg1)
         {
             if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1>>)eventInfo).action?.Invoke(arg0, arg1);
         }
         /// <summary>
-        /// ´¥·¢3¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘3ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1,T2>(string eventName, T0 arg0, T1 arg1,T2 arg2)
+        public void EventTrigger<T0, T1, T2>(string eventName, T0 arg0, T1 arg1, T2 arg2)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1,T2>>)eventInfo).action?.Invoke(arg0, arg1,arg2);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2>>)eventInfo).action?.Invoke(arg0, arg1, arg2);
         }
         /// <summary>
-        /// ´¥·¢4¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘4ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2,T3>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3)
+        public void EventTrigger<T0, T1, T2, T3>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2,T3>>)eventInfo).action?.Invoke(arg0, arg1, arg2,arg3);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3);
         }
         /// <summary>
-        /// ´¥·¢5¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘5ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3,T4>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3,T4 arg4)
+        public void EventTrigger<T0, T1, T2, T3, T4>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3,T4>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3,arg4);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4);
         }
         /// <summary>
-        /// ´¥·¢6¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘6ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4,T5>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4,T5 arg5)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4,arg5);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5);
         }
         /// <summary>
-        /// ´¥·¢7¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘7ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5,T6>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5,T6 arg6)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5,T6>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5,arg6);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
         }
         /// <summary>
-        /// ´¥·¢8¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘8ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6,T7>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6,arg7);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
         }
         /// <summary>
-        /// ´¥·¢9¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘9ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7,T8>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7,T8 arg8)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7,T8>>)eventInfo).action.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7,arg8);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8>>)eventInfo).action.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
         }
         /// <summary>
-        /// ´¥·¢10¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘10ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8,T9 arg9)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8,T9>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8,arg9);
-        }
-
-        /// <summary>
-        /// ´¥·¢11¸ö²ÎÊıµÄÊÂ¼ş
-        /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9,T10 arg10)
-        {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,T10>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9,arg10);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
         }
 
         /// <summary>
-        /// ´¥·¢12¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘11ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10,T11 arg11)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10,T11>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10,arg11);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
         }
 
         /// <summary>
-        /// ´¥·¢13¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘12ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11,T12 arg12)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,T12>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
         }
 
         /// <summary>
-        /// ´¥·¢14¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘13ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12 ,T13 arg13)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,T13>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12,arg13);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
         }
 
         /// <summary>
-        /// ´¥·¢15¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘14ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13,T14 arg14)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,T14>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13,arg14);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13);
         }
 
         /// <summary>
-        /// ´¥·¢16¸ö²ÎÊıµÄÊÂ¼ş
+        /// è§¦å‘15ä¸ªå‚æ•°çš„äº‹ä»¶
         /// </summary>
-        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14,T15 arg15)
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14)
         {
-            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,T15>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14,arg15);
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
+        }
+
+        /// <summary>
+        /// è§¦å‘16ä¸ªå‚æ•°çš„äº‹ä»¶
+        /// </summary>
+        public void EventTrigger<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(string eventName, T0 arg0, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, T9 arg9, T10 arg10, T11 arg11, T12 arg12, T13 arg13, T14 arg14, T15 arg15)
+        {
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo)) ((MultipleParameterEventInfo<Action<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>)eventInfo).action?.Invoke(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
         }
 
         #endregion
 
-        #region È¡ÏûÊÂ¼şµÄ¼àÌı
+        #region å–æ¶ˆäº‹ä»¶çš„ç›‘å¬
         /// <summary>
-        /// ÒÆ³ıÎŞ²ÎµÄÊÂ¼ş¼àÌı
+        /// ç§»é™¤æ— å‚çš„äº‹ä»¶ç›‘å¬
         /// </summary>
         public void RemoveEventListener(string eventName, Action action)
         {
-            if (eventInfoDic.TryGetValue(eventName,out IEventInfo eventInfo))
+            if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo))
             {
                 ((EventInfo)eventInfo).action -= action;
             }
         }
         /// <summary>
-        /// ÒÆ³ıÓĞ²ÎÊıµÄÊÂ¼ş¼àÌı
+        /// ç§»é™¤æœ‰å‚æ•°çš„äº‹ä»¶ç›‘å¬
         /// </summary>
-        public void RemoveEventListener<TAction>(string eventName, TAction action) where TAction:MulticastDelegate
+        public void RemoveEventListener<TAction>(string eventName, TAction action) where TAction : MulticastDelegate
         {
             if (eventInfoDic.TryGetValue(eventName, out IEventInfo eventInfo))
             {
                 MultipleParameterEventInfo<TAction> info = (MultipleParameterEventInfo<TAction>)eventInfo;
-                info.action = (TAction)Delegate.Remove(info.action,action);
+                info.action = (TAction)Delegate.Remove(info.action, action);
             }
         }
         #endregion
 
-        #region ÒÆ³ıÊÂ¼ş
+        #region ç§»é™¤äº‹ä»¶
         /// <summary>
-        /// ÒÆ³ı/É¾³ıÒ»¸öÊÂ¼ş
+        /// ç§»é™¤/åˆ é™¤ä¸€ä¸ªäº‹ä»¶
         /// </summary>
         public void RemoveEvent(string eventName)
         {
-            if (eventInfoDic.Remove(eventName,out IEventInfo eventInfo))
+            if (eventInfoDic.Remove(eventName, out IEventInfo eventInfo))
             {
                 eventInfo.Destory();
             }
         }
 
         /// <summary>
-        /// Çå¿ÕÊÂ¼şÖĞĞÄ
+        /// æ¸…ç©ºäº‹ä»¶ä¸­å¿ƒ
         /// </summary>
         public void Clear()
         {

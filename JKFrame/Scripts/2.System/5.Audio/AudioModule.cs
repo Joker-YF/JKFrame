@@ -190,7 +190,7 @@ namespace JKFrame
             else
             {
                 BGAudioSource.UnPause();
-            }   
+            }
 
         }
         #endregion
@@ -241,7 +241,7 @@ namespace JKFrame
                 BGAudioSource.Play();
                 float time = clip.length;
                 // 时间只要还好，一直检测
-                while (time>0)
+                while (time > 0)
                 {
                     yield return CoroutineTool.WaitForFrames();
                     if (!isPause) time -= Time.deltaTime;
@@ -259,13 +259,13 @@ namespace JKFrame
         }
 
         public void PauseBGAudio()
-        {   
+        {
             IsPause = true;
         }
 
         public void UnPauseBGAudio()
         {
-            IsPause= false;
+            IsPause = false;
         }
 
         #endregion

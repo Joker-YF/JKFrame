@@ -22,17 +22,30 @@ namespace JKFrame
         // 所有的状态 Key:状态枚举的值 Value:具体的状态
         private Dictionary<Type, StateBase> stateDic = new Dictionary<Type, StateBase>();
 
+        private Dictionary<string, object> stateShareDataDic;
+
         /// <summary>
         /// 初始化
         /// </summary>
         /// <param name="owner">宿主</param>
+        /// <param name="enableStateShareData">启用状态共享数据，但是注意存在装箱和拆箱情况！</param>
         /// <typeparam name="T">初始状态类型</typeparam>
-        public void Init<T>(IStateMachineOwner owner) where T : StateBase, new()
+        public void Init<T>(IStateMachineOwner owner, bool enableStateShareData = false) where T : StateBase, new()
         {
             this.owner = owner;
+            if (enableStateShareData) stateShareDataDic = new Dictionary<string, object>();
             ChangeState<T>();
         }
+        /// <summary>
+        /// 初始化（无默认状态，状态机待机）
+        /// </summary>
+        /// <param name="owner">宿主</param>
+        public void Init(IStateMachineOwner owner, bool enableStateShareData = false)
+        {
+            this.owner = owner;
+        }
 
+        #region 状态
         /// <summary>
         /// 切换状态
         /// </summary>
@@ -73,6 +86,7 @@ namespace JKFrame
             Type stateType = typeof(T);
             if (stateDic.ContainsKey(stateType)) return stateDic[stateType];
             StateBase state = ResSystem.GetOrNew<T>();
+            state.InitInternalData(this);
             state.Init(owner);
             stateDic.Add(stateType, state);
             return state;
@@ -99,6 +113,38 @@ namespace JKFrame
             }
             stateDic.Clear();
         }
+        #endregion
+        #region 状态共享数据
+        public bool TryGetShareData<T>(string key, out T data)
+        {
+            bool res = stateShareDataDic.TryGetValue(key, out object stateData);
+            if (res)
+            {
+                data = (T)stateData;
+            }
+            else
+            {
+                data = default(T);
+            }
+            return res;
+        }
+        public void AddShareData(string key, object data)
+        {
+            stateShareDataDic.Add(key, data);
+        }
+        public bool RemoveShareData(string key)
+        {
+            return stateShareDataDic.Remove(key);
+        }
+        public bool ContainsShareData(string key)
+        {
+            return stateShareDataDic.ContainsKey(key);
+        }
+        public void CleanShareData()
+        {
+            stateShareDataDic.Clear();
+        }
+        #endregion
 
         /// <summary>
         /// 销毁，宿主应该释放掉StateMachin的引用
@@ -107,9 +153,10 @@ namespace JKFrame
         {
             // 处理所有状态
             Stop();
+            // 清除共享数据
+            CleanShareData();
             // 放弃所有资源的引用
             owner = null;
-
             // 放进对象池
             this.ObjectPushPool();
         }

@@ -13,7 +13,7 @@ namespace JKFrame
     {
         public int saveID;
         public DateTime lastSaveTime;
-        [SerializeField]private string lastSaveTimeString; // Json不支持DateTime，用来持久化的
+        [SerializeField] private string lastSaveTimeString; // Json不支持DateTime，用来持久化的
         public SaveItem(int saveID, DateTime lastSaveTime)
         {
             this.saveID = saveID;
@@ -25,7 +25,6 @@ namespace JKFrame
                 case SaveSystemType.Json:
                     this.lastSaveTime = lastSaveTime;
                     lastSaveTimeString = lastSaveTime.ToString();
-                    Debug.Log(lastSaveTimeString);
                     break;
             }
         }
@@ -482,7 +481,7 @@ namespace JKFrame
         public static void DeleteObject<T>(string saveFileName, int saveID) where T : class
         {
             //清空缓存中对象
-            if (GetCache<T>(saveID,saveFileName) != null)
+            if (GetCache<T>(saveID, saveFileName) != null)
             {
                 RemoveCache(saveID, saveFileName);
             }

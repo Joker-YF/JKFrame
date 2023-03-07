@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="PoolSystemItem" style="flex-wrap: nowrap; flex-direction: row;">
+        <ui:Label text="名称" display-tooltip-when-elided="true" name="Name" />
+        <ui:Label text="数量" display-tooltip-when-elided="true" name="Count" style="flex-direction: row-reverse; flex-wrap: nowrap; flex-grow: 1; justify-content: flex-start; align-items: center; white-space: nowrap; -unity-text-align: upper-right;" />
+    </ui:VisualElement>
+</ui:UXML>

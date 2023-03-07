@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="PoolSystemItem" src="project://database/Assets/JKFrame/Editor/Windows/PoolSystem/PoolSystemItem.uxml?fileID=9197481963319205126&amp;guid=d58b399cf0ba85a4ca88894b0f3fc37d&amp;type=3#PoolSystemItem" />
+    <ui:VisualElement name="Main" style="min-width: 200px; min-height: 200px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:Foldout text="普通实例" name="ClassFoldout" value="true" picking-mode="Ignore" style="font-size: 15px; white-space: normal; -unity-font-style: normal; padding-bottom: 0; min-height: 30px;">
+            <ui:Instance template="PoolSystemItem" name="PoolSystemItem" />
+            <ui:ListView focusable="false" name="LayerList" selection-type="None" show-border="false" show-add-remove-footer="false" reorderable="false" show-foldout-header="false" show-alternating-row-backgrounds="None" style="margin-top: 5px;" />
+        </ui:Foldout>
+        <ui:Foldout text="游戏对象" name="GameObjectFoldout" style="margin-top: 10px; font-size: 15px; padding-top: 0; transition-property: all; transition-duration: 0s; transition-timing-function: ease; transition-delay: 0s; min-height: 30px;">
+            <ui:Instance template="PoolSystemItem" name="PoolSystemItem" />
+            <ui:ListView focusable="false" name="GameObjectLayerList" horizontal-scrolling="false" style="margin-top: 5px;" />
+        </ui:Foldout>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,4 +1,4 @@
-
+ï»¿
 #if ENABLE_ADDRESSABLES
 using System.Collections.Generic;
 using System.IO;
@@ -19,25 +19,25 @@ using UnityEngine.Playables;
 using JKFrame;
 namespace R
 {
-~~³ÉÔ±~~
+~~æˆå‘˜~~
 }";
     private static string classTemplate =
 @" 
-    public static class ##ÀàÃû##
+    public static class ##ç±»å##
     {
-~~³ÉÔ±~~
+~~æˆå‘˜~~
     }";
     private static string PropertyTemplate =
 @" 
-        public static ##ÀàĞÍ## ##×ÊÔ´Ãû³Æ## { get => ResSystem.LoadAsset<##ÀàĞÍ##>(""##×ÊÔ´Â·¾¶##""); }";
+        public static ##ç±»å‹## ##èµ„æºåç§°## { get => ResSystem.LoadAsset<##ç±»å‹##>(""##èµ„æºè·¯å¾„##""); }";
     private static string SubAssetPropertyTemplate =
 @"  
-        public static ##ÀàĞÍ## ##×ÊÔ´Ãû³Æ## { get => ResSystem.LoadAsset<##ÀàĞÍ##>(""##×ÊÔ´Â·¾¶##""); }";
+        public static ##ç±»å‹## ##èµ„æºåç§°## { get => ResSystem.LoadAsset<##ç±»å‹##>(""##èµ„æºè·¯å¾„##""); }";
     private static string GameObjectPropertyTemplate =
 @"  
-        public static GameObject ##×ÊÔ´Ãû³Æ##_GameObject(Transform parent = null,string keyName=null,bool autoRelease = true)
+        public static GameObject ##èµ„æºåç§°##_GameObject(Transform parent = null,string keyName=null,bool autoRelease = true)
         {
-            return ResSystem.InstantiateGameObject(""##×ÊÔ´Â·¾¶##"", parent, keyName,autoRelease);
+            return ResSystem.InstantiateGameObject(""##èµ„æºè·¯å¾„##"", parent, keyName,autoRelease);
         }";
 
     public static void CleanResReferenceCode()
@@ -47,68 +47,68 @@ namespace R
             File.Delete(scriptPath);
             AssetDatabase.Refresh();
         }
-        Debug.Log("Çå³ı×ÊÔ´´úÂë½Å±¾³É¹¦");
+        Debug.Log("æ¸…é™¤èµ„æºä»£ç è„šæœ¬æˆåŠŸ");
     }
     public static void GenerateResReferenceCode()
     {
-        // ¿ªÊ¼Éú³É
-        Debug.Log("¿ªÊ¼Éú³É×ÊÔ´´úÂë");
+        // å¼€å§‹ç”Ÿæˆ
+        Debug.Log("å¼€å§‹ç”Ÿæˆèµ„æºä»£ç ");
         if (File.Exists(scriptPath)) File.Delete(scriptPath);
 
         FileStream file = new FileStream(scriptPath, FileMode.CreateNew);
         StreamWriter fileW = new StreamWriter(file, System.Text.Encoding.UTF8);
 
-        // »ñÈ¡È«²¿AddressableµÄGroup
+        // è·å–å…¨éƒ¨Addressableçš„Group
         string groupsStr = "";
         AddressableAssetSettings assets = AddressableAssetSettingsDefaultObject.Settings;
         foreach (AddressableAssetGroup group in assets.groups)
         {
             if (group.name == "Built In Data") continue;
-            string name = group.name.Replace(" ", "");   // È¥³ı¿Õ¸ñ
-            // ½¨Á¢×ÓÀàÃû³Æ
-            string groupStr = classTemplate.Replace("##ÀàÃû##", name);
+            string name = group.name.Replace(" ", "");   // å»é™¤ç©ºæ ¼
+            // å»ºç«‹å­ç±»åç§°
+            string groupStr = classTemplate.Replace("##ç±»å##", name);
 
-            // ÕÒµ½×ÓÀàÈ«²¿×ÊÔ´ÒÔ¼°ÀàĞÍ
+            // æ‰¾åˆ°å­ç±»å…¨éƒ¨èµ„æºä»¥åŠç±»å‹
             List<AddressableAssetEntry> allAssetEntry = new List<AddressableAssetEntry>();
             group.GatherAllAssets(allAssetEntry, true, true, true);
-            string propertyStrs = "";   // ÊôĞÔµÄ×Ö·û´®
+            string propertyStrs = "";   // å±æ€§çš„å­—ç¬¦ä¸²
             for (int i = 0; i < allAssetEntry.Count; i++)
             {
                 AddressableAssetEntry assetItem = allAssetEntry[i];
-                if (assetItem.IsSubAsset)   // sub×ÊÔ´Ö÷Òª´æÔÚ[]ÎŞ·¨Éú³Éclass
+                if (assetItem.IsSubAsset)   // subèµ„æºä¸»è¦å­˜åœ¨[]æ— æ³•ç”Ÿæˆclass
                 {
-                    string subAssetPropertyStr = SubAssetPropertyTemplate.Replace("##ÀàĞÍ##", assetItem.MainAssetType.Name);
-                    string assetName = assetItem.address.Replace("[", "_").Replace("]", ""); // È¥³ı×Ó×ÊÔ´ÖĞµÄÀ¨ºÅ
-                    subAssetPropertyStr = subAssetPropertyStr.Replace("##×ÊÔ´Ãû³Æ##", assetName.Replace(" ", ""));
-                    subAssetPropertyStr = subAssetPropertyStr.Replace("##×ÊÔ´Â·¾¶##", assetItem.address);
+                    string subAssetPropertyStr = SubAssetPropertyTemplate.Replace("##ç±»å‹##", assetItem.MainAssetType.Name);
+                    string assetName = assetItem.address.Replace("[", "_").Replace("]", ""); // å»é™¤å­èµ„æºä¸­çš„æ‹¬å·
+                    subAssetPropertyStr = subAssetPropertyStr.Replace("##èµ„æºåç§°##", assetName.Replace(" ", ""));
+                    subAssetPropertyStr = subAssetPropertyStr.Replace("##èµ„æºè·¯å¾„##", assetItem.address);
                     propertyStrs += subAssetPropertyStr;
                 }
                 else
                 {
-                    string propertyStr = PropertyTemplate.Replace("##ÀàĞÍ##", assetItem.MainAssetType.Name);
-                    propertyStr = propertyStr.Replace("##×ÊÔ´Ãû³Æ##", assetItem.address.Replace(" ", ""));
-                    propertyStr = propertyStr.Replace("##×ÊÔ´Â·¾¶##", assetItem.address);
+                    string propertyStr = PropertyTemplate.Replace("##ç±»å‹##", assetItem.MainAssetType.Name);
+                    propertyStr = propertyStr.Replace("##èµ„æºåç§°##", assetItem.address.Replace(" ", ""));
+                    propertyStr = propertyStr.Replace("##èµ„æºè·¯å¾„##", assetItem.address);
                     propertyStrs += propertyStr;
-                    if (assetItem.MainAssetType == typeof(GameObject))  // ÓÎÏ·ÎïÌåÔö¼ÓÒ»¸öÓÃÓÚÖ±½ÓÊµÀı»¯µÄ
+                    if (assetItem.MainAssetType == typeof(GameObject))  // æ¸¸æˆç‰©ä½“å¢åŠ ä¸€ä¸ªç”¨äºç›´æ¥å®ä¾‹åŒ–çš„
                     {
-                        string gameObjectPropertyStr = GameObjectPropertyTemplate.Replace("##×ÊÔ´Ãû³Æ##", assetItem.address.Replace(" ", ""));
-                        gameObjectPropertyStr = gameObjectPropertyStr.Replace("##×ÊÔ´Â·¾¶##", assetItem.address);
+                        string gameObjectPropertyStr = GameObjectPropertyTemplate.Replace("##èµ„æºåç§°##", assetItem.address.Replace(" ", ""));
+                        gameObjectPropertyStr = gameObjectPropertyStr.Replace("##èµ„æºè·¯å¾„##", assetItem.address);
                         propertyStrs += gameObjectPropertyStr;
                     }
                 }
             }
-            groupStr = groupStr.Replace("~~³ÉÔ±~~", propertyStrs);
+            groupStr = groupStr.Replace("~~æˆå‘˜~~", propertyStrs);
             groupsStr += groupStr;
         }
-        fileStr = fileStr.Replace("~~³ÉÔ±~~", groupsStr);
+        fileStr = fileStr.Replace("~~æˆå‘˜~~", groupsStr);
         fileW.Write(fileStr);
         fileW.Flush();
         fileW.Close();
         file.Close();
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-        // ½áÊøÉú³É
-        Debug.Log("Éú³É×ÊÔ´´úÂë³É¹¦");
+        // ç»“æŸç”Ÿæˆ
+        Debug.Log("ç”Ÿæˆèµ„æºä»£ç æˆåŠŸ");
     }
 }
 #endif
