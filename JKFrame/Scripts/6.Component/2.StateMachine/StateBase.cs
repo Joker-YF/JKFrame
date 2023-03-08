@@ -1,7 +1,4 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using UnityEditorInternal;
-
-namespace JKFrame
+﻿namespace JKFrame
 {
     /// <summary>
     /// 状态基类
@@ -59,7 +56,7 @@ namespace JKFrame
         {
             return stateMachine.TryGetShareData<T>(key, out data);
         }
-        public void AddShareData(string key, T data)
+        public void AddShareData(string key, object data)
         {
             stateMachine.AddShareData(key, data);
         }
