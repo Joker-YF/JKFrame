@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using static JKFrame.GameObjectPoolModule;
+using Unity.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -47,6 +49,21 @@ namespace JKFrame
                 JKFrameRoot.EditorEventModule.EventTrigger<string, int>("OnInitGameObjectPool", keyName, defaultQuantity);
 #endif
         }
+        /// <summary>
+        /// 初始化对象池
+        /// </summary>
+        /// <param name="keyName"></param>
+        /// <param name="maxCapacity">最大容量，-1代表无限</param>
+        /// <param name="gameObjects">默认要放进来的对象数组</param>
+        public static void InitGameObjectPool(string keyName, int maxCapacity, GameObject[] gameObjects = null)
+        {
+            GameObjectPoolModule.InitObjectPool(keyName, maxCapacity, gameObjects);
+#if UNITY_EDITOR
+            if (JKFrameRoot.EditorEventModule != null)
+                JKFrameRoot.EditorEventModule.EventTrigger<string, int>("OnInitGameObjectPool", keyName, gameObjects.Length);
+#endif
+        }
+
 
         /// <summary>
         /// 初始化对象池并设置容量

@@ -2,9 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static JKFrame.GameObjectPoolModule;
+
 namespace JKFrame
 {
     public static class ResSystem
@@ -111,9 +114,12 @@ namespace JKFrame
             }
             else
             {
-                GameObject prefab = LoadAsset<GameObject>(assetName);
-                PoolSystem.InitGameObjectPool(keyName, maxCapacity, prefab, defaultQuantity);
-                UnloadAsset<GameObject>(prefab); // 预制体释放掉，后续没必要了
+                GameObject[] gameObjects = new GameObject[defaultQuantity];
+                for (int i = 0; i < defaultQuantity; i++)
+                {
+                    gameObjects[i] = Addressables.InstantiateAsync(assetName).WaitForCompletion();
+                }
+                PoolSystem.InitGameObjectPool(keyName, maxCapacity, gameObjects);
             }
         }
 
@@ -127,7 +133,6 @@ namespace JKFrame
         {
             InitGameObjectPoolForKeyName(assetName, maxCapacity, assetName, defaultQuantity);
         }
-
 
         /// <summary>
         /// 卸载游戏对象，这里是使用对象池的方式

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 namespace JKFrame
@@ -50,7 +51,7 @@ namespace JKFrame
                         {
                             GameObject go = GameObject.Instantiate(prefab);
                             go.name = prefab.name;
-                            PushObject(keyName, go);
+                            poolData.PushObj(go);
                         }
                     }
                     else
@@ -76,7 +77,7 @@ namespace JKFrame
                         {
                             GameObject go = GameObject.Instantiate(prefab);
                             go.name = prefab.name;
-                            PushObject(keyName, go);
+                            poolData.PushObj(go);
                         }
                     }
                     else
@@ -96,6 +97,54 @@ namespace JKFrame
         public void InitObjectPool(GameObject prefab, int maxCapacity = -1, int defaultQuantity = 0)
         {
             InitObjectPool(prefab.name, maxCapacity, prefab, defaultQuantity);
+        }
+
+
+        /// <summary>
+        /// 初始化对象池
+        /// </summary>
+        /// <param name="keyName"></param>
+        /// <param name="maxCapacity">最大容量，-1代表无限</param>
+        /// <param name="gameObjects">默认要放进来的对象数组</param>
+        public void InitObjectPool(string keyName, int maxCapacity = -1, GameObject[] gameObjects = null)
+        {
+            if (gameObjects.Length > maxCapacity && maxCapacity != -1)
+            {
+                JKLog.Error("默认容量超出最大容量限制");
+                return;
+            }
+
+            //设置的对象池已经存在
+            if (poolDic.TryGetValue(keyName, out GameObjectPoolData poolData))
+            {
+                //更新容量限制
+                poolData.maxCapacity = maxCapacity;
+            }
+            //设置的对象池不存在
+            else
+            {
+                //创建对象池
+                poolData = CreateGameObjectPoolData(keyName, maxCapacity);
+            }
+
+            //在指定默认容量和默认对象时才有意义
+            if (gameObjects.Length > 0)
+            {
+                int nowCapacity = poolData.PoolQueue.Count;
+                // 生成差值容量个数的物体放入对象池
+                for (int i = 0; i < gameObjects.Length; i++)
+                {
+                    if (i < gameObjects.Length - nowCapacity)
+                    {
+                        gameObjects[i].gameObject.name = keyName;
+                        poolData.PushObj(gameObjects[i].gameObject);
+                    }
+                    else
+                    {
+                        GameObject.Destroy(gameObjects[i].gameObject);
+                    }
+                }
+            }
         }
 
         /// <summary>
