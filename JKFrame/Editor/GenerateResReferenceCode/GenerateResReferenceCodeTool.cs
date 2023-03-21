@@ -13,7 +13,6 @@ public static class GenerateResReferenceCodeTool
     private static string fileStr =
 @"using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Animations;
 using System;
 using UnityEngine.Playables;
 using JKFrame;
