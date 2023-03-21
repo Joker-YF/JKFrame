@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace JKFrame
@@ -446,6 +447,41 @@ namespace JKFrame
             UITipsItem item = PoolSystem.GetGameObject<UITipsItem>(instance.UITipsItemPrefab.name, instance.UITipsItemParent);
             if (item == null) item = GameObject.Instantiate(instance.UITipsItemPrefab, instance.UITipsItemParent).GetComponent<UITipsItem>();
             item.Init(tips);
+        }
+        #endregion
+
+        #region 工具
+
+        private static List<RaycastResult> raycastResultList = new List<RaycastResult>();
+        /// <summary>
+        /// 检查鼠标是否在UI上,会屏蔽名称为Mask的物体
+        /// </summary>
+        public static bool CheckMouseOnUI()
+        {
+            return CheckPositoinOnUI(Input.mousePosition);
+        }
+
+        /// <summary>
+        /// 检查一个坐标是否在UI上,会屏蔽名称为Mask的物体
+        /// </summary>
+        public static bool CheckPositoinOnUI(Vector2 pos)
+        {
+            UnityEngine.EventSystems.EventSystem eventSystem = UnityEngine.EventSystems.EventSystem.current;
+            PointerEventData pointerEventData = new PointerEventData(eventSystem);
+            pointerEventData.position = pos;
+            // 射线去检测有没有除了Mask以外的任何UI物体
+            eventSystem.RaycastAll(pointerEventData, raycastResultList);
+            for (int i = 0; i < raycastResultList.Count; i++)
+            {
+                // 是UI，同时还不是Mask作用的物体
+                if (raycastResultList[i].gameObject.name != "Mask")
+                {
+                    raycastResultList.Clear();
+                    return true;
+                }
+            }
+            raycastResultList.Clear();
+            return false;
         }
         #endregion
 
