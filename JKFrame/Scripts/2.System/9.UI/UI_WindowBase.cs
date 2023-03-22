@@ -21,38 +21,41 @@ namespace JKFrame
         /// </summary>
         public virtual void Init() { }
 
-        /// <summary>
-        /// 显示
-        /// </summary>
-        public virtual void OnShow()
+        public void ShowGeneralLogic()
         {
             uiEnable = true;
             OnUpdateLanguage();
             RegisterEventListener();
+            OnShow();
+        }
+
+        /// <summary>
+        /// 显示
+        /// </summary>
+        public virtual void OnShow() { }
+
+
+        public void CloseGeneralLogic()
+        {
+            uiEnable = false;
+            CancelEventListener();
+            OnClose();
         }
 
         /// <summary>
         /// 关闭时额外执行的内容
         /// </summary>
-        public virtual void OnClose()
-        {
-            uiEnable = false;
-            Debug.Log(uiEnable);
-            CancelEventListener();
-        }
+        public virtual void OnClose() { }
 
         /// <summary>
         /// 注册事件
         /// </summary>
-        protected virtual void RegisterEventListener()
-        {
-        }
+        protected virtual void RegisterEventListener() { }
+
         /// <summary>
         /// 取消事件
         /// </summary>
-        protected virtual void CancelEventListener()
-        {
-        }
+        protected virtual void CancelEventListener() { }
         protected virtual void OnUpdateLanguage() { }
     }
 }

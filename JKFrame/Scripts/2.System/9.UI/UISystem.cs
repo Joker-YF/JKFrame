@@ -250,14 +250,14 @@ namespace JKFrame
                 windowData.instance.gameObject.SetActive(true);
                 windowData.instance.transform.SetParent(UILayers[layerNum].root);
                 windowData.instance.transform.SetAsLastSibling();
-                windowData.instance.OnShow();
+                windowData.instance.ShowGeneralLogic();
             }
             else
             {
                 UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowData.assetPath, UILayers[layerNum].root, windowKey);
                 windowData.instance = window;
                 window.Init();
-                window.OnShow();
+                window.ShowGeneralLogic();
             }
             windowData.layerNum = layerNum;
             UILayers[layerNum].OnWindowShow();
@@ -395,7 +395,7 @@ namespace JKFrame
         {
             if (windowData.instance.UIEnable)
             {
-                windowData.instance.OnClose();
+                windowData.instance.CloseGeneralLogic();
                 // 缓存则隐藏
                 if (windowData.isCache)
                 {
