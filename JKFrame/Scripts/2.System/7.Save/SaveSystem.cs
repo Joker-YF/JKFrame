@@ -92,7 +92,7 @@ namespace JKFrame
 
         // 存档中对象的缓存字典 
         // <存档ID,<文件名称，实际的对象>>
-        private static Dictionary<int, Dictionary<string, object>> cacheDic = new Dictionary<int, Dictionary<string, object>>();
+        private static Dictionary<int, Dictionary<string, object>> cacheDic;
 
 #if UNITY_EDITOR
         static SaveSystem()
@@ -110,7 +110,7 @@ namespace JKFrame
         {
             saveDirPath = Application.persistentDataPath + "/" + saveDirName;
             settingDirPath = Application.persistentDataPath + "/" + settingDirName;
-
+            cacheDic = new Dictionary<int, Dictionary<string, object>>();
 #if UNITY_EDITOR
             // 
             if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)

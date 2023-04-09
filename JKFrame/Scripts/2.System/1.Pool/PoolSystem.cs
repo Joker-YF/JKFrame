@@ -21,7 +21,7 @@ namespace JKFrame
         private static GameObjectPoolModule GameObjectPoolModule;
         private static ObjectPoolModule ObjectPoolModule;
         private static Transform poolRootTransform;
-        static PoolSystem()
+        public static void Init()
         {
             GameObjectPoolModule = new GameObjectPoolModule();
             ObjectPoolModule = new ObjectPoolModule();

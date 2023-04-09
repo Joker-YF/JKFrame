@@ -10,6 +10,10 @@ namespace JKFrame
     {
         static JKLog()
         {
+            Init();
+        }
+        public static void Init()
+        {
             if (JKFrameRoot.Setting != null)
             {
                 Init(JKFrameRoot.Setting.LogConfig);

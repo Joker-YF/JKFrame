@@ -2,6 +2,7 @@
 
 namespace JKFrame
 {
+    using JK.Log;
 #if UNITY_EDITOR
     using UnityEditor;
     [InitializeOnLoad]
@@ -42,6 +43,8 @@ namespace JKFrame
         #region System
         private void InitSystems()
         {
+            PoolSystem.Init();
+            EventSystem.Init();
             MonoSystem.Init();
             AudioSystem.Init();
             UISystem.Init();
@@ -83,7 +86,7 @@ namespace JKFrame
                 UI_WindowBase[] window = Instance.transform.GetComponentsInChildren<UI_WindowBase>();
                 foreach (UI_WindowBase win in window)
                 {
-                    win.OnShow();
+                    win.ShowGeneralLogic();
                 }
             }
         }

@@ -8,7 +8,7 @@ namespace JKFrame
     public static class EventSystem
     {
         private static EventModule eventModule;
-        static EventSystem()
+        public static void Init()
         {
             eventModule = new EventModule();
         }

@@ -60,11 +60,19 @@
         {
             stateMachine.AddShareData(key, data);
         }
-        public void RemoveData(string key)
+        public void RemoveShareData(string key)
         {
             stateMachine.RemoveShareData(key);
         }
-        public bool ContainsData(string key)
+        public void UpdateShareData(string key, object data)
+        {
+            stateMachine.UpdateShareData(key, data);
+        }
+        public void CleanShareData()
+        {
+            stateMachine.CleanShareData();
+        }
+        public bool ContainsShareData(string key)
         {
             return stateMachine.ContainsShareData(key);
         }

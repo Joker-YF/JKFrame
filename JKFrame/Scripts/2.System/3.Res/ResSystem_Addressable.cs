@@ -336,32 +336,39 @@ namespace JKFrame
 
         /// <summary>
         /// 加载指定Key的所有资源
+        /// 注意:批量加载时，如果释放资源要释放掉handle，直接去释放资源是无效的
         /// </summary>
         /// <typeparam name="T">加载类型</typeparam>
         /// <param name="keyName">一般是lable</param>
+        /// <param name="handle">用来Release时使用</param>
         /// <param name="callBackOnEveryOne">注意这里是针对每一个资源的回调</param>
         /// <returns>所有资源</returns>
-        public static IList<T> LoadAssets<T>(string keyName, Action<T> callBackOnEveryOne = null)
+        public static IList<T> LoadAssets<T>(string keyName, out AsyncOperationHandle<IList<T>> handle, Action<T> callBackOnEveryOne = null)
         {
-            return Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne).WaitForCompletion();
+            handle = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne, true);
+            return handle.WaitForCompletion();
         }
 
         /// <summary>
         /// 异步加载指定Key的所有资源
+        /// 注意1:批量加载时，如果释放资源要释放掉handle，直接去释放资源是无效的
+        /// 注意2:回调后使用callBack中的参数使用(.Result)即可访问资源列表
         /// </summary>
         /// <typeparam name="T">加载类型</typeparam>
         /// <param name="keyName">一般是lable</param>
-        /// <param name="callBack">注意这里是针对每一个资源的回调</param>
-        public static void LoadAssetsAsync<T>(string keyName, Action<IList<T>> callBack = null, Action<T> callBackOnEveryOne = null)
+        /// <param name="callBack">所有资源列表的统一回调，注意这是很必要的，因为Release时需要这个handle</param>
+        /// <param name="callBackOnEveryOne">注意这里是针对每一个资源的回调,可以是Null</param>
+        public static void LoadAssetsAsync<T>(string keyName, Action<AsyncOperationHandle<IList<T>>> callBack, Action<T> callBackOnEveryOne = null)
         {
             MonoSystem.Start_Coroutine(DoLoadAssetsAsync<T>(keyName, callBack, callBackOnEveryOne));
         }
 
-        static IEnumerator DoLoadAssetsAsync<T>(string keyName, Action<IList<T>> callBack = null, Action<T> callBackOnEveryOne = null)
+        static IEnumerator DoLoadAssetsAsync<T>(string keyName, Action<AsyncOperationHandle<IList<T>>> callBack, Action<T> callBackOnEveryOne = null)
         {
-            AsyncOperationHandle<IList<T>> request = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne);
-            yield return request;
-            callBack?.Invoke(request.Result);
+            AsyncOperationHandle<IList<T>> handle = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne);
+            yield return handle;
+
+            callBack?.Invoke(handle);
         }
 
         /// <summary>

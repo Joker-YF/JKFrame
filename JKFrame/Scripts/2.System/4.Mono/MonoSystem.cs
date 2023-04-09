@@ -20,6 +20,9 @@ namespace JKFrame
         public static void Init()
         {
             instance = JKFrameRoot.RootTransform.GetComponent<MonoSystem>();
+            instance.updateEvent = null;
+            instance.lateUpdateEvent = null;
+            instance.fixedUpdateEvent = null;
         }
 
         #region 生命周期函数

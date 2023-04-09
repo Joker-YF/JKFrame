@@ -42,6 +42,7 @@ namespace JKFrame
         /// <param name="owner">宿主</param>
         public void Init(IStateMachineOwner owner, bool enableStateShareData = false)
         {
+            if (enableStateShareData) stateShareDataDic = new Dictionary<string, object>();
             this.owner = owner;
         }
 
@@ -72,7 +73,7 @@ namespace JKFrame
             CurrStateType = stateType;
             currStateObj.Enter();
             currStateObj.AddUpdate(currStateObj.Update);
-            currStateObj.AddUpdate(currStateObj.LateUpdate);
+            currStateObj.AddLateUpdate(currStateObj.LateUpdate);
             currStateObj.AddFixedUpdate(currStateObj.FixedUpdate);
 
             return true;
@@ -139,6 +140,15 @@ namespace JKFrame
         public bool ContainsShareData(string key)
         {
             return stateShareDataDic.ContainsKey(key);
+        }
+        public bool UpdateShareData(string key, object data)
+        {
+            if (ContainsShareData(key))
+            {
+                stateShareDataDic[key] = data;
+                return true;
+            }
+            else return false;
         }
         public void CleanShareData()
         {
