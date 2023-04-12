@@ -1,4 +1,4 @@
-<linker>
+﻿<linker>
        <assembly fullname="Sirenix.OdinInspector.Attributes" preserve="all"/>
        <assembly fullname="Sirenix.Serialization.Config" preserve="all"/>
        <assembly fullname="Sirenix.Serialization" preserve="all"/>

@@ -70,19 +70,19 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: TestWindow
+      Data: TestWindow0
     - Name: $v
       Entry: 7
       Data: 3|JKFrame.UIWindowData, JKFrame
     - Name: isCache
       Entry: 5
-      Data: false
+      Data: true
     - Name: assetPath
       Entry: 1
-      Data: TestWindow222
+      Data: TestWindow
     - Name: layerNum
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: instance
       Entry: 6
       Data: 
@@ -97,19 +97,19 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: DD2
+      Data: TestWindow
     - Name: $v
       Entry: 7
       Data: 4|JKFrame.UIWindowData, JKFrame
     - Name: isCache
       Entry: 5
-      Data: false
+      Data: true
     - Name: assetPath
       Entry: 1
       Data: TestWindow
     - Name: layerNum
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: instance
       Entry: 6
       Data: 
@@ -125,5 +125,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  ResourcesSystemType: 1
+  ResourcesSystemType: 0
   SaveSystemType: 1
