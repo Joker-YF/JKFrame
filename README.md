@@ -7,7 +7,7 @@ JKFrame2.0比较像是个工具箱，除了UI窗口外的大多情况下，你�
 很多功能更像是插件的感觉~如：
 
 	SaveSystem.SaveObject(object)保存某个存档数据
-
+	
 	AudioSystem.PlayBGAudio(audioClip)播放某个背景音乐
 
 **主要功能系统：**
@@ -54,3 +54,5 @@ Parks
 QQ群：654336425
 
 作者：739554159（Joker）
+
+使用手册：http://www.yfjoker.com/JKFrame/
