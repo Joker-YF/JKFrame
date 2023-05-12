@@ -7,6 +7,7 @@ namespace JKFrame
     using UnityEditor;
     [InitializeOnLoad]
 #endif
+    [DefaultExecutionOrder(-20)]
     /// <summary>
     /// 框架根节点
     /// </summary>
