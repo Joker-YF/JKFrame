@@ -1,25 +1,24 @@
 ﻿
 #if ENABLE_ADDRESSABLES
+using JKFrame;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
-
 public static class GenerateResReferenceCodeTool
 {
+
     static string scriptPath = Application.dataPath + "/JKFrame/R.cs";
     private static string fileStr =
-@"using UnityEngine;
-using UnityEngine.UI;
-using System;
-using UnityEngine.Playables;
-using JKFrame;
+@"using JKFrame;
+~~命名空间~~
 namespace R
 {
 ~~成员~~
 }";
+
     private static string classTemplate =
 @" 
     public static class ##类名##
@@ -46,16 +45,19 @@ namespace R
             File.Delete(scriptPath);
             AssetDatabase.Refresh();
         }
-        Debug.Log("清除资源代码脚本成功");
+        JKLog.Succeed("清除资源代码脚本成功");
     }
     public static void GenerateResReferenceCode()
     {
         // 开始生成
-        Debug.Log("开始生成资源代码");
+        JKLog.Log("开始生成资源代码");
         if (File.Exists(scriptPath)) File.Delete(scriptPath);
 
         FileStream file = new FileStream(scriptPath, FileMode.CreateNew);
         StreamWriter fileW = new StreamWriter(file, System.Text.Encoding.UTF8);
+
+        HashSet<string> allTypeAssemblyNames = new HashSet<string>();
+        allTypeAssemblyNames.Add("UnityEngine");
 
         // 获取全部Addressable的Group
         string groupsStr = "";
@@ -69,11 +71,19 @@ namespace R
 
             // 找到子类全部资源以及类型
             List<AddressableAssetEntry> allAssetEntry = new List<AddressableAssetEntry>();
+
             group.GatherAllAssets(allAssetEntry, true, true, true);
             string propertyStrs = "";   // 属性的字符串
             for (int i = 0; i < allAssetEntry.Count; i++)
             {
                 AddressableAssetEntry assetItem = allAssetEntry[i];
+                // 添加到类型列表中等待添加命名空间
+                string assemblyNam = assetItem.MainAssetType.Assembly.GetName().Name;
+                if (assemblyNam != "UnityEngine.CoreModule" && !allTypeAssemblyNames.Contains(assemblyNam))
+                {
+                    allTypeAssemblyNames.Add(assemblyNam);
+                }
+
                 if (assetItem.IsSubAsset)   // sub资源主要存在[]无法生成class
                 {
                     string subAssetPropertyStr = SubAssetPropertyTemplate.Replace("##类型##", assetItem.MainAssetType.Name);
@@ -99,7 +109,19 @@ namespace R
             groupStr = groupStr.Replace("~~成员~~", propertyStrs);
             groupsStr += groupStr;
         }
+
+        string namespaceString = "";
+        // 生成命名空间
+        foreach (string item in allTypeAssemblyNames)
+        {
+            namespaceString += @" using {item};
+".Replace("{item}", item);
+        }
+
+        fileStr = fileStr.Replace("~~命名空间~~", namespaceString);
         fileStr = fileStr.Replace("~~成员~~", groupsStr);
+
+
         fileW.Write(fileStr);
         fileW.Flush();
         fileW.Close();
@@ -107,7 +129,7 @@ namespace R
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         // 结束生成
-        Debug.Log("生成资源代码成功");
+        JKLog.Succeed("生成资源代码成功");
     }
 }
 #endif
