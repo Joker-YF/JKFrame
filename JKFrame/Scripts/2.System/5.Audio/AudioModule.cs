@@ -209,36 +209,64 @@ namespace JKFrame
         }
 
         #region 背景音乐
-        public void PlayBGAudio(AudioClip clip, bool loop = true, float volume = -1)
+        private static Coroutine fadeCoroutine;
+
+        public void PlayBGAudio(AudioClip clip, bool loop = true, float volume = -1, float fadeOutTime = 0, float fadeInTime = 0)
         {
-            BGAudioSource.clip = clip;
             IsLoop = loop;
             if (volume != -1)
             {
                 BGVolume = volume;
             }
+            fadeCoroutine = StartCoroutine(DoVolumeFade(clip, fadeOutTime, fadeInTime));
             BGAudioSource.Play();
         }
+        private IEnumerator DoVolumeFade(AudioClip clip, float fadeOutTime, float fadeInTime)
+        {
+            float currTime = 0;
+            if (fadeOutTime <= 0) fadeOutTime = 0.0001f;
+            if (fadeInTime <= 0) fadeInTime = 0.0001f;
 
+            // 降低音量，也就是淡出
+            while (currTime < fadeOutTime)
+            {
+                yield return CoroutineTool.WaitForFrames();
+                if (!isPause) currTime += Time.deltaTime;
+                float ratio = Mathf.Lerp(1, 0, currTime / fadeOutTime);
+                BGAudioSource.volume = bgVolume * globalVolume * ratio;
+            }
+
+            BGAudioSource.clip = clip;
+            BGAudioSource.Play();
+            currTime = 0;
+            // 提高音量，也就是淡入
+            while (currTime < fadeInTime)
+            {
+                yield return CoroutineTool.WaitForFrames();
+                if (!isPause) currTime += Time.deltaTime;
+                float ratio = Mathf.InverseLerp(0, 1, currTime / fadeInTime);
+                BGAudioSource.volume = bgVolume * globalVolume * ratio;
+            }
+            fadeCoroutine = null;
+        }
 
         private static Coroutine bgWithClipsCoroutine;
         /// <summary>
         /// 使用音效数组播放背景音乐，自动循环
         /// </summary>
-        public void PlayBGAudioWithClips(AudioClip[] clips, float volume = -1)
+        public void PlayBGAudioWithClips(AudioClip[] clips, float volume = -1, float fadeOutTime = 0, float fadeInTime = 0)
         {
             bgWithClipsCoroutine = MonoSystem.Start_Coroutine(DoPlayBGAudioWithClips(clips, volume));
         }
 
-        private IEnumerator DoPlayBGAudioWithClips(AudioClip[] clips, float volume = -1)
+        private IEnumerator DoPlayBGAudioWithClips(AudioClip[] clips, float volume = -1, float fadeOutTime = 0, float fadeInTime = 0)
         {
             if (volume != -1) BGVolume = volume;
             int currIndex = 0;
             while (true)
             {
                 AudioClip clip = clips[currIndex];
-                BGAudioSource.clip = clip;
-                BGAudioSource.Play();
+                fadeCoroutine = StartCoroutine(DoVolumeFade(clip, fadeOutTime, fadeInTime));
                 float time = clip.length;
                 // 时间只要还好，一直检测
                 while (time > 0)
@@ -254,6 +282,7 @@ namespace JKFrame
         public void StopBGAudio()
         {
             if (bgWithClipsCoroutine != null) MonoSystem.Stop_Coroutine(bgWithClipsCoroutine);
+            if (fadeCoroutine != null) MonoSystem.Stop_Coroutine(fadeCoroutine);
             BGAudioSource.Stop();
             BGAudioSource.clip = null;
         }

@@ -24,14 +24,18 @@ namespace JKFrame
         /// <param name="clip">音乐片段</param>
         /// <param name="loop">是否循环</param>
         /// <param name="volume">音量，-1代表不设置，采用当前音量</param>
-        public static void PlayBGAudio(AudioClip clip, bool loop = true, float volume = -1)
-            => audioModule.PlayBGAudio(clip, loop, volume);
+        /// <param name="fadeOutTime">渐出音量花费的时间</param>
+        /// <param name="fadeInTime">渐入音量花费的时间</param>
+        public static void PlayBGAudio(AudioClip clip, bool loop = true, float volume = -1, float fadeOutTime = 0, float fadeInTime = 0)
+            => audioModule.PlayBGAudio(clip, loop, volume, fadeOutTime, fadeInTime);
 
         /// <summary>
         /// 使用音效数组播放背景音乐，自动循环
         /// </summary>
-        public static void PlayBGAudioWithClips(AudioClip[] clips, float volume = -1)
-            => audioModule.PlayBGAudioWithClips(clips, volume);
+        /// <param name="fadeOutTime">渐出音量花费的时间</param>
+        /// <param name="fadeInTime">渐入音量花费的时间</param>
+        public static void PlayBGAudioWithClips(AudioClip[] clips, float volume = -1, float fadeOutTime = 0, float fadeInTime = 0)
+            => audioModule.PlayBGAudioWithClips(clips, volume, fadeOutTime, fadeInTime);
 
         /// <summary>
         /// 停止背景音乐
