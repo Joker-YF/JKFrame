@@ -97,10 +97,6 @@ namespace JKFrame
 #if UNITY_EDITOR
         static SaveSystem()
         {
-            if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
-            {
-                return;
-            }
             Init();
         }
 #endif
