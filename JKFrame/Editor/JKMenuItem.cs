@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using JKFrame;
+using UnityEditor;
 using UnityEngine;
 
 public class JKMenuItem
@@ -13,6 +14,11 @@ public class JKMenuItem
     public static void OpenDoc()
     {
         Application.OpenURL("http://www.yfjoker.com/JKFrame/index.html");
+    }
+    [MenuItem("JKFrame/清空存档")]
+    public static void CleanSave()
+    {
+        SaveSystem.DeleteAll();
     }
 
 #if ENABLE_ADDRESSABLES
