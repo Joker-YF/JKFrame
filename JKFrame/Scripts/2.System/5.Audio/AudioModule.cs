@@ -219,7 +219,6 @@ namespace JKFrame
                 BGVolume = volume;
             }
             fadeCoroutine = StartCoroutine(DoVolumeFade(clip, fadeOutTime, fadeInTime));
-            BGAudioSource.Play();
         }
         private IEnumerator DoVolumeFade(AudioClip clip, float fadeOutTime, float fadeInTime)
         {
