@@ -12,47 +12,26 @@ namespace JKFrame
     public class SaveItem : ISerializationCallbackReceiver
     {
         public int saveID;
-        public DateTime lastSaveTime;
+        [NonSerialized] public DateTime lastSaveTime;
         [SerializeField] private string lastSaveTimeString; // Json不支持DateTime，用来持久化的
         public SaveItem(int saveID, DateTime lastSaveTime)
         {
             this.saveID = saveID;
-            switch (JKFrameRoot.Setting.SaveSystemType)
-            {
-                case SaveSystemType.Binary:
-                    this.lastSaveTime = lastSaveTime;
-                    break;
-                case SaveSystemType.Json:
-                    this.lastSaveTime = lastSaveTime;
-                    lastSaveTimeString = lastSaveTime.ToString();
-                    break;
-            }
+            this.lastSaveTime = lastSaveTime;
+            lastSaveTimeString = lastSaveTime.ToString();
         }
 
         public void UpdateTime(DateTime lastSaveTime)
         {
             this.lastSaveTime = lastSaveTime;
-            switch (JKFrameRoot.Setting.SaveSystemType)
-            {
-                case SaveSystemType.Binary:
-                    this.lastSaveTime = lastSaveTime;
-                    break;
-                case SaveSystemType.Json:
-                    this.lastSaveTime = lastSaveTime;
-                    lastSaveTimeString = lastSaveTime.ToString();
-                    break;
-            }
+            this.lastSaveTime = lastSaveTime;
+            lastSaveTimeString = lastSaveTime.ToString();
         }
 
         public void OnAfterDeserialize()
         {
-            // 存档如果是Json格式，只会保存字符串，所以需要将字符串转为DateTime格式
-            switch (JKFrameRoot.Setting.SaveSystemType)
-            {
-                case SaveSystemType.Json:
-                    DateTime.TryParse(lastSaveTimeString, out lastSaveTime);
-                    break;
-            }
+            //  只会保存字符串，所以需要将字符串转为DateTime格式
+            DateTime.TryParse(lastSaveTimeString, out lastSaveTime);
         }
 
         public void OnBeforeSerialize()
