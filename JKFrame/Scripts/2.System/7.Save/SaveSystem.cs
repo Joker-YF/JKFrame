@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
 namespace JKFrame
 {
@@ -9,10 +10,21 @@ namespace JKFrame
     /// 一个存档的数据
     /// </summary>
     [Serializable]
-    public class SaveItem : ISerializationCallbackReceiver
+    public class SaveItem
     {
         public int saveID;
-        [NonSerialized] public DateTime lastSaveTime;
+        private DateTime lastSaveTime;
+        public DateTime LastSaveTime
+        {
+            get
+            {
+                if (lastSaveTime == default(DateTime))
+                {
+                    DateTime.TryParse(lastSaveTimeString, out lastSaveTime);
+                }
+                return lastSaveTime;
+            }
+        }
         [SerializeField] private string lastSaveTimeString; // Json不支持DateTime，用来持久化的
         public SaveItem(int saveID, DateTime lastSaveTime)
         {
@@ -24,18 +36,7 @@ namespace JKFrame
         public void UpdateTime(DateTime lastSaveTime)
         {
             this.lastSaveTime = lastSaveTime;
-            this.lastSaveTime = lastSaveTime;
             lastSaveTimeString = lastSaveTime.ToString();
-        }
-
-        public void OnAfterDeserialize()
-        {
-            //  只会保存字符串，所以需要将字符串转为DateTime格式
-            DateTime.TryParse(lastSaveTimeString, out lastSaveTime);
-        }
-
-        public void OnBeforeSerialize()
-        {
         }
     }
 
@@ -147,7 +148,7 @@ namespace JKFrame
         {
             public int Compare(SaveItem x, SaveItem y)
             {
-                if (x.lastSaveTime > y.lastSaveTime)
+                if (x.LastSaveTime > y.LastSaveTime)
                 {
                     return -1;
                 }
