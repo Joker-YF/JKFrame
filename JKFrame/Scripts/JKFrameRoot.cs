@@ -54,7 +54,6 @@ namespace JKFrame
             JKLog.Init(FrameSetting.LogConfig);
 #endif
         }
-
         #endregion
 
         #region Editor

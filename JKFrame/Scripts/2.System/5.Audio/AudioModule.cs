@@ -342,7 +342,7 @@ namespace JKFrame
             }
         }
 
-        public void PlayOnShot(AudioClip clip, Component component = null, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)
+        public void PlayOneShot(AudioClip clip, Component component = null, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)
         {
             // 初始化音乐播放器
             AudioSource audioSource = GetAudioPlay(is3d);
@@ -373,7 +373,7 @@ namespace JKFrame
             if (owner != null) owner.RemoveOnDestroy<AudioSource>(OnOwerDestory);
         }
 
-        public void PlayOnShot(AudioClip clip, Vector3 position, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)
+        public void PlayOneShot(AudioClip clip, Vector3 position, bool autoReleaseClip = false, float volumeScale = 1, bool is3d = true, Action callBack = null)
         {
             // 初始化音乐播放器
             AudioSource audioSource = GetAudioPlay(is3d);
