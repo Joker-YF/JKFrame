@@ -382,6 +382,16 @@ namespace JKFrame
         }
 
         /// <summary>
+        /// 卸载因为批量加载而产生的handle
+        /// </summary>
+        /// <typeparam name="TObject"></typeparam>
+        /// <param name="handle"></param>
+        public static void UnLoadAssetsHandle<TObject>(AsyncOperationHandle<TObject> handle)
+        {
+            Addressables.Release(handle);
+        }
+
+        /// <summary>
         /// 销毁游戏物体并释放资源
         /// </summary>
         public static bool UnloadInstance(GameObject obj)
