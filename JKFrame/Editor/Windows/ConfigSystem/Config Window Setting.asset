@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751026cd146f28c419f23d9085b14e81, type: 3}
+  m_Name: Config Window Setting
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: generateExcelTemplateClassType
+      Entry: 7
+      Data: 0|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: TestConfig, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: conversionTye
+      Entry: 9
+      Data: 0
+  generateExcelTemplatePath: E:/Unity/JKFrame2.0/Assets/TestExcelConfig/Normal
+  fileName: NoramlMode
+  useLableText: 1
+  useListFied: 0
+  generateExcelTemplateFieldName: nums
+  conversion: 1
+  guidMode: 0
+  conversionExcelFilePath: E:/Unity/JKFrame2.0/Assets/TestExcelConfig/Normal/NewExcel.xlsx
+  saveExcelFileFolderPath: E:/Unity/JKFrame2.0/Assets/TestExcelConfig/Normal
+  saveExcelName: NewExcel
+  conversionSoFolderPath: Assets/TestExcelConfig/Normal/Config
+  useSoFileNamePrefix: 0
+  soFileNameUseFileIndex: 0
+  soFileNamePrefixName: "\u7528\u6237"
+  soFile: {fileID: 11400000, guid: 6acc6438bc5bd6744bb944cd74a9be98, type: 2}
+  listFieldName: nums
+  deleteFolder: 0

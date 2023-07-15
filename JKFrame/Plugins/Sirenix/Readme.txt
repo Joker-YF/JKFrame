@@ -1,4 +1,4 @@
-﻿------------------------------------ Getting Started ------------------------------------
+------------------------------------ Getting Started ------------------------------------
 
 Open up the Getting Started guide from "Tools > Odin Inspector > Getting Started."
 
