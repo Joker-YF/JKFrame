@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-public class LocalizationSystem : SerializedMonoBehaviour
+public class LocalizationSystem : MonoBehaviour
 {
     private static LocalizationSystem instance;
     private const string OnUpdaterLanguage = "OnUpdaterLanguage";
@@ -30,10 +30,14 @@ public class LocalizationSystem : SerializedMonoBehaviour
     /// 全局的配置
     /// 可以运行时修改此配置
     /// </summary>
-    [LabelText("全局配置"), AssetsOnly] public LocalizationConfig globalConfig;
+    [SerializeField] private LocalizationConfig globalConfig;
 
-    [SerializeField, LabelText("语言类型"), OnValueChanged("OnLanguageValueChanged")] private LanguageType languageType;
+    [SerializeField] private LanguageType languageType;
 
+    private void OnValidate()
+    {
+        OnLanguageValueChanged();
+    }
     public static void OnLanguageValueChanged()
     {
         if (instance == null) return; // 应该没有运行

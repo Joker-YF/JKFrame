@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Example/LocalizationConfig")]
+[CreateAssetMenu(menuName = "JKFrame/LocalizationConfig")]
 public class LocalizationConfig : LocalizationConfigBase<LanguageType>
 {
 
