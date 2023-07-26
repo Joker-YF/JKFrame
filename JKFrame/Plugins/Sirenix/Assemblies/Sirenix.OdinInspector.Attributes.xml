@@ -1058,17 +1058,17 @@
              <para>The following example shows how DisplayAsString is used to display a string property as text in the inspector.</para>
              <code>
              public class MyComponent : MonoBehaviour
-            	{
-            		[DisplayAsString]
-            		public string MyInt = 5;
+                {
+                    [DisplayAsString]
+                    public string MyInt = 5;
             
-            		// You can combine with <see cref="T:Sirenix.OdinInspector.HideLabelAttribute"/> to display a message in the inspector.
-            		[DisplayAsString, HideLabel]
-            		public string MyMessage = "This string will be displayed as text in the inspector";
-            		
-            		[DisplayAsString(false)]
-            		public string InlineMessage = "This string is very long, but has been configured to not overflow.";
-            	}
+                    // You can combine with <see cref="T:Sirenix.OdinInspector.HideLabelAttribute"/> to display a message in the inspector.
+                    [DisplayAsString, HideLabel]
+                    public string MyMessage = "This string will be displayed as text in the inspector";
+            
+                    [DisplayAsString(false)]
+                    public string InlineMessage = "This string is very long, but has been configured to not overflow.";
+                }
              </code>
              </example>
              <seealso cref="T:Sirenix.OdinInspector.TitleAttribute"/>
@@ -1078,6 +1078,21 @@
             <summary>
             If <c>true</c>, the string will overflow past the drawn space and be clipped when there's not enough space for the text.
             If <c>false</c> the string will expand to multiple lines, if there's not enough space when drawn.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.DisplayAsStringAttribute.Alignment">
+            <summary>
+            How the string should be aligned.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.DisplayAsStringAttribute.FontSize">
+            <summary>
+            The size of the font.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.DisplayAsStringAttribute.EnableRichText">
+            <summary>
+            If <c>true</c> the string will support rich text.
             </summary>
         </member>
         <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor">
@@ -1090,6 +1105,94 @@
             Displays the property as a string in the inspector.
             </summary>
             <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(UnityEngine.TextAlignment)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="alignment">How the string should be aligned.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Int32)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="fontSize">The size of the font.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Boolean,UnityEngine.TextAlignment)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+            <param name="alignment">How the string should be aligned.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Boolean,System.Int32)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+            <param name="fontSize">The size of the font.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Int32,UnityEngine.TextAlignment)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="fontSize">The size of the font.</param>
+            <param name="alignment">How the string should be aligned.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Boolean,System.Int32,UnityEngine.TextAlignment)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+            <param name="fontSize">The size of the font.</param>
+            <param name="alignment">How the string should be aligned.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(UnityEngine.TextAlignment,System.Boolean)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="alignment">How the string should be aligned.</param>
+            <param name="enableRichText">If <c>true</c> the string will support rich text.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="fontSize">The size of the font.</param>
+            <param name="enableRichText">If <c>true</c> the string will support rich text.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Boolean,UnityEngine.TextAlignment,System.Boolean)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+            <param name="alignment">How the string should be aligned.</param>
+            <param name="enableRichText">If <c>true</c> the string will support rich text.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Boolean,System.Int32,System.Boolean)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+            <param name="fontSize">The size of the font.</param>
+            <param name="enableRichText">If <c>true</c> the string will support rich text.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Int32,UnityEngine.TextAlignment,System.Boolean)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="fontSize">The size of the font.</param>
+            <param name="alignment">How the string should be aligned.</param>
+            <param name="enableRichText">If <c>true</c> the string will support rich text.</param>
+        </member>
+        <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor(System.Boolean,System.Int32,UnityEngine.TextAlignment,System.Boolean)">
+            <summary>
+            Displays the property as a string in the inspector.
+            </summary>
+            <param name="overflow">Value indicating if the string should overflow past the available space, or expand to multiple lines when there's not enough horizontal space.</param>
+            <param name="fontSize">The size of the font.</param>
+            <param name="alignment">How the string should be aligned.</param>
+            <param name="enableRichText">If <c>true</c> the string will support rich text.</param>
         </member>
         <member name="T:Sirenix.OdinInspector.DoNotDrawAsReferenceAttribute">
             <summary>
@@ -3293,7 +3396,7 @@
         </member>
         <member name="F:Sirenix.OdinInspector.PreviewFieldAttribute.FilterMode">
             <summary>
-            The FilterMode to be used for the preview. (Applies only to previews retrieved via the previewGetter parameter).
+            The FilterMode to be used for the preview.
             </summary>
         </member>
         <member name="P:Sirenix.OdinInspector.PreviewFieldAttribute.Alignment">

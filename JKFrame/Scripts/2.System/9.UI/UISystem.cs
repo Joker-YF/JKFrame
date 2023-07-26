@@ -250,14 +250,14 @@ namespace JKFrame
                 windowData.instance.gameObject.SetActive(true);
                 windowData.instance.transform.SetParent(UILayers[layerNum].root);
                 windowData.instance.transform.SetAsLastSibling();
-                windowData.instance.ShowGeneralLogic();
+                windowData.instance.ShowGeneralLogic(layerNum);
             }
             else
             {
                 UI_WindowBase window = ResSystem.InstantiateGameObject<UI_WindowBase>(windowData.assetPath, UILayers[layerNum].root, windowKey);
                 windowData.instance = window;
                 window.Init();
-                window.ShowGeneralLogic();
+                window.ShowGeneralLogic(layerNum);
             }
             windowData.layerNum = layerNum;
             UILayers[layerNum].OnWindowShow();

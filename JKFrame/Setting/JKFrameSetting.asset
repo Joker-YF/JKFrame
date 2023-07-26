@@ -125,5 +125,14 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: LocalizationEnumType
+      Entry: 7
+      Data: 5|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: LanguageType, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
   ResourcesSystemType: 0
   SaveSystemType: 0

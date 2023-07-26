@@ -3,6 +3,8 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using System.Collections;
+using Sirenix.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -47,7 +49,6 @@ namespace JKFrame
 
         [LabelText("UI窗口数据(无需手动填写)")]
         public Dictionary<string, UIWindowData> UIWindowDataDic = new Dictionary<string, UIWindowData>();
-
 
         /// <summary>
         /// 日志设置

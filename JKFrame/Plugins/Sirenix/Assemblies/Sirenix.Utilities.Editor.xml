@@ -1009,71 +1009,6 @@
             </summary>
             <seealso cref="T:Sirenix.Utilities.Editor.DragAndDropUtilities"/>
         </member>
-        <member name="P:Sirenix.Utilities.Editor.DragAndDropManager.CurrentDraggingHandle">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragAndDropManager.CurrentHoveringDropZone">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragAndDropManager.IsDragInProgress">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragAndDropManager.IsHoveringDropZone">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.DragAndDropManager.AllowDrop">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.BeginDropZone``1(System.Object)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.BeginDropZone``1(System.Object,System.Boolean)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.BeginDropZone(System.Object,System.Type,System.Boolean)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.EndDropZone">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.BeginDragHandle(System.Object,System.Object,Sirenix.Utilities.Editor.DragAndDropMethods)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.BeginDragHandle(System.Object,System.Object,System.Boolean,Sirenix.Utilities.Editor.DragAndDropMethods)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DragAndDropManager.EndDragHandle">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.DragAndDropManager.guiState">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
         <member name="T:Sirenix.Utilities.Editor.DragAndDropMethods">
             <summary>
             This class is due to undergo refactoring.
@@ -1229,76 +1164,6 @@
             This class is due to undergo refactoring.
             </summary>
         </member>
-        <member name="F:Sirenix.Utilities.Editor.DragHandle.SourceWindow">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.IsCrossWindowDrag">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.Rect">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.DraggingScreenRect">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.Object">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.DragAndDropMethod">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.OnDragStarted">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.OnDragFinnished">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.IsDragging">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.IsHovering">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.CurrentMethod">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.MouseDownPostionOffset">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DragHandle.DragHandleRect">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.DragHandle.Enabled">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
         <member name="T:Sirenix.Utilities.Editor.DropEvents">
             <summary>
             This class is due to undergo refactoring.
@@ -1332,61 +1197,6 @@
         <member name="T:Sirenix.Utilities.Editor.DropZoneHandle">
             <summary>
             This class is due to undergo refactoring.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.IsAccepted">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.IsBeingHovered">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.DropZoneHandle.SourceWindow">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.Rect">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.Type">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.LayoutDepth">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.CanAcceptMove">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.IsCrossWindowDrag">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="P:Sirenix.Utilities.Editor.DropZoneHandle.IsReadyToClaim">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.Editor.DropZoneHandle.Enabled">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DropZoneHandle.ClaimObject">
-            <summary>
-            Not yet documented.
             </summary>
         </member>
         <member name="T:Sirenix.Utilities.Editor.OnDragFinnished">
@@ -1689,7 +1499,7 @@
         <member name="P:Sirenix.Utilities.Editor.GUIHelper.BetterContextWidth">
             <summary>
             Odin will set this for you whenever an Odin property tree is drawn.
-            But if you're using BetterLabelWidth and BetterContextWidth without Odin, then 
+            But if you're using BetterLabelWidth and BetterContextWidth without Odin, then
             you need to set BetterContextWidth in the beginning of each GUIEvent.
             </summary>
         </member>
@@ -2153,6 +1963,13 @@
             <param name="type"></param>
             <param name="preferObjectPreviewOverFileIcon"></param>
             <returns></returns>
+        </member>
+        <member name="M:Sirenix.Utilities.Editor.GUIHelper.GetPreviewTexture(UnityEngine.Object)">
+            <summary>
+            Gets a preview texture for the provided object.
+            </summary>
+            <param name="objectToPreview"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="T:Sirenix.Utilities.Editor.GUIPagingHelper">
             <summary>

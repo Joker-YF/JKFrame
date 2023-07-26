@@ -50,6 +50,7 @@ namespace JKFrame
             AudioSystem.Init();
             UISystem.Init();
             SaveSystem.Init();
+            LocalizationSystem.Init();
 #if ENABLE_LOG
             JKLog.Init(FrameSetting.LogConfig);
 #endif
@@ -82,12 +83,12 @@ namespace JKFrame
                 Instance = GameObject.FindObjectOfType<JKFrameRoot>();
                 if (Instance == null) return;
                 Instance.FrameSetting.InitOnEditor();
-                // 场景的所有窗口都进行一次Show
-                UI_WindowBase[] window = Instance.transform.GetComponentsInChildren<UI_WindowBase>();
-                foreach (UI_WindowBase win in window)
-                {
-                    win.ShowGeneralLogic();
-                }
+                //// 场景的所有窗口都进行一次Show
+                //UI_WindowBase[] window = Instance.transform.GetComponentsInChildren<UI_WindowBase>();
+                //foreach (UI_WindowBase win in window)
+                //{
+                //    win.ShowGeneralLogic();
+                //}
             }
         }
 #endif

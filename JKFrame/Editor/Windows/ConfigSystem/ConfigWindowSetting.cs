@@ -157,7 +157,6 @@ namespace JKFrame.Editor
             // 创建列表的实际泛型 类型
             IList list = (IList)Activator.CreateInstance(listFieldInfo.FieldType);
             MethodInfo addMethodInfo = list.GetType().GetMethod("Add");
-            // addMethodInfo.Invoke(list,new object[] { 10086 });
             // 读取表格数据，填充进SO
             // 根据表头找到所有的FieldInfo
             using (ExcelPackage excelPackage = new ExcelPackage(new FileStream(excelFilepath, FileMode.Open)))
@@ -182,7 +181,6 @@ namespace JKFrame.Editor
                 {
                     startColIndex = remarkIndex + 1;
                 }
-                bool isBreak = false;
                 // 行
                 for (int x = 1; x <= colCount; x++)
                 {
@@ -192,16 +190,13 @@ namespace JKFrame.Editor
                     for (int y = 1; y <= fieldInfoList.Count; y++)
                     {
                         string excelValue = sheet.Cells[x + startColIndex, y].Text;
-                        if (string.IsNullOrEmpty(excelValue))
+                        if (!string.IsNullOrEmpty(excelValue))
                         {
-                            isBreak = true;
-                            continue;
+                            // y-1意味着是第几个字段
+                            FieldInfo fieldInfo = fieldInfoList[y - 1];
+                            SetDataField(obj, fieldInfo, excelValue);
                         }
-                        // y-1意味着是第几个字段
-                        FieldInfo fieldInfo = fieldInfoList[y - 1];
-                        SetDataField(obj, fieldInfo, excelValue);
                     }
-                    if (isBreak) continue;
                     addMethodInfo.Invoke(list, new object[] { obj });
                 }
             }
@@ -248,7 +243,6 @@ namespace JKFrame.Editor
                 int startColIndex = remarkIndex;
                 // 验证起始行
                 if (sheet.Cells[remarkIndex, 1].Text == fieldInfoList[0].Name) startColIndex = remarkIndex + 1;
-                bool isBreak = false;
                 // 行
                 for (int x = 1; x <= colCount; x++)
                 {
@@ -266,27 +260,27 @@ namespace JKFrame.Editor
                             }
                         }
 
-                        if (string.IsNullOrEmpty(excelValue))
+                        if (!string.IsNullOrEmpty(excelValue))
                         {
-                            isBreak = true;
-                            continue;
+                            // y-1意味着是第几个字段
+                            FieldInfo fieldInfo = fieldInfoList[y - 1];
+                            SetDataField(obj, fieldInfo, excelValue);
                         }
-                        // y-1意味着是第几个字段
-                        FieldInfo fieldInfo = fieldInfoList[y - 1];
-                        SetDataField(obj, fieldInfo, excelValue);
                     }
-                    if (isBreak) continue;
+                    if (!useSoFileNamePrefix && string.IsNullOrEmpty(obj.name))
+                    {
+                        continue;
+                    }
                     if (useSoFileNamePrefix)
                     {
                         obj.name = soFileNamePrefixName + "_" + x;
                     }
                     AssetDatabase.CreateAsset(obj, $"{conversionSoFolderPath}/{obj.name}.asset");
                 }
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
             }
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
         }
-
         private void OneSo2Excel()
         {
             if (soFile == null)
@@ -386,7 +380,7 @@ namespace JKFrame.Editor
                 for (int i = 0; i < soFilePaths.Length; i++)
                 {
                     string path = soFilePaths[i].Substring(soFilePaths[i].IndexOf("Assets")); // 绝对路径转相对路径
-                    // 挨个写入
+                                                                                              // 挨个写入
                     UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath(path, conversionTye);
                     if (obj != null)
                     {
@@ -471,7 +465,10 @@ namespace JKFrame.Editor
                 {
                     fieldInfo.SetValue(obj, excelValue.ToUpper() == "TRUE" || excelValue == "1");// 表格可能会对bool自动做变化，避免这种情况
                 }
-                else fieldInfo.SetValue(obj, Convert.ChangeType(excelValue, fieldInfo.FieldType));
+                else
+                {
+                    fieldInfo.SetValue(obj, Convert.ChangeType(excelValue, fieldInfo.FieldType));
+                }
             }
         }
 
@@ -482,15 +479,18 @@ namespace JKFrame.Editor
             // 对Unity类型特殊处理,获取资源的路径
             if (fieldInfo.FieldType.IsSubclassOf(typeof(UnityEngine.Object)))
             {
-                UnityEngine.Object unityeObject = (UnityEngine.Object)data;
-                res = AssetDatabase.GetAssetPath(unityeObject);
-                if (guidMode)
+                if (data != null)
                 {
-                    res = AssetDatabase.GUIDFromAssetPath(res).ToString();
-                }
-                if (AssetDatabase.IsSubAsset(unityeObject))
-                {
-                    res += "$/" + unityeObject.name;
+                    UnityEngine.Object unityeObject = (UnityEngine.Object)data;
+                    res = AssetDatabase.GetAssetPath(unityeObject);
+                    if (guidMode)
+                    {
+                        res = AssetDatabase.GUIDFromAssetPath(res).ToString();
+                    }
+                    if (AssetDatabase.IsSubAsset(unityeObject))
+                    {
+                        res += "$/" + unityeObject.name;
+                    }
                 }
             }
             else
