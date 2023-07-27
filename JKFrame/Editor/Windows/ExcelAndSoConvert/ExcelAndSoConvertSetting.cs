@@ -12,7 +12,7 @@ using UnityEngine;
 namespace JKFrame.Editor
 {
     [Serializable]
-    public class ConfigWindowSetting : ConfigBase
+    public class ExcelAndSoConvertSetting : ConfigBase
     {
         const int typeIndex = 1;  // 类型
         const int fieldNameIndex = 2; // 变量名
@@ -26,7 +26,7 @@ namespace JKFrame.Editor
         [TabGroup("生成Excel模板"), LabelText("List<T>字段名称"), ShowIf("CheckGenerateExcelTemplateFieldName")] public string generateExcelTemplateFieldName;
         private bool CheckGenerateExcelTemplateFieldName => useListFied;
 
-        [TabGroup("生成Excel模板"), Button(ButtonHeight = 30), LabelText("生成Excel模板文件")]
+        [TabGroup("生成Excel模板"), Button(ButtonHeight = 30, Name = "生成Excel模版")]
         public void GenerateExcelTemplate()
         {
             GenerateExcelTemplateFile(generateExcelTemplatePath, fileName, generateExcelTemplateClassType, useLableText, useListFied, generateExcelTemplateFieldName);

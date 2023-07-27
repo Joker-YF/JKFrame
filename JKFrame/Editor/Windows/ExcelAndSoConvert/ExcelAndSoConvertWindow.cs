@@ -5,16 +5,16 @@ using UnityEngine.UIElements;
 
 namespace JKFrame.Editor
 {
-    public class ConfigWindow : OdinEditorWindow
+    public class ExcelAndSoConvertWindow : OdinEditorWindow
     {
         public int num;
-        public ConfigWindowSetting setting;     // 通过面板拖拽赋值
+        public ExcelAndSoConvertSetting setting;     // 通过面板拖拽赋值
         public VisualTreeAsset editorUIAsset;   // 通过面板拖拽赋值
-        [MenuItem("JKFrame/配置窗口")]
+        [MenuItem("JKFrame/Excel和SO互转")]
         public static void ShowExample()
         {
-            ConfigWindow wnd = GetWindow<ConfigWindow>();
-            wnd.titleContent = new GUIContent("ConfigWindow");
+            ExcelAndSoConvertWindow wnd = GetWindow<ExcelAndSoConvertWindow>();
+            wnd.titleContent = new GUIContent("Excel和SO互转");
         }
 
         public void CreateGUI()
