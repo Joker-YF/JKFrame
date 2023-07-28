@@ -406,5 +406,57 @@ namespace JKFrame
         }
 
         #endregion
+        
+        #region 基于类型的事件重载
+
+        /// <summary>
+        /// 基于事件类型注册事件监听
+        /// </summary>
+        /// <param name="callBack">事件回调</param>
+        /// <typeparam name="T">事件类型</typeparam>
+        public static void AddTypeEventListener<T>(Action<T> callBack) where T : new()
+        {
+            eventModule.AddEventListener(typeof(T).GetHashCode().ToString(), callBack);
+        }
+
+        /// <summary>
+        /// 触发基于类型的事件
+        /// </summary>
+        /// <typeparam name="T">事件类型</typeparam>
+        public static void TypeEventTrigger<T>() where T : new()
+        {
+            eventModule.EventTrigger(typeof(T).GetHashCode().ToString(), new T());
+        }
+
+        /// <summary>
+        /// 触发基于类型的事件，如果需要在事件中传参请使用这个方法，传入创建的对象以传递参数。
+        /// </summary>
+        /// <param name="e">传入的具体事件</param>
+        /// <typeparam name="T">事件类型，可以省略</typeparam>
+        public static void TypeEventTrigger<T>(T e) where T : new()
+        {
+            eventModule.EventTrigger(typeof(T).GetHashCode().ToString(), e);
+        }
+
+        /// <summary>
+        /// 移除一个基于类型的监听
+        /// </summary>
+        /// <param name="callBack">事件回调</param>
+        /// <typeparam name="T">事件类型</typeparam>
+        public static void RemoveTypeEventListener<T>(Action<T> callBack) where T : new()
+        {
+            eventModule.RemoveEventListener(typeof(T).GetHashCode().ToString(), callBack);
+        }
+
+        /// <summary>
+        /// 移除一个类型的所有监听
+        /// </summary>
+        /// <typeparam name="T">事件类型</typeparam>
+        public static void RemoveTypeEvent<T>() where T : new()
+        {
+            eventModule.RemoveEvent(typeof(T).GetHashCode().ToString());
+        }
+
+        #endregion
     }
 }
