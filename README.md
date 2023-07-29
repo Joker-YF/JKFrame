@@ -60,3 +60,7 @@ QQ群：654336425
 **上线案例**
 
 曹军来袭：https://store.steampowered.com/app/2452940/
+
+**贡献者名单**
+
+**[GodChouyu](https://github.com/GodChouyu)** 
