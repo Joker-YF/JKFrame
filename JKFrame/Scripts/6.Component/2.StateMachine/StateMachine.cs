@@ -85,7 +85,7 @@ namespace JKFrame
         private StateBase GetState<T>() where T : StateBase, new()
         {
             Type stateType = typeof(T);
-            if (stateDic.ContainsKey(stateType)) return stateDic[stateType];
+            if (stateDic.TryGetValue(stateType, out var st)) return st;
             StateBase state = ResSystem.GetOrNew<T>();
             state.InitInternalData(this);
             state.Init(owner);
@@ -100,17 +100,19 @@ namespace JKFrame
         public void Stop()
         {
             // 处理当前状态的额外逻辑
-            currStateObj.Exit();
-            currStateObj.RemoveUpdate(currStateObj.Update);
-            currStateObj.RemoveLateUpdate(currStateObj.LateUpdate);
-            currStateObj.RemoveFixedUpdate(currStateObj.FixedUpdate);
-            CurrStateType = null;
-            currStateObj = null;
-            // 处理缓存中所有状态的逻辑
-            var enumerator = stateDic.GetEnumerator();
-            while (enumerator.MoveNext())
+            if (currStateObj != null)
             {
-                enumerator.Current.Value.UnInit();
+                currStateObj.Exit();
+                currStateObj.RemoveUpdate(currStateObj.Update);
+                currStateObj.RemoveLateUpdate(currStateObj.LateUpdate);
+                currStateObj.RemoveFixedUpdate(currStateObj.FixedUpdate);
+                currStateObj = null;
+            }
+            CurrStateType = null;
+            // 处理缓存中所有状态的逻辑
+            foreach (var state in stateDic.Values)
+            {
+                state.UnInit();
             }
             stateDic.Clear();
         }
@@ -157,9 +159,9 @@ namespace JKFrame
         #endregion
 
         /// <summary>
-        /// 销毁，宿主应该释放掉StateMachin的引用
+        /// 销毁，宿主应该释放掉StateMachine的引用
         /// </summary>
-        public void Destory()
+        public void Destroy()
         {
             // 处理所有状态
             Stop();
