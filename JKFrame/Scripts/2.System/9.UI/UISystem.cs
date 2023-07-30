@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Sirenix.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
 namespace JKFrame
 {
     /// <summary>
@@ -458,16 +458,26 @@ namespace JKFrame
         /// </summary>
         public static bool CheckMouseOnUI()
         {
+#if ENABLE_LEGACY_INPUT_MANAGER
             return CheckPositoinOnUI(Input.mousePosition);
+#else
+            return CheckPositoinOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
+#endif
+
         }
 
+        private static UnityEngine.EventSystems.EventSystem eventSystem;
+        private static PointerEventData pointerEventData;
         /// <summary>
         /// 检查一个坐标是否在UI上,会屏蔽名称为Mask的物体
         /// </summary>
         public static bool CheckPositoinOnUI(Vector2 pos)
         {
-            UnityEngine.EventSystems.EventSystem eventSystem = UnityEngine.EventSystems.EventSystem.current;
-            PointerEventData pointerEventData = new PointerEventData(eventSystem);
+            if (eventSystem == null)
+            {
+                UnityEngine.EventSystems.EventSystem eventSystem = UnityEngine.EventSystems.EventSystem.current;
+                pointerEventData = new PointerEventData(eventSystem);
+            }
             pointerEventData.position = pos;
             // 射线去检测有没有除了Mask以外的任何UI物体
             eventSystem.RaycastAll(pointerEventData, raycastResultList);

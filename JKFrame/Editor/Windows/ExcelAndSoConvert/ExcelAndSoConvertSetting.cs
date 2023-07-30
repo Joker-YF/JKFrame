@@ -186,6 +186,7 @@ namespace JKFrame.Editor
                 {
                     // 创建对象 so中的对象
                     object obj = Activator.CreateInstance(argType);
+                    bool allEmpty = true; // 一行全是空则说明可以停止
                     // 列
                     for (int y = 1; y <= fieldInfoList.Count; y++)
                     {
@@ -195,9 +196,13 @@ namespace JKFrame.Editor
                             // y-1意味着是第几个字段
                             FieldInfo fieldInfo = fieldInfoList[y - 1];
                             SetDataField(obj, fieldInfo, excelValue);
+                            allEmpty = false;
                         }
                     }
-                    addMethodInfo.Invoke(list, new object[] { obj });
+                    if (!allEmpty)
+                    {
+                        addMethodInfo.Invoke(list, new object[] { obj });
+                    }
                 }
             }
 
@@ -232,6 +237,7 @@ namespace JKFrame.Editor
                 List<FieldInfo> fieldInfoList = new List<FieldInfo>();
                 for (int i = 1; i <= rowCount; i++)
                 {
+                    string d = sheet.Cells[fieldNameIndex, i].Text;
                     FieldInfo fieldInfo = conversionTye.GetField(sheet.Cells[fieldNameIndex, i].Text);
                     if (fieldInfo == null)
                     {
@@ -243,10 +249,12 @@ namespace JKFrame.Editor
                 int startColIndex = remarkIndex;
                 // 验证起始行
                 if (sheet.Cells[remarkIndex, 1].Text == fieldInfoList[0].Name) startColIndex = remarkIndex + 1;
+
                 // 行
                 for (int x = 1; x <= colCount; x++)
                 {
                     ScriptableObject obj = ScriptableObject.CreateInstance(conversionTye);
+                    bool allEmpty = true; // 一行全是空则说明可以停止
                     // 列
                     for (int y = 1; y <= fieldInfoList.Count; y++)
                     {
@@ -265,9 +273,10 @@ namespace JKFrame.Editor
                             // y-1意味着是第几个字段
                             FieldInfo fieldInfo = fieldInfoList[y - 1];
                             SetDataField(obj, fieldInfo, excelValue);
+                            allEmpty = false;
                         }
                     }
-                    if (!useSoFileNamePrefix && string.IsNullOrEmpty(obj.name))
+                    if (!useSoFileNamePrefix && string.IsNullOrEmpty(obj.name) || allEmpty)
                     {
                         continue;
                     }
@@ -457,7 +466,11 @@ namespace JKFrame.Editor
             else
             {
                 // 内置类型直接转
-                if (fieldInfo.FieldType.IsEnum) // 枚举特殊转换
+                if (fieldInfo.FieldType == typeof(string))
+                {
+                    fieldInfo.SetValue(obj, excelValue);
+                }
+                else if (fieldInfo.FieldType.IsEnum) // 枚举特殊转换
                 {
                     fieldInfo.SetValue(obj, Enum.Parse(fieldInfo.FieldType, excelValue));
                 }

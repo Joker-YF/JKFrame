@@ -31,10 +31,7 @@ namespace JKFrame
             uiEnable = true;
             RegisterEventListener();
             // 绑定本地化事件
-            if (EnableLocalization)
-            {
-                LocalizationSystem.RegisterLanguageEvent(UpdateLanguageGeneralLogic);
-            }
+            LocalizationSystem.RegisterLanguageEvent(UpdateLanguageGeneralLogic);
             OnShow();
             OnUpdateLanguage(LocalizationSystem.LanguageType);
         }
@@ -51,10 +48,7 @@ namespace JKFrame
         {
             uiEnable = false;
             UnRegisterEventListener();
-            if (EnableLocalization)
-            {
-                LocalizationSystem.UnregisterLanguageEvent(UpdateLanguageGeneralLogic);
-            }
+            LocalizationSystem.UnregisterLanguageEvent(UpdateLanguageGeneralLogic);
             OnClose();
         }
 
