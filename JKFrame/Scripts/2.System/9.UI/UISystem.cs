@@ -179,7 +179,7 @@ namespace JKFrame
         /// </summary>
         public static void ClearUIWindowData()
         {
-            using var enumerator = UIWindowDataDic.GetEnumerator();
+            var enumerator = UIWindowDataDic.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Destroy(enumerator.Current.Value.instance.gameObject);
