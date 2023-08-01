@@ -326,7 +326,7 @@ namespace JKFrame
         public static bool TryGetWindow(string windowKey, out UI_WindowBase window)
         {
             UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData);
-            window = windowData.instance;
+            window = windowData?.instance;
             return window != null;
         }
 
@@ -337,7 +337,7 @@ namespace JKFrame
         public static bool TryGetWindow<T>(string windowKey, out T window) where T : UI_WindowBase
         {
             UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData);
-            window = windowData.instance as T;
+            window = windowData?.instance as T;
             return window != null;
         }
 
@@ -425,7 +425,7 @@ namespace JKFrame
         public static void CloseAllWindow()
         {
             // 处理缓存中所有状态的逻辑
-            var enumerator = UIWindowDataDic.GetEnumerator();
+            using var enumerator = UIWindowDataDic.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 if (enumerator.Current.Value.instance != null
