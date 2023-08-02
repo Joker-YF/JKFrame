@@ -169,7 +169,7 @@ namespace JKFrame
                 go = Addressables.InstantiateAsync(keyName, parent).WaitForCompletion();
                 if (autoRelease)
                 {
-                    go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+                    go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
                 }
                 go.name = keyName;
             }
@@ -195,7 +195,7 @@ namespace JKFrame
                 go = Addressables.InstantiateAsync(assetName, parent).WaitForCompletion();
                 if (autoRelease)
                 {
-                    go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+                    go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
                 }
                 go.name = keyName != null ? keyName : assetName;
             }
@@ -234,7 +234,7 @@ namespace JKFrame
         /// <summary>
         /// 自动释放资源事件，基于事件工具
         /// </summary>
-        private static void AutomaticReleaseAssetAction(GameObject obj, int arg)
+        private static void AutomaticReleaseAssetAction(GameObject obj)
         {
             Addressables.ReleaseInstance(obj);
         }
@@ -253,7 +253,7 @@ namespace JKFrame
             // 对象池中有
             if (!go.IsNull())
             {
-                if (autoRelease) go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+                if (autoRelease) go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
                 callBack?.Invoke(go);
                 return;
             }
@@ -277,7 +277,7 @@ namespace JKFrame
             // 对象池中有
             if (!go.IsNull())
             {
-                if (autoRelease) go.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+                if (autoRelease) go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
                 callBack?.Invoke(go.GetComponent<T>());
                 return;
             }
@@ -290,14 +290,14 @@ namespace JKFrame
         {
             AsyncOperationHandle<GameObject> request = Addressables.InstantiateAsync(assetName, parent);
             yield return request;
-            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
             callBack?.Invoke(request.Result);
         }
         static IEnumerator DoLoadGameObjectAsync<T>(string assetName, Action<T> callBack = null, Transform parent = null, bool autoRelease = true) where T : UnityEngine.Object
         {
             AsyncOperationHandle<GameObject> request = Addressables.InstantiateAsync(assetName, parent);
             yield return request;
-            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset<int>(AutomaticReleaseAssetAction);
+            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
             callBack?.Invoke(request.Result.GetComponent<T>());
         }
 

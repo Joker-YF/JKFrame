@@ -425,13 +425,11 @@ namespace JKFrame
         public static void CloseAllWindow()
         {
             // 处理缓存中所有状态的逻辑
-            using var enumerator = UIWindowDataDic.GetEnumerator();
-            while (enumerator.MoveNext())
+            foreach (var item in UIWindowDataDic.Values)
             {
-                if (enumerator.Current.Value.instance != null
-                    && enumerator.Current.Value.instance.gameObject.activeInHierarchy == true)
+                if (item.instance != null && item.instance.gameObject.activeInHierarchy == true)
                 {
-                    CloseWindow(enumerator.Current.Value);
+                    CloseWindow(item);
                 }
             }
             for (int i = 0; i < UILayers.Length; i++)

@@ -64,7 +64,34 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: UI_LocalizationExampleWindow
+    - Name: $v
+      Entry: 7
+      Data: 3|JKFrame.UIWindowData, JKFrame
+    - Name: isCache
+      Entry: 5
+      Data: false
+    - Name: assetPath
+      Entry: 1
+      Data: UI_LocalizationExampleWindow
+    - Name: layerNum
+      Entry: 3
+      Data: 1
+    - Name: instance
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 7
       Data: 
@@ -73,7 +100,7 @@ MonoBehaviour:
       Data: TestWindow0
     - Name: $v
       Entry: 7
-      Data: 3|JKFrame.UIWindowData, JKFrame
+      Data: 4|JKFrame.UIWindowData, JKFrame
     - Name: isCache
       Entry: 5
       Data: true
@@ -100,7 +127,7 @@ MonoBehaviour:
       Data: TestWindow
     - Name: $v
       Entry: 7
-      Data: 4|JKFrame.UIWindowData, JKFrame
+      Data: 5|JKFrame.UIWindowData, JKFrame
     - Name: isCache
       Entry: 5
       Data: true
@@ -122,15 +149,6 @@ MonoBehaviour:
     - Name: 
       Entry: 13
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: LocalizationEnumType
-      Entry: 7
-      Data: 5|System.RuntimeType, mscorlib
-    - Name: 
-      Entry: 1
-      Data: LanguageType, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
