@@ -154,7 +154,7 @@ namespace JKFrame
         }
         public void CleanShareData()
         {
-            stateShareDataDic.Clear();
+            stateShareDataDic?.Clear();
         }
         #endregion
 
