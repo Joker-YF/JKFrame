@@ -473,7 +473,7 @@ namespace JKFrame
         {
             if (eventSystem == null)
             {
-                UnityEngine.EventSystems.EventSystem eventSystem = UnityEngine.EventSystems.EventSystem.current;
+                eventSystem = UnityEngine.EventSystems.EventSystem.current;
                 pointerEventData = new PointerEventData(eventSystem);
             }
             pointerEventData.position = pos;
