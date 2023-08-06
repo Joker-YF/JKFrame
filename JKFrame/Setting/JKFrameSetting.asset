@@ -32,7 +32,7 @@ MonoBehaviour:
       Data: true
     - Name: writeThreadID
       Entry: 5
-      Data: false
+      Data: true
     - Name: writeTrace
       Entry: 5
       Data: true
@@ -41,13 +41,13 @@ MonoBehaviour:
       Data: false
     - Name: saveLogTypes
       Entry: 3
-      Data: 0
+      Data: 18446744073709551615
     - Name: savePath
       Entry: 1
       Data: /Log
     - Name: customSaveFileName
       Entry: 1
-      Data: 
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

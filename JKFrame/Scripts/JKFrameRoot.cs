@@ -56,7 +56,12 @@ namespace JKFrame
 #endif
         }
         #endregion
-
+        private void OnDisable()
+        {
+#if ENABLE_LOG
+            JKLog.Close();
+#endif
+        }
         #region Editor
 #if UNITY_EDITOR
         // 编辑器专属事件系统

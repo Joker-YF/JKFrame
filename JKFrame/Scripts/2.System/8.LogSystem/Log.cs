@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using JK.Log;
 using UnityEngine;
-using JK.Log;
 using static JKFrame.JKFrameSetting;
 
 namespace JKFrame
@@ -48,6 +46,13 @@ namespace JKFrame
         {
 #if ENABLE_LOG
             JK.Log.JKLog.Succeed(msg);
+#endif
+        }
+
+        public static void Close()
+        {
+#if ENABLE_LOG
+            JK.Log.JKLog.Close();
 #endif
         }
     }
