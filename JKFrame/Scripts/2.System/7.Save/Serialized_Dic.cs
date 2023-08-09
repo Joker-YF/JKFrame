@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using UnityEngine;
 
 /// <summary>
-/// 可序列化的字典
+/// 可序列化的字典，支持二进制和JsonUtility
 /// </summary>
+/// <remarks>如果使用URP或HDRP渲染管线，官方提供的序列化字典为<see cref="UnityEngine.Rendering.SerializedDictionary{K,V}"/>"</remarks>
 [Serializable]
-public class Serialized_Dic<K, V>
+public class Serialized_Dic<K, V> : ISerializationCallbackReceiver
 {
-    private List<K> keyList;
-    private List<V> valueList;
+    [SerializeField] private List<K> keyList;
+    [SerializeField] private List<V> valueList;
 
     [NonSerialized] // 不序列化 避免报错
     private Dictionary<K, V> dictionary;
-    public Dictionary<K, V> Dictionary { get => dictionary; }
+
+    public Dictionary<K, V> Dictionary
+    {
+        get => dictionary;
+    }
+
     public Serialized_Dic()
     {
         dictionary = new Dictionary<K, V>();
@@ -28,24 +35,35 @@ public class Serialized_Dic<K, V>
     [OnSerializing]
     private void OnSerializing(StreamingContext context)
     {
-        keyList = new List<K>(dictionary.Count);
-        valueList = new List<V>(dictionary.Count);
-        foreach (var item in dictionary)
-        {
-            keyList.Add(item.Key);
-            valueList.Add(item.Value);
-        }
+        OnBeforeSerialize();
     }
-
+    
     // 反序列化时候自动完成字典的初始化
     [OnDeserialized]
     private void OnDeserialized(StreamingContext context)
     {
-        dictionary = new Dictionary<K, V>(keyList.Count);
-        for (int i = 0; i < keyList.Count; i++)
-        {
-            dictionary.Add(keyList[i], valueList[i]);
-        }
+        OnAfterDeserialize();
     }
 
+    /// <summary>
+    /// Unity序列化前调用
+    /// </summary>
+    public void OnBeforeSerialize()
+    {
+        keyList = new List<K>(dictionary.Keys);
+        valueList = new List<V>(dictionary.Values);
+    }
+
+    /// <summary>
+    /// Unity反序列化后调用
+    /// </summary>
+    public void OnAfterDeserialize()
+    {
+        dictionary = new Dictionary<K, V>();
+        for (int i = 0; i < keyList.Count; i++)
+            dictionary.Add(keyList[i], valueList[i]);
+
+        keyList.Clear();
+        valueList.Clear();
+    }
 }
