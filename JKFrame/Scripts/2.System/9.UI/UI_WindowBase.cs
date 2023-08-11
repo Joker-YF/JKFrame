@@ -28,12 +28,16 @@ namespace JKFrame
         public void ShowGeneralLogic(int layerNum)
         {
             this.currentLayer = layerNum;
-            uiEnable = true;
-            RegisterEventListener();
-            // 绑定本地化事件
-            LocalizationSystem.RegisterLanguageEvent(UpdateLanguageGeneralLogic);
+            if (!uiEnable)
+            {
+                RegisterEventListener();
+                // 绑定本地化事件
+                LocalizationSystem.RegisterLanguageEvent(UpdateLanguageGeneralLogic);
+            }
+
             OnShow();
             OnUpdateLanguage(LocalizationSystem.LanguageType);
+            uiEnable = true;
         }
 
         /// <summary>

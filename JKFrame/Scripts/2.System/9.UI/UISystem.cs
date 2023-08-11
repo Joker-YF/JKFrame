@@ -245,7 +245,7 @@ namespace JKFrame
                 // 原本就激活使用状态，避免内部计数问题，进行一次层关闭
                 if (windowData.instance.UIEnable)
                 {
-                    UILayers[layerNum].OnWindowClose(false);
+                    UILayers[windowData.layerNum].OnWindowClose(false);
                 }
                 windowData.instance.gameObject.SetActive(true);
                 windowData.instance.transform.SetParent(UILayers[layerNum].root);
