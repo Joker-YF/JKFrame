@@ -457,7 +457,7 @@ namespace JKFrame
         public static bool CheckMouseOnUI()
         {
 #if ENABLE_LEGACY_INPUT_MANAGER
-            return CheckPositoinOnUI(Input.mousePosition);
+            return CheckPositionOnUI(Input.mousePosition);
 #else
             return CheckPositoinOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
 #endif
@@ -469,7 +469,7 @@ namespace JKFrame
         /// <summary>
         /// 检查一个坐标是否在UI上,会屏蔽名称为Mask的物体
         /// </summary>
-        public static bool CheckPositoinOnUI(Vector2 pos)
+        public static bool CheckPositionOnUI(Vector2 pos)
         {
             if (eventSystem == null)
             {
