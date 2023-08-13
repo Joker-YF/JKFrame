@@ -29,10 +29,10 @@ namespace JKFrame
                 count += 1;
                 Update();
             }
-            public void OnWindowClose(bool update = true)
+            public void OnWindowClose()
             {
                 count -= 1;
-                if (update) Update();
+                Update();
             }
             private void Update()
             {
@@ -245,7 +245,7 @@ namespace JKFrame
                 // 原本就激活使用状态，避免内部计数问题，进行一次层关闭
                 if (windowData.instance.UIEnable)
                 {
-                    UILayers[layerNum].OnWindowClose(false);
+                    UILayers[windowData.layerNum].OnWindowClose();
                 }
                 windowData.instance.gameObject.SetActive(true);
                 windowData.instance.transform.SetParent(UILayers[layerNum].root);
@@ -457,7 +457,7 @@ namespace JKFrame
         public static bool CheckMouseOnUI()
         {
 #if ENABLE_LEGACY_INPUT_MANAGER
-            return CheckPositoinOnUI(Input.mousePosition);
+            return CheckPositionOnUI(Input.mousePosition);
 #else
             return CheckPositoinOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
 #endif
@@ -469,7 +469,7 @@ namespace JKFrame
         /// <summary>
         /// 检查一个坐标是否在UI上,会屏蔽名称为Mask的物体
         /// </summary>
-        public static bool CheckPositoinOnUI(Vector2 pos)
+        public static bool CheckPositionOnUI(Vector2 pos)
         {
             if (eventSystem == null)
             {
