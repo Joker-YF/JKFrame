@@ -91,6 +91,53 @@ namespace JKFrame
                 yield return CoroutineTool.WaitForFrames();
             }
         }
+        
+        /// <summary>
+        /// 异步加载场景，加载完成后不立刻切换
+        /// </summary>
+        /// <param name="sceneName">场景名称</param>
+        /// <param name="successCallBack">加载完成回调，必须传入否则场景无法切换</param>
+        /// <param name="loadingCallBack">加载时每帧回调</param>
+        /// <param name="mode">加载模式</param>
+        public static void LoadSceneAsyncWithoutActive(string sceneName, Action<AsyncOperation> successCallBack,
+            Action<float> loadingCallBack = null, LoadSceneMode mode = LoadSceneMode.Single)
+        {
+            var ao = SceneManager.LoadSceneAsync(sceneName, mode);
+            MonoSystem.Start_Coroutine(DoLoadSceneAsyncWithoutActive(ao, successCallBack, loadingCallBack,
+                mode));
+        }
+
+        /// <summary>
+        /// 异步加载场景，加载完成后不立刻切换
+        /// </summary>
+        /// <param name="sceneIndex">场景构建序号</param>
+        /// <param name="successCallBack">加载完成回调，必须传入否则场景无法切换</param>
+        /// <param name="loadingCallBack">加载时每帧回调</param>
+        /// <param name="mode">加载模式</param>
+        public static void LoadSceneAsyncWithoutActive(int sceneIndex, Action<AsyncOperation> successCallBack,
+            Action<float> loadingCallBack = null, LoadSceneMode mode = LoadSceneMode.Single)
+        {
+            var ao = SceneManager.LoadSceneAsync(sceneIndex, mode);
+            MonoSystem.Start_Coroutine(DoLoadSceneAsyncWithoutActive(ao, successCallBack, loadingCallBack,
+                mode));
+        }
+
+        private static IEnumerator DoLoadSceneAsyncWithoutActive(AsyncOperation ao,
+            Action<AsyncOperation> successCallBack, Action<float> loadingCallBack = null,
+            LoadSceneMode mode = LoadSceneMode.Single)
+        {
+            ao.allowSceneActivation = false;
+            ao.completed += successCallBack;
+            while (!ao.isDone)
+            {
+                loadingCallBack?.Invoke(ao.progress);
+                Debug.Log(ao.progress);
+                EventSystem.EventTrigger("LoadingSceneProgress", ao.progress);
+                yield return CoroutineTool.WaitForFrames();
+            }
+
+            EventSystem.EventTrigger("LoadSceneSucceed");
+        }
     }
 }
 
