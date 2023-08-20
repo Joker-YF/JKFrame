@@ -1,12 +1,9 @@
 ﻿#if ENABLE_ADDRESSABLES
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static JKFrame.GameObjectPoolModule;
 
 namespace JKFrame
 {
@@ -177,6 +174,48 @@ namespace JKFrame
         }
 
         /// <summary>
+        /// 异步加载游戏物体
+        /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
+        /// </summary>
+        /// <param name="keyName">对象池中的分组名称</param>
+        /// <param name="parent">父物体</param>
+        /// <param name="callback">加载完成后的回调</param>
+        /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
+        public static void InstantiateGameObjectAsync(Transform parent, string keyName, Action<GameObject> callback, bool autoRelease = true)
+        {
+            GameObject go;
+            go = PoolSystem.GetGameObject(keyName, parent);
+            if (go.IsNull() == false) callback?.Invoke(go);
+            else
+            {
+                Addressables.InstantiateAsync(keyName, parent).Completed += (handle) =>
+                {
+                    OnInstantiateGameObjectAsyncCompleted(handle, callback, keyName, autoRelease);
+                };
+            }
+
+        }
+        private static void OnInstantiateGameObjectAsyncCompleted(AsyncOperationHandle<GameObject> handle, Action<GameObject> callback, string gameObjectName, bool autoRelease = true)
+        {
+            handle.Result.name = gameObjectName;
+            if (autoRelease)
+            {
+                handle.Result.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
+            }
+            callback?.Invoke(handle.Result);
+        }
+        private static void OnInstantiateGameObjectAsyncCompleted<T>(AsyncOperationHandle<GameObject> handle, Action<T> callback, string gameObjectName, bool autoRelease = true) where T : Component
+        {
+            handle.Result.name = gameObjectName;
+            if (autoRelease)
+            {
+                handle.Result.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
+            }
+            callback?.Invoke(handle.Result.GetComponent<T>());
+        }
+
+
+        /// <summary>
         /// 加载游戏物体
         /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
         /// </summary>
@@ -200,6 +239,31 @@ namespace JKFrame
                 go.name = keyName != null ? keyName : assetName;
             }
             return go;
+        }
+
+        /// <summary>
+        /// 异步加载游戏物体
+        /// 会自动检查对象池中是否包含，如果包含则返回对象池中的
+        /// </summary>
+        /// <param name="assetName">AB资源名称</param>
+        /// <param name="callback">加载完成后的回调</param>
+        /// <param name="keyName">对象池中的分组名称，可为Null</param>
+        /// <param name="parent">父物体</param>
+        /// <param name="autoRelease">物体销毁时，会自动去调用一次Addressables.Release</param>
+        public static void InstantiateGameObjectAsync(string assetName, Action<GameObject> callback, Transform parent = null, string keyName = null, bool autoRelease = true)
+        {
+            GameObject go;
+            if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
+            else go = PoolSystem.GetGameObject(keyName, parent);
+
+            if (go.IsNull() == false) callback?.Invoke(go);
+            else
+            {
+                Addressables.InstantiateAsync(assetName, parent).Completed += (handle) =>
+                {
+                    OnInstantiateGameObjectAsyncCompleted(handle, callback, keyName != null ? keyName : assetName, autoRelease);
+                };
+            }
         }
 
         /// <summary>
@@ -240,36 +304,14 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// 异步加载游戏物体
-        /// </summary>
-        /// <param name="assetName">AB资源名称</param>
-        /// <param name="callBack">实例化后的回调函数</param>
-        /// <param name="parent">父物体</param>
-        public static void InstantiateGameObjectAsync(string assetName, Action<GameObject> callBack = null, Transform parent = null, string keyName = null, bool autoRelease = true)
-        {
-            GameObject go;
-            if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
-            else go = PoolSystem.GetGameObject(keyName, parent);
-            // 对象池中有
-            if (!go.IsNull())
-            {
-                if (autoRelease) go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
-                callBack?.Invoke(go);
-                return;
-            }
-            // 不通过缓存池
-            MonoSystem.Start_Coroutine(DoLoadGameObjectAsync(assetName, callBack, parent));
-
-        }
-
-        /// <summary>
         /// 异步加载游戏物体并获取组件
         /// </summary>
         /// <typeparam name="T">物体身上的组件</typeparam>
         /// <param name="assetName">AB资源名称</param>
-        /// <param name="callBack">实例化后的回调函数</param>
+        /// <param name="callback">实例化后的回调函数</param>
         /// <param name="parent">父物体</param>
-        public static void InstantiateGameObjectAsync<T>(string assetName, Action<T> callBack = null, Transform parent = null, string keyName = null, bool autoRelease = true) where T : UnityEngine.Object
+        /// <param name="keyName">对象池中的分组名称，可为Null</param>
+        public static void InstantiateGameObjectAsync<T>(string assetName, Action<T> callback = null, Transform parent = null, string keyName = null, bool autoRelease = true) where T : Component
         {
             GameObject go;
             if (keyName == null) go = PoolSystem.GetGameObject(assetName, parent);
@@ -278,30 +320,15 @@ namespace JKFrame
             if (!go.IsNull())
             {
                 if (autoRelease) go.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
-                callBack?.Invoke(go.GetComponent<T>());
+                callback?.Invoke(go.GetComponent<T>());
                 return;
             }
             // 不通过缓存池
-            MonoSystem.Start_Coroutine(DoLoadGameObjectAsync<T>(assetName, callBack, parent));
-
+            Addressables.InstantiateAsync(assetName, parent).Completed += (handle) =>
+            {
+                OnInstantiateGameObjectAsyncCompleted<T>(handle, callback, keyName != null ? keyName : assetName, autoRelease);
+            };
         }
-
-        static IEnumerator DoLoadGameObjectAsync(string assetName, Action<GameObject> callBack = null, Transform parent = null, bool autoRelease = true)
-        {
-            AsyncOperationHandle<GameObject> request = Addressables.InstantiateAsync(assetName, parent);
-            yield return request;
-            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
-            callBack?.Invoke(request.Result);
-        }
-        static IEnumerator DoLoadGameObjectAsync<T>(string assetName, Action<T> callBack = null, Transform parent = null, bool autoRelease = true) where T : UnityEngine.Object
-        {
-            AsyncOperationHandle<GameObject> request = Addressables.InstantiateAsync(assetName, parent);
-            yield return request;
-            if (autoRelease) request.Result.transform.OnReleaseAddressableAsset(AutomaticReleaseAssetAction);
-            callBack?.Invoke(request.Result.GetComponent<T>());
-        }
-
-
 
         #endregion
 
@@ -322,16 +349,17 @@ namespace JKFrame
         /// <typeparam name="T">资源类型</typeparam>
         /// <param name="assetName">AB资源名称</param>
         /// <param name="callBack">回调函数</param>
-        public static void LoadAssetAsync<T>(string assetName, Action<T> callBack = null) where T : UnityEngine.Object
+        public static void LoadAssetAsync<T>(string assetName, Action<T> callback) where T : UnityEngine.Object
         {
-            MonoSystem.Start_Coroutine(DoLoadAssetAsync<T>(assetName, callBack));
+            Addressables.LoadAssetAsync<T>(assetName).Completed += (handle) =>
+            {
+                OnLoadAssetAsyncCompleted<T>(handle, callback);
+            };
         }
 
-        static IEnumerator DoLoadAssetAsync<T>(string assetName, Action<T> callBack = null) where T : UnityEngine.Object
+        private static void OnLoadAssetAsyncCompleted<T>(AsyncOperationHandle<T> handle, Action<T> callback) where T : UnityEngine.Object
         {
-            AsyncOperationHandle<T> request = Addressables.LoadAssetAsync<T>(assetName);
-            yield return request;
-            callBack?.Invoke(request.Result);
+            callback?.Invoke(handle.Result);
         }
 
         /// <summary>
@@ -343,7 +371,7 @@ namespace JKFrame
         /// <param name="handle">用来Release时使用</param>
         /// <param name="callBackOnEveryOne">注意这里是针对每一个资源的回调</param>
         /// <returns>所有资源</returns>
-        public static IList<T> LoadAssets<T>(string keyName, out AsyncOperationHandle<IList<T>> handle, Action<T> callBackOnEveryOne = null)
+        public static IList<T> LoadAssets<T>(string keyName, out AsyncOperationHandle<IList<T>> handle, Action<T> callBackOnEveryOne = null) where T : UnityEngine.Object
         {
             handle = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne, true);
             return handle.WaitForCompletion();
@@ -358,17 +386,9 @@ namespace JKFrame
         /// <param name="keyName">一般是lable</param>
         /// <param name="callBack">所有资源列表的统一回调，注意这是很必要的，因为Release时需要这个handle</param>
         /// <param name="callBackOnEveryOne">注意这里是针对每一个资源的回调,可以是Null</param>
-        public static void LoadAssetsAsync<T>(string keyName, Action<AsyncOperationHandle<IList<T>>> callBack, Action<T> callBackOnEveryOne = null)
+        public static void LoadAssetsAsync<T>(string keyName, Action<AsyncOperationHandle<IList<T>>> callBack, Action<T> callBackOnEveryOne = null) where T : UnityEngine.Object
         {
-            MonoSystem.Start_Coroutine(DoLoadAssetsAsync<T>(keyName, callBack, callBackOnEveryOne));
-        }
-
-        static IEnumerator DoLoadAssetsAsync<T>(string keyName, Action<AsyncOperationHandle<IList<T>>> callBack, Action<T> callBackOnEveryOne = null)
-        {
-            AsyncOperationHandle<IList<T>> handle = Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne);
-            yield return handle;
-
-            callBack?.Invoke(handle);
+            Addressables.LoadAssetsAsync<T>(keyName, callBackOnEveryOne).Completed += callBack;
         }
 
         /// <summary>
