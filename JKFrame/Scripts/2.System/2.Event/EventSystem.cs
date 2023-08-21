@@ -423,17 +423,25 @@ namespace JKFrame
         /// 移除/删除一个类型事件
         /// </summary>
         /// <typeparam name="T">事件的参数类型</typeparam>
-        public static void RemoveEvent<T>()
+        public static void RemoveTypeEvent<T>()
         {
             RemoveEvent(nameof(T));
         }
 
         /// <summary>
+        /// 移除类型事件的监听
+        /// </summary>
+        public static void RemoveTypeEventListener<T>(Action<T> action)
+        {
+            eventModule.RemoveEventListener(nameof(T), action);
+        }
+
+        /// <summary>
         /// 触发类型事件
         /// </summary>
-        public static void EventTrigger<T>()
+        public static void EventTrigger<T>(T arg)
         {
-            EventTrigger(nameof(T));
+            EventTrigger(nameof(T), arg);
         }
         #endregion
     }
