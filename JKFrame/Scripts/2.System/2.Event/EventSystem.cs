@@ -406,5 +406,35 @@ namespace JKFrame
         }
 
         #endregion
+
+        #region 类型事件
+        /// <summary>
+        /// 添加类型事件的监听
+        /// 本质上是以T的名称作为事件名称
+        /// </summary>
+        /// <typeparam name="T">参数类型,建议为struct类型</typeparam>
+        /// <param name="action">回调函数</param>
+        public static void AddTypeEventListener<T>(Action<T> action)
+        {
+            AddEventListener<T>(nameof(T), action);
+        }
+
+        /// <summary>
+        /// 移除/删除一个类型事件
+        /// </summary>
+        /// <typeparam name="T">事件的参数类型</typeparam>
+        public static void RemoveEvent<T>()
+        {
+            RemoveEvent(nameof(T));
+        }
+
+        /// <summary>
+        /// 触发类型事件
+        /// </summary>
+        public static void EventTrigger<T>()
+        {
+            EventTrigger(nameof(T));
+        }
+        #endregion
     }
 }
