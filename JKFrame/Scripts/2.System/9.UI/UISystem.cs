@@ -1,5 +1,4 @@
-﻿using Sirenix.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -200,6 +199,16 @@ namespace JKFrame
         }
 
         /// <summary>
+        /// 显示窗口 异步
+        /// </summary>
+        /// <typeparam name="T">窗口类型</typeparam>
+        /// <param name="layer">层级 -1等于不设置</param>
+        public static void ShowAsync<T>(Action<T> callback = null, int layer = -1) where T : UI_WindowBase
+        {
+            ShowAsync(typeof(T), (window) => { callback?.Invoke((T)window); }, layer);
+        }
+
+        /// <summary>
         /// 显示窗口
         /// </summary>
         /// <typeparam name="T">要返回的窗口类型</typeparam>
@@ -208,6 +217,17 @@ namespace JKFrame
         public static T Show<T>(string windowKey, int layer = -1) where T : UI_WindowBase
         {
             return Show(windowKey, layer) as T;
+        }
+
+        /// <summary>
+        /// 显示窗口 异步
+        /// </summary>
+        /// <typeparam name="T">要返回的窗口类型</typeparam>
+        /// <param name="windowKey">窗口的Key</param>
+        /// <param name="layer">层级 -1等于不设置</param>
+        public static T ShowAsync<T>(string windowKey, Action<T> callback = null, int layer = -1) where T : UI_WindowBase
+        {
+            return ShowAsync(windowKey, callback, layer) as T;
         }
 
         /// <summary>
@@ -223,6 +243,17 @@ namespace JKFrame
         /// <summary>
         /// 显示窗口
         /// </summary>
+        /// <param name="type">窗口类型</param>
+        /// <param name="layer">层级 -1等于不设置</param>
+        public static void ShowAsync(Type type, Action<UI_WindowBase> callback = null, int layer = -1)
+        {
+            ShowAsync(type.FullName, callback, layer);
+        }
+
+
+        /// <summary>
+        /// 显示窗口
+        /// </summary>
         /// <param name="windowKey">窗口的key</param>
         /// <param name="layer">层级 -1等于不设置</param>
         public static UI_WindowBase Show(string windowKey, int layer = -1)
@@ -234,6 +265,20 @@ namespace JKFrame
             // 资源库中没有意味着不允许显示
             JKLog.Log($"JKFrame:不存在{windowKey}的UIWindowData");
             return null;
+        }
+
+        /// <summary>
+        /// 显示窗口
+        /// </summary>
+        /// <param name="windowKey">窗口的key</param>
+        /// <param name="layer">层级 -1等于不设置</param>
+        public static void ShowAsync(string windowKey, Action<UI_WindowBase> callback = null, int layer = -1)
+        {
+            if (UIWindowDataDic.TryGetValue(windowKey, out UIWindowData windowData))
+            {
+                ShowAsync(windowData, windowKey, callback, layer);
+            }
+            else JKLog.Log($"JKFrame:不存在{windowKey}的UIWindowData");// 资源库中没有意味着不允许显示
         }
 
         private static UI_WindowBase Show(UIWindowData windowData, string windowKey, int layer = -1)
@@ -262,6 +307,38 @@ namespace JKFrame
             windowData.layerNum = layerNum;
             UILayers[layerNum].OnWindowShow();
             return windowData.instance;
+        }
+
+        private static void ShowAsync(UIWindowData windowData, string windowKey, Action<UI_WindowBase> callback = null, int layer = -1)
+        {
+            int layerNum = layer == -1 ? windowData.layerNum : layer;
+            // 实例化实例或者获取到实例，保证窗口实例存在
+            if (windowData.instance != null)
+            {
+                // 原本就激活使用状态，避免内部计数问题，进行一次层关闭
+                if (windowData.instance.UIEnable)
+                {
+                    UILayers[windowData.layerNum].OnWindowClose();
+                }
+                windowData.instance.gameObject.SetActive(true);
+                windowData.instance.transform.SetParent(UILayers[layerNum].root);
+                windowData.instance.transform.SetAsLastSibling();
+                windowData.instance.ShowGeneralLogic(layerNum);
+            }
+            else
+            {
+                ResSystem.InstantiateGameObjectAsync<UI_WindowBase>(windowData.assetPath,
+                    (window) =>
+                    {
+                        windowData.instance = window;
+                        window.Init();
+                        window.ShowGeneralLogic(layerNum);
+                        callback?.Invoke(window);
+                    }
+                    , UILayers[layerNum].root, windowKey);
+            }
+            windowData.layerNum = layerNum;
+            UILayers[layerNum].OnWindowShow();
         }
         #endregion
 
