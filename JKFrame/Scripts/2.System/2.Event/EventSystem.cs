@@ -439,7 +439,7 @@ namespace JKFrame
         /// <summary>
         /// 触发类型事件
         /// </summary>
-        public static void EventTrigger<T>(T arg)
+        public static void TypeEventTrigger<T>(T arg)
         {
             EventTrigger(nameof(T), arg);
         }
