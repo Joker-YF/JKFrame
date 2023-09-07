@@ -67,13 +67,15 @@ public class UILocalizationCollector : SerializedMonoBehaviour
         // 内置简单解析
         if (component is Text)
         {
-            LocalizationStringData data = localizationConfig.GetContent<LocalizationStringData>(key, languageType);
+            LocalizationStringData data = null;
+            if (localizationConfig != null) data = localizationConfig.GetContent<LocalizationStringData>(key, languageType);
             if (data == null) data = LocalizationSystem.GetContent<LocalizationStringData>(key, languageType);
             if (data != null) ((Text)component).text = data.content;
         }
         else if (component is Image)
         {
-            LocalizationImageData data = localizationConfig.GetContent<LocalizationImageData>(key, languageType);
+            LocalizationImageData data = null;
+            if (localizationConfig != null) data = localizationConfig.GetContent<LocalizationImageData>(key, languageType);
             if (data == null) data = LocalizationSystem.GetContent<LocalizationImageData>(key, languageType);
             if (data != null) ((Image)component).sprite = data.content;
         }
