@@ -17,7 +17,6 @@ namespace JKFrame
 
         private static WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
         private static WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
-        private static YieldInstruction yieldInstruction = new YieldInstruction();
         public static WaitForEndOfFrame WaitForEndOfFrame()
         {
             return waitForEndOfFrame;
@@ -32,7 +31,7 @@ namespace JKFrame
             while (currTime < time)
             {
                 currTime += Time.deltaTime;
-                yield return yieldInstruction;
+                yield return new WaitForFrameStruct();
             }
         }
 
@@ -42,7 +41,7 @@ namespace JKFrame
             while (currTime < time)
             {
                 currTime += Time.unscaledDeltaTime;
-                yield return yieldInstruction;
+                yield return new WaitForFrameStruct();
             }
         }
 
