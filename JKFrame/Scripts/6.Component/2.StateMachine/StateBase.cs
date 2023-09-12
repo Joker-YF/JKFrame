@@ -33,6 +33,7 @@
         /// </summary>
         public virtual void UnInit()
         {
+            stateMachine = null;
             // 放回对象池
             this.ObjectPushPool();
         }
