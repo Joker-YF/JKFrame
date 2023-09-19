@@ -11,7 +11,7 @@ namespace JKFrame
         private struct WaitForFrameStruct : IEnumerator
         {
             public object Current => null;
-            public bool MoveNext() => false;
+            public bool MoveNext() { return true; }
             public void Reset() { }
         }
 
