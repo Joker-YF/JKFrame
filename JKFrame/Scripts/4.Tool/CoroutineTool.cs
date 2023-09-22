@@ -12,7 +12,7 @@ namespace JKFrame
         {
             public object Current => null;
 
-            public bool MoveNext() => false;
+            public bool MoveNext() { return false; }
 
             public void Reset() { }
         }
