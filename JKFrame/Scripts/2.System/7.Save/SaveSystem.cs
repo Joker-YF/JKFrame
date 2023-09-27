@@ -96,6 +96,8 @@ namespace JKFrame
             CheckAndCreateDir();
             // 初始化SaveSystemData
             InitSaveSystemData();
+            // 避免Editor环境下使用了上一次运行的缓存
+            CleanCache();
         }
         #endregion
 
