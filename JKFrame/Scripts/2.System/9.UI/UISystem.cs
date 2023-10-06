@@ -520,7 +520,12 @@ namespace JKFrame
         public static void AddTips(string tips)
         {
             UITipsItem item = PoolSystem.GetGameObject<UITipsItem>(instance.UITipsItemPrefab.name, instance.UITipsItemParent);
-            if (item == null) item = GameObject.Instantiate(instance.UITipsItemPrefab, instance.UITipsItemParent).GetComponent<UITipsItem>();
+            
+            if (item == null) {
+                item = GameObject.Instantiate(instance.UITipsItemPrefab, instance.UITipsItemParent).GetComponent<UITipsItem>();
+                  item.name = instance.UITipsItemPrefab.name;
+            }
+
             item.Init(tips);
         }
         #endregion
@@ -536,7 +541,7 @@ namespace JKFrame
 #if ENABLE_LEGACY_INPUT_MANAGER
             return CheckPositionOnUI(Input.mousePosition);
 #else
-            return CheckPositoinOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
+            return CheckPositionOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
 #endif
 
         }
