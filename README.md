@@ -59,7 +59,7 @@ QQ群：654336425
 
 使用手册：http://www.yfjoker.com/JKFrame/
 
-**上线案例**
+**上线案例(欢迎联系添加！)**
 
 曹军来袭：[https://store.steampowered.com/app/2452940/](https://store.steampowered.com/app/2452940/)
 
