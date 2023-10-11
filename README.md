@@ -61,7 +61,9 @@ QQ群：654336425
 
 **上线案例**
 
-曹军来袭：https://store.steampowered.com/app/2452940/
+曹军来袭：[https://store.steampowered.com/app/2452940/](https://store.steampowered.com/app/2452940/)
+
+萌宠拆拆乐来袭：[https://store.steampowered.com/app/2452940/](https://store.steampowered.com/app/2572560/)
 
 **贡献者名单**
 
