@@ -33,7 +33,7 @@ namespace JKFrame
         public void Init<T>(IStateMachineOwner owner, bool enableStateShareData = false) where T : StateBase, new()
         {
             this.owner = owner;
-            if (enableStateShareData) stateShareDataDic = new Dictionary<string, object>();
+            if (enableStateShareData && stateShareDataDic == null) stateShareDataDic = new Dictionary<string, object>();
             ChangeState<T>();
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace JKFrame
         /// <param name="owner">宿主</param>
         public void Init(IStateMachineOwner owner, bool enableStateShareData = false)
         {
-            if (enableStateShareData) stateShareDataDic = new Dictionary<string, object>();
+            if (enableStateShareData && stateShareDataDic == null) stateShareDataDic = new Dictionary<string, object>();
             this.owner = owner;
         }
 
