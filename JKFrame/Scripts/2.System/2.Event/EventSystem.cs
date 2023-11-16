@@ -416,7 +416,7 @@ namespace JKFrame
         /// <param name="action">回调函数</param>
         public static void AddTypeEventListener<T>(Action<T> action)
         {
-            AddEventListener<T>(nameof(T), action);
+            AddEventListener<T>(typeof(T).Name, action);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace JKFrame
         /// <typeparam name="T">事件的参数类型</typeparam>
         public static void RemoveTypeEvent<T>()
         {
-            RemoveEvent(nameof(T));
+            RemoveEvent(typeof(T).Name);
         }
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace JKFrame
         /// </summary>
         public static void RemoveTypeEventListener<T>(Action<T> action)
         {
-            eventModule.RemoveEventListener(nameof(T), action);
+            eventModule.RemoveEventListener(typeof(T).Name, action);
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace JKFrame
         /// </summary>
         public static void TypeEventTrigger<T>(T arg)
         {
-            EventTrigger(nameof(T), arg);
+            EventTrigger(typeof(T).Name, arg);
         }
         #endregion
     }
