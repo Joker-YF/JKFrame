@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -219,7 +220,6 @@ namespace JKFrame
             return Show(windowKey, layer) as T;
         }
 
-
         /// <summary>
         /// 显示窗口
         /// </summary>
@@ -314,6 +314,7 @@ namespace JKFrame
                 windowData.instance.transform.SetParent(UILayers[layerNum].root);
                 windowData.instance.transform.SetAsLastSibling();
                 windowData.instance.ShowGeneralLogic(layerNum);
+                callback?.Invoke(windowData.instance);
             }
             else
             {
@@ -510,13 +511,7 @@ namespace JKFrame
         public static void AddTips(string tips)
         {
             UITipsItem item = PoolSystem.GetGameObject<UITipsItem>(instance.UITipsItemPrefab.name, instance.UITipsItemParent);
-
-            if (item == null)
-            {
-                item = GameObject.Instantiate(instance.UITipsItemPrefab, instance.UITipsItemParent).GetComponent<UITipsItem>();
-                item.name = instance.UITipsItemPrefab.name;
-            }
-
+            if (item == null) item = GameObject.Instantiate(instance.UITipsItemPrefab, instance.UITipsItemParent).GetComponent<UITipsItem>();
             item.Init(tips);
         }
         #endregion
@@ -532,7 +527,7 @@ namespace JKFrame
 #if ENABLE_LEGACY_INPUT_MANAGER
             return CheckPositionOnUI(Input.mousePosition);
 #else
-            return CheckPositionOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
+            return CheckPositoinOnUI(UnityEngine.InputSystem.Mouse.current.position.ReadValue());
 #endif
 
         }
