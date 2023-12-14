@@ -14,7 +14,7 @@ namespace JKFrame
         public Type CurrStateType { get; private set; } = null;
 
         // 当前生效中的状态
-        private StateBase currStateObj;
+        public StateBase currStateObj { get; private set; }
 
         // 宿主
         private IStateMachineOwner owner;
