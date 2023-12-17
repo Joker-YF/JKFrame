@@ -3,8 +3,6 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
-using System.Collections;
-using Sirenix.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
