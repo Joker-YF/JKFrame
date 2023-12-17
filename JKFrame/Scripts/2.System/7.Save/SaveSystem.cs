@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using UnityEngine;
 namespace JKFrame
 {
@@ -40,11 +41,18 @@ namespace JKFrame
         }
     }
 
+    public interface IBinarySerializer
+    {
+        public byte[] Serialize<T>(T obj) where T : class;
+        public T Deserialize<T>(byte[] bytes) where T : class;
+    }
     /// <summary>
     /// 存档系统
     /// </summary>
     public static class SaveSystem
     {
+        private static IBinarySerializer binarySerializer;
+
         #region 存档系统、存档系统数据类及所有用户存档、设置存档数据
         /// <summary>
         /// 存档系统数据类
@@ -80,10 +88,10 @@ namespace JKFrame
             Init();
         }
 #endif
-
         // 初始化的事情
         public static void Init()
         {
+            binarySerializer = JKFrameRoot.Setting.binarySerializer;
             saveDirPath = Application.persistentDataPath + "/" + saveDirName;
             settingDirPath = Application.persistentDataPath + "/" + settingDirName;
 #if UNITY_EDITOR
@@ -619,7 +627,12 @@ namespace JKFrame
             switch (JKFrameRoot.Setting.SaveSystemType)
             {
                 case SaveSystemType.Binary:
-                    IOTool.SaveFile(saveObject, path);
+                    if (binarySerializer == null || saveObject.GetType() == typeof(SaveSystemData)) IOTool.SaveFile(saveObject, path);
+                    else
+                    {
+                        byte[] bytes = binarySerializer.Serialize(saveObject);
+                        File.WriteAllBytes(path, bytes);
+                    }
                     break;
                 case SaveSystemType.Json:
                     string jsonData = JsonUtility.ToJson(saveObject);
@@ -638,7 +651,16 @@ namespace JKFrame
             switch (JKFrameRoot.Setting.SaveSystemType)
             {
                 case SaveSystemType.Binary:
-                    return IOTool.LoadFile<T>(path);
+                    // 避免框架内部的数据类型也使用外部序列化工具序列化，这一般都会出现问题
+                    if (binarySerializer == null || typeof(T) == typeof(SaveSystemData)) return IOTool.LoadFile<T>(path);
+                    else
+                    {
+                        FileStream file = new FileStream(path, FileMode.Open);
+                        byte[] bytes = new byte[file.Length];
+                        file.Read(bytes, 0, bytes.Length);
+                        file.Close();
+                        return binarySerializer.Deserialize<T>(bytes);
+                    }
                 case SaveSystemType.Json:
                     return IOTool.LoadJson<T>(path);
             }

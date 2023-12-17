@@ -62,8 +62,6 @@ namespace JKFrame
             file.Dispose();
             return obj;
         }
-
-
     }
 }
 

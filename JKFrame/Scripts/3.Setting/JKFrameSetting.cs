@@ -45,6 +45,9 @@ namespace JKFrame
 #endif
         public SaveSystemType SaveSystemType = SaveSystemType.Binary;
 
+        [LabelText("二进制序列化器，仅用于二进制方式存档")]
+        public IBinarySerializer binarySerializer;
+
         [LabelText("日志设置")] public LogSetting LogConfig = new LogSetting();
 
         [LabelText("UI窗口数据(无需手动填写)")]
