@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 [Serializable]
-public struct Serialized_Vector3
+public struct Serialized_Vector3 : IEquatable<Serialized_Vector3>
 {
     public float x, y, z;
 
@@ -12,9 +12,18 @@ public struct Serialized_Vector3
         this.z = z;
     }
 
+    public bool Equals(Serialized_Vector3 other)
+    {
+        return this.x == other.x && this.y == other.y && this.z == other.z;
+    }
+
     public override string ToString()
     {
         return $"({x},{y},{z})";
+    }
+    public override int GetHashCode()
+    {
+        return x.GetHashCode() ^ (y.GetHashCode() << 2) ^ (z.GetHashCode() >> 2);
     }
 
     public static implicit operator Serialized_Vector3(Vector3 vector3)
@@ -36,7 +45,7 @@ public struct Serialized_Vector3
 }
 
 [Serializable]
-public struct Serialized_Vector2
+public struct Serialized_Vector2 : IEquatable<Serialized_Vector2>
 {
     public float x, y;
 
@@ -45,11 +54,19 @@ public struct Serialized_Vector2
         this.x = x;
         this.y = y;
     }
+    public bool Equals(Serialized_Vector2 other)
+    {
+        return this.x == other.x && this.y == other.y;
+    }
+
     public override string ToString()
     {
         return $"({x},{y})";
     }
-
+    public override int GetHashCode()
+    {
+        return x.GetHashCode() ^ (y.GetHashCode() << 2);
+    }
     public static implicit operator Serialized_Vector2(Vector2 vector2)
     {
         return new Serialized_Vector2(vector2.x, vector2.y);
