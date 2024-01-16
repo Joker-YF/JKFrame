@@ -90,10 +90,7 @@ public class RuntimeScreeLogger : MonoBehaviour
     private void HandleLog(string condition, string stackTrace, UnityEngine.LogType type)
     {
         stackTrace = ProcessingStackTraceString(stackTrace, out bool fromJKLog);
-        if (fromJKLog)
-        {
-            condition = ProcessingJKLogString(condition);
-        }
+        condition = ProcessingJKLogString(condition);
         LogMessage logMessage = new LogMessage()
         {
             log = condition,
@@ -103,7 +100,6 @@ public class RuntimeScreeLogger : MonoBehaviour
             fromJKLog = fromJKLog
         };
         logs.Add(logMessage);
-
     }
 
     private string ProcessingJKLogString(string logString)
@@ -227,7 +223,10 @@ public class RuntimeScreeLogger : MonoBehaviour
                     else timeAndLog = logMessage.log;
 
                 }
-                else timeAndLog = $"[{logMessage.time}]:{logMessage.log}";
+                else
+                {
+                    timeAndLog = $"[{logMessage.time}]:{logMessage.log}";
+                }
                 if (i != selectIndex)
                 {
                     if (GUILayout.Button(timeAndLog, normalLogStype))
