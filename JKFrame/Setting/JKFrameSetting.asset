@@ -21,6 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: binarySerializer
+      Entry: 6
+      Data: 
     - Name: LogConfig
       Entry: 7
       Data: 0|JKFrame.JKFrameSetting+LogSetting, JKFrame
@@ -35,7 +38,7 @@ MonoBehaviour:
       Data: true
     - Name: writeTrace
       Entry: 5
-      Data: true
+      Data: false
     - Name: enableSave
       Entry: 5
       Data: false
