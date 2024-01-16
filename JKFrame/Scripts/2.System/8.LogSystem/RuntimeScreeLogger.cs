@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JK.Log;
+using JKFrame;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ public class RuntimeScreeLogger : MonoBehaviour
         public string log;
         public string stackTrace;
         public UnityEngine.LogType logType;
+        public bool fromJKLog;
     }
     private List<LogMessage> logs = new List<LogMessage>();
     private GUIStyle mainContainerStyle;
@@ -86,32 +89,40 @@ public class RuntimeScreeLogger : MonoBehaviour
 
     private void HandleLog(string condition, string stackTrace, UnityEngine.LogType type)
     {
-        condition = ProcessingLogString(condition);
-        stackTrace = ProcessingStackTraceString(stackTrace);
+        stackTrace = ProcessingStackTraceString(stackTrace, out bool fromJKLog);
+        if (fromJKLog)
+        {
+            condition = ProcessingJKLogString(condition);
+        }
         LogMessage logMessage = new LogMessage()
         {
             log = condition,
             stackTrace = stackTrace,
             logType = type,
-            time = DateTime.Now.ToString("HH:mm:ss")
+            time = DateTime.Now.ToString("HH:mm:ss"),
+            fromJKLog = fromJKLog
         };
         logs.Add(logMessage);
 
     }
 
-    private string ProcessingLogString(string logString)
+    private string ProcessingJKLogString(string logString)
     {
+        if (logString.Length == 0) return logString;
+
+        string newString = logString;
         // 去除最后一行可能的换行符
         if (logString[logString.Length - 1] == '\n')
         {
-            return logString.Remove(logString.Length - 1, 1);
+            newString = logString.Remove(logString.Length - 1, 1);
         }
-        return logString;
+        return newString;
     }
-    private string ProcessingStackTraceString(string stackTrace)
+    private string ProcessingStackTraceString(string stackTrace, out bool fromJKLog)
     {
         int stackTrackRemoveIndex = -1;
-        if (stackTrace.Contains("JKFrame.JKLog")) // 去除4行JKLog带来的堆栈信息
+        fromJKLog = stackTrace.Contains("JKFrame.JKLog");
+        if (fromJKLog) // 去除4行JKLog带来的堆栈信息
         {
             for (int i = 0; i < 4; i++)
             {
@@ -138,6 +149,7 @@ public class RuntimeScreeLogger : MonoBehaviour
     private bool showError = true;
 
     private bool isFirstEnterOnGUI = true;
+
     private void OnGUI()
     {
         if (isFirstEnterOnGUI)
@@ -207,7 +219,15 @@ public class RuntimeScreeLogger : MonoBehaviour
                         break;
                 }
 
-                string timeAndLog = $"[{logMessage.time}]:{logMessage.log}";
+                string timeAndLog = null;
+                if (logMessage.fromJKLog)
+                {
+                    // 根据框架设置决定是否显示时间
+                    if (!JKFrameRoot.Setting.LogConfig.writeTime) timeAndLog = $"[{logMessage.time}]:{logMessage.log}";
+                    else timeAndLog = logMessage.log;
+
+                }
+                else timeAndLog = $"[{logMessage.time}]:{logMessage.log}";
                 if (i != selectIndex)
                 {
                     if (GUILayout.Button(timeAndLog, normalLogStype))
@@ -229,9 +249,10 @@ public class RuntimeScreeLogger : MonoBehaviour
             stackTraceScrollPosition = GUILayout.BeginScrollView(stackTraceScrollPosition, GUILayout.Width(width), GUILayout.Height(stackTraceHeight - 10));
             if (selectIndex != -1)
             {
-                GUILayout.Label(logs[selectIndex].log, stackTraceLableStyle);
-                GUILayout.Label(logs[selectIndex].logType.ToString(), stackTraceLableStyle);
-                GUILayout.Label(logs[selectIndex].stackTrace, stackTraceLableStyle);
+                LogMessage logMessage = logs[selectIndex];
+                GUILayout.Label(logMessage.log, stackTraceLableStyle);
+                GUILayout.Label(logMessage.logType.ToString(), stackTraceLableStyle);
+                GUILayout.Label(logMessage.stackTrace, stackTraceLableStyle);
             }
             GUILayout.EndScrollView();
             GUILayout.EndArea();
