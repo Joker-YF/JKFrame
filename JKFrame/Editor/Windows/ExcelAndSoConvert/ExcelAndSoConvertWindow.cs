@@ -21,7 +21,7 @@ namespace JKFrame.Editor
         {
             VisualElement root = rootVisualElement;
 
-            root.Add(new IMGUIContainer(base.OnGUI));
+            root.Add(new IMGUIContainer(base.OnImGUI));
             root.Add(editorUIAsset.Instantiate());
         }
 

@@ -259,6 +259,11 @@
             </para>
             </summary>
         </member>
+        <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.EnableUIToolkitSupport">
+            <summary>
+            Specify whether or not the script selector above components should be drawn.
+            </summary>
+        </member>
         <member name="P:Sirenix.OdinInspector.Editor.GeneralDrawerConfig.ShowMonoScriptInEditor">
             <summary>
             Specify whether or not the script selector above components should be drawn.
@@ -8497,7 +8502,7 @@
             Draws the menu tree selection.
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.OdinMenuEditorWindow.OnGUI">
+        <member name="M:Sirenix.OdinInspector.Editor.OdinMenuEditorWindow.OnImGUI">
             <summary>
             Draws the Odin Editor Window.
             </summary>
@@ -10855,7 +10860,7 @@
             Opens a new static inspector window for the given type.
             </summary>
         </member>
-        <member name="M:Sirenix.OdinInspector.Editor.StaticInspectorWindow.OnGUI">
+        <member name="M:Sirenix.OdinInspector.Editor.StaticInspectorWindow.OnImGUI">
             <summary>
             Draws the Odin Editor Window.
             </summary>
