@@ -180,21 +180,29 @@ namespace JKFrame
             // 遍历程序集
             foreach (System.Reflection.Assembly assembly in asms)
             {
-                // 遍历程序集下的每一个类型
-                Type[] types = assembly.GetTypes();
-                foreach (Type type in types)
-                {
-                    if (baseType.IsAssignableFrom(type)
-                        && !type.IsAbstract)
-                    {
-                        var attributes = type.GetCustomAttributes<UIWindowDataAttribute>();
-                        foreach (var attribute in attributes)
-                        {
-                            UIWindowDataDic.Add(attribute.windowKey,
-                                new UIWindowData(attribute.isCache, attribute.assetPath, attribute.layerNum));
-                        }
 
+                // 遍历程序集下的每一个类型
+                try
+                {
+                    Type[] types = assembly.GetTypes();
+                    foreach (Type type in types)
+                    {
+                        if (baseType.IsAssignableFrom(type)
+                            && !type.IsAbstract)
+                        {
+                            var attributes = type.GetCustomAttributes<UIWindowDataAttribute>();
+                            foreach (var attribute in attributes)
+                            {
+                                UIWindowDataDic.Add(attribute.windowKey,
+                                    new UIWindowData(attribute.isCache, attribute.assetPath, attribute.layerNum));
+                            }
+
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    continue;
                 }
             }
         }
