@@ -458,6 +458,41 @@ namespace JKFrame
         }
 
 
+        /// <summary>
+        /// 尝试关闭窗口
+        /// </summary>
+        /// <typeparam name="T">窗口类型</typeparam>
+        public static void TryColose<T>()
+        {
+            TryColose(typeof(T));
+        }
+
+        /// <summary>
+        /// 尝试关闭窗口
+        /// </summary>
+        /// <typeparam name="Type">窗口类型</typeparam>
+        public static void TryColose(Type type)
+        {
+            TryColose(type.FullName);
+        }
+        /// <summary>
+        /// 尝试关闭窗口
+        /// </summary>
+        public static bool TryColose(string windowKey)
+        {
+            if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
+            {
+                if (windowData.instance != null && CloseWindow(windowData))
+                {
+                    UILayers[windowData.layerNum].OnWindowClose();
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+
+
         private static bool CloseWindow(UIWindowData windowData)
         {
             if (windowData.instance.UIEnable)

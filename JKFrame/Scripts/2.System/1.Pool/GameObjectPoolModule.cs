@@ -127,7 +127,7 @@ namespace JKFrame
                 poolData = CreateGameObjectPoolData(keyName, maxCapacity);
             }
 
-            //在指定默认容量和默认对象时才有意义
+            //数组大小为默认容量，数组内容作为默认对象置入对象池
             if (gameObjects.Length > 0)
             {
                 int nowCapacity = poolData.PoolQueue.Count;

@@ -73,7 +73,7 @@ public struct Serialized_Vector2 : IEquatable<Serialized_Vector2>
     }
     public static implicit operator Vector2(Serialized_Vector2 vector2)
     {
-        return new Vector3(vector2.x, vector2.y);
+        return new Vector2(vector2.x, vector2.y);
     }
     public static implicit operator Serialized_Vector2(Vector2Int vector2)
     {
