@@ -67,6 +67,8 @@ QQ群：654336425
 
 山水画乡：[https://store.steampowered.com/app/2653480/](https://store.steampowered.com/app/2653480/)
 
+农场还债物语：[https://store.steampowered.com/app/2730320/](https://store.steampowered.com/app/2730320/)
+
 **贡献者名单**
 
 **[GodChouyu](https://github.com/GodChouyu)** 
