@@ -1,5 +1,4 @@
 ﻿using JKFrame;
-using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -31,6 +30,11 @@ public class LocalizationSystem : MonoBehaviour
     /// 可以运行时修改此配置
     /// </summary>
     [SerializeField] private LocalizationConfig globalConfig;
+    public static LocalizationConfig GlobalConfig
+    {
+        get => instance.globalConfig;
+        set => instance.globalConfig = value;
+    }
 
     [SerializeField] private LanguageType languageType;
 
