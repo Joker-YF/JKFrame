@@ -1,0 +1,26 @@
+ManifestVersion: 1
+ModuleID: Unity.Addressables
+ModuleVersion: 1.1.0.9
+ModuleFiles:
+  AddressablesInspectors.cs
+  AddressablesInspectors.cs.meta
+  Internal.meta
+  Sirenix.OdinInspector.Modules.Unity.Addressables.asmdef
+  Sirenix.OdinInspector.Modules.Unity.Addressables.asmdef.meta
+  Validators.meta
+  Internal/OdinAddressableReflection.cs
+  Internal/OdinAddressableReflection.cs.meta
+  Internal/OdinAddressableReflectionValidator.cs
+  Internal/OdinAddressableReflectionValidator.cs.meta
+  Validators/AssetLabelReferenceValidator.cs
+  Validators/AssetLabelReferenceValidator.cs.meta
+  Validators/AssetReferenceValidator.cs
+  Validators/AssetReferenceValidator.cs.meta
+  Validators/CheckDuplicateBundleDependenciesValidator.cs
+  Validators/CheckDuplicateBundleDependenciesValidator.cs.meta
+  Validators/CheckResourcesToAddressableDuplicateDependenciesValidator.cs
+  Validators/CheckResourcesToAddressableDuplicateDependenciesValidator.cs.meta
+  Validators/DisallowAddressableSubAssetFieldAttributeValidator.cs
+  Validators/DisallowAddressableSubAssetFieldAttributeValidator.cs.meta
+  Validators/MissingAddressableGroupReferenceValidator.cs
+  Validators/MissingAddressableGroupReferenceValidator.cs.meta

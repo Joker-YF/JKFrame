@@ -1,0 +1,29 @@
+{
+    "name": "Sirenix.OdinInspector.Modules.Unity.Addressables",
+    "references": [
+        "Unity.Addressables",
+        "Unity.Addressables.Editor",
+        "Sirenix.Serialization",
+        "Sirenix.OdinInspector.Attributes",
+        "Sirenix.OdinInspector.Editor",
+        "Sirenix.Utilities.Editor",
+        "Sirenix.Utilities",
+        "Sirenix.OdinValidator.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Sirenix.Serialization.dll",
+        "Sirenix.OdinInspector.Attributes.dll",
+        "Sirenix.OdinInspector.Editor.dll",
+        "Sirenix.Utilities.Editor.dll",
+        "Sirenix.Utilities.dll",
+        "Sirenix.OdinValidator.Editor.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1095,6 +1095,11 @@
             If <c>true</c> the string will support rich text.
             </summary>
         </member>
+        <member name="F:Sirenix.OdinInspector.DisplayAsStringAttribute.Format">
+            <summary>
+            String for formatting the value. Type must implement the <c>IFormattable</c> interface.
+            </summary>
+        </member>
         <member name="M:Sirenix.OdinInspector.DisplayAsStringAttribute.#ctor">
             <summary>
             Displays the property as a string in the inspector.
@@ -3370,6 +3375,59 @@
             This attribute does not do anything unless you have Odin Validator and the 'Reference Required by Default' rule is enabled.
             </summary>
         </member>
+        <member name="T:Sirenix.OdinInspector.NonDefaultConstructorPreference">
+            <summary>
+            Specifies how non-default constructors are handled.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.NonDefaultConstructorPreference.Exclude">
+            <summary>
+            Excludes types with non default constructors from the Selector.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.NonDefaultConstructorPreference.ConstructIdeal">
+            <summary>
+            Attempts to find the most straightforward constructor to call, prioritizing default values.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.NonDefaultConstructorPreference.PreferUninitialized">
+            <summary>
+            Uses <see cref="M:System.Runtime.Serialization.FormatterServices.GetUninitializedObject(System.Type)"/> if no default constructor is found.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.NonDefaultConstructorPreference.LogWarning">
+            <summary>
+            Logs a warning instead of constructing the object, indicating that an attempt was made to construct an object without a default constructor.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.PolymorphicDrawerSettingsAttribute.ShowBaseType">
+            <summary>
+            Determines whether the base type should be displayed in the drawer.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.PolymorphicDrawerSettingsAttribute.ReadOnlyIfNotNullReference">
+            <summary>
+            Indicates if the drawer should be read-only once a value is assigned.
+            </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.PolymorphicDrawerSettingsAttribute.NonDefaultConstructorPreference">
+            <summary>
+            Specifies how non-default constructors are handled.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.PolymorphicDrawerSettingsAttribute.CreateInstanceFunction">
+            <summary>
+            Specifies a custom function for creating an instance of the selected <see cref="T:System.Type"/>.
+            </summary>
+            <remarks>Does not get called for <see cref="T:UnityEngine.Object">UnityEngine.Object</see> types.</remarks>
+            <example>
+            <para>
+            The resolver expects any method that takes a single parameter of <see cref="T:System.Type"/>, where the parameter is named 'type', and which returns an <see cref="T:System.Object"/>.
+            </para>
+            
+            <para>Implementation example: <c>public object Method(Type type)</c>.</para>
+            </example>
+        </member>
         <member name="T:Sirenix.OdinInspector.PreviewFieldAttribute">
              <summary>
              <para>
@@ -5398,6 +5456,16 @@
             </code>
             </example>
         </member>
+        <member name="F:Sirenix.OdinInspector.TypeDrawerSettingsAttribute.BaseType">
+            <summary>
+            Specifies whether a base type should be used instead of all types.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.TypeDrawerSettingsAttribute.Filter">
+            <summary>
+            Filters the result.
+            </summary>
+        </member>
         <member name="P:Sirenix.OdinInspector.TypeFilterAttribute.MemberName">
             <summary>
             Name of any field, property or method member that implements IList. E.g. arrays or Lists. Obsolete; use the FilterGetter member instead.
@@ -5452,6 +5520,29 @@
             Draws an info box at the top of a type in the inspector.
             </summary>
             <param name="message">The message to display in the info box.</param>
+        </member>
+        <member name="P:Sirenix.OdinInspector.TypeSelectorSettingsAttribute.ShowNoneItem">
+            <summary> Specifies if the '&lt;none&gt;' item is shown. </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.TypeSelectorSettingsAttribute.ShowCategories">
+            <summary> Specifies if categories are shown. </summary>
+        </member>
+        <member name="P:Sirenix.OdinInspector.TypeSelectorSettingsAttribute.PreferNamespaces">
+            <summary>
+            Specifies if namespaces are preferred over assembly category names for category names.
+            </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.TypeSelectorSettingsAttribute.FilterTypesFunction">
+            <summary>
+            Function for filtering types displayed in the Type Selector.
+            </summary>
+            <example>
+            <para>
+            The resolver expects any method that takes a single parameter of <see cref="T:System.Type"/>, with the parameter name 'type', and which returns a <see cref="T:System.Boolean"/> indicating whether the <see cref="T:System.Type"/> is included or not;
+            </para>
+            
+            <para>Implementation example: <c>public bool SomeFilterMethod(Type type)</c>.</para>
+            </example>
         </member>
         <!-- Badly formed XML comment ignored for member "T:Sirenix.OdinInspector.UnitAttribute" -->
         <member name="F:Sirenix.OdinInspector.UnitAttribute.Base">
@@ -6339,6 +6430,12 @@
             <summary>
             Title on the left, subtitle on the right.
             </summary>
+        </member>
+        <member name="T:Sirenix.OdinInspector.TypeInclusionFilter">
+            <summary> Specifies the types to include based on certain criteria. </summary>
+        </member>
+        <member name="F:Sirenix.OdinInspector.TypeInclusionFilter.IncludeConcreteTypes">
+            <summary> Represents types that are not interfaces, abstracts, or generics. </summary>
         </member>
     </members>
 </doc>
