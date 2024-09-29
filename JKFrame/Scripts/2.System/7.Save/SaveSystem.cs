@@ -653,6 +653,10 @@ namespace JKFrame
                     if (binarySerializer == null || typeof(T) == typeof(SaveSystemData)) return IOTool.LoadFile<T>(path);
                     else
                     {
+                        if (!File.Exists(path))
+                        {
+                            return null;
+                        }
                         FileStream file = new FileStream(path, FileMode.Open);
                         byte[] bytes = new byte[file.Length];
                         file.Read(bytes, 0, bytes.Length);
