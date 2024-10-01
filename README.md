@@ -69,6 +69,8 @@ QQ群：654336425
 
 农场还债物语：[https://store.steampowered.com/app/2730320/](https://store.steampowered.com/app/2730320/)
 
+巨神的遗迹：[https://titanstudio.itch.io/ruins-of-the-titan](https://titanstudio.itch.io/ruins-of-the-titan)
+
 **贡献者名单**
 
 **[GodChouyu](https://github.com/GodChouyu)** 
