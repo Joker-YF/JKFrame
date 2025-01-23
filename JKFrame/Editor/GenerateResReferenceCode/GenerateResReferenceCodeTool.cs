@@ -79,7 +79,7 @@ namespace R
                 AddressableAssetEntry assetItem = allAssetEntry[i];
                 // 添加到类型列表中等待添加命名空间
                 string assemblyNam = assetItem.MainAssetType.Assembly.GetName().Name;
-                if (assemblyNam != "UnityEngine.CoreModule" && !allTypeAssemblyNames.Contains(assemblyNam))
+                if (!assemblyNam.Contains("UnityEngine") && !allTypeAssemblyNames.Contains(assemblyNam))
                 {
                     allTypeAssemblyNames.Add(assemblyNam);
                 }
