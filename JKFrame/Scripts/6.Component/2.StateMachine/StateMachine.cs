@@ -97,12 +97,12 @@ namespace JKFrame
         /// 停止工作
         /// 把所有状态都释放，但是StateMachine未来还可以工作
         /// </summary>
-        public void Stop()
+        public void Stop(bool triggerExit = true)
         {
             // 处理当前状态的额外逻辑
             if (currStateObj != null)
             {
-                currStateObj.Exit();
+                if (triggerExit) currStateObj.Exit();
                 currStateObj.RemoveUpdate(currStateObj.Update);
                 currStateObj.RemoveLateUpdate(currStateObj.LateUpdate);
                 currStateObj.RemoveFixedUpdate(currStateObj.FixedUpdate);
@@ -161,10 +161,10 @@ namespace JKFrame
         /// <summary>
         /// 销毁，宿主应该释放掉StateMachine的引用
         /// </summary>
-        public void Destroy()
+        public void Destroy(bool triggerExit = true)
         {
             // 处理所有状态
-            Stop();
+            Stop(triggerExit);
             // 清除共享数据
             CleanShareData();
             // 放弃所有资源的引用
