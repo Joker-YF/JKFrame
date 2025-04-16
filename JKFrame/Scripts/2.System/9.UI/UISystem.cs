@@ -409,7 +409,7 @@ namespace JKFrame
         }
 
         /// <summary>
-        /// 销毁窗口
+        /// 立刻销毁窗口，不会触发任何窗口函数
         /// </summary>
         public static void DestroyWindow(string windowKey)
         {
@@ -419,6 +419,24 @@ namespace JKFrame
                 DestroyImmediate(window.gameObject);
             }
         }
+
+        /// <summary>
+        /// 立刻销毁窗口，不会触发任何窗口函数
+        /// </summary>
+        /// <typeparam name="Type">窗口类型</typeparam>
+        public static void DestroyWindow(Type type)
+        {
+            DestroyWindow(type.Name);
+        }
+
+        /// <summary>
+        /// 立刻销毁窗口，不会触发任何窗口函数
+        /// </summary>
+        /// <typeparam name="T">窗口类型</typeparam>
+        public static void DestroyWindow<T>()
+        {
+            DestroyWindow(typeof(T));
+        }
         #endregion
 
         #region 关闭窗口
@@ -426,29 +444,32 @@ namespace JKFrame
         /// 关闭窗口
         /// </summary>
         /// <typeparam name="T">窗口类型</typeparam>
-        public static void Close<T>()
+        /// <param name="destroy">确保一定销毁，如果为false会基于UIWindowData中isCahce来决定</param>
+        public static void Close<T>(bool destroy = false)
         {
-            Close(typeof(T));
+            Close(typeof(T), destroy);
         }
 
         /// <summary>
         /// 关闭窗口
         /// </summary>
-        /// <typeparam name="Type">窗口类型</typeparam>
-        public static void Close(Type type)
+        /// <param name="Type">窗口类型</param>
+        /// <param name="destroy">确保一定销毁，如果为false会基于UIWindowData中isCahce来决定</param>
+        public static void Close(Type type, bool destroy = false)
         {
-            Close(type.FullName);
+            Close(type.FullName, destroy);
         }
 
         /// <summary>
         /// 关闭窗口
         /// </summary>
         /// <param name="windowKey"></param>
-        public static void Close(string windowKey)
+        /// <param name="destroy">确保一定销毁，如果为false会基于UIWindowData中isCahce来决定</param>
+        public static void Close(string windowKey, bool destroy = false)
         {
             if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
             {
-                if (windowData.instance != null && CloseWindow(windowData))
+                if (windowData.instance != null && CloseWindow(windowData, destroy))
                 {
                     UILayers[windowData.layerNum].OnWindowClose();
                 }
@@ -462,27 +483,27 @@ namespace JKFrame
         /// 尝试关闭窗口
         /// </summary>
         /// <typeparam name="T">窗口类型</typeparam>
-        public static void TryColose<T>()
+        public static void TryColose<T>(bool destroy = false)
         {
-            TryColose(typeof(T));
+            TryColose(typeof(T), destroy);
         }
 
         /// <summary>
         /// 尝试关闭窗口
         /// </summary>
         /// <typeparam name="Type">窗口类型</typeparam>
-        public static void TryColose(Type type)
+        public static void TryColose(Type type, bool destroy = false)
         {
-            TryColose(type.FullName);
+            TryColose(type.FullName, destroy);
         }
         /// <summary>
         /// 尝试关闭窗口
         /// </summary>
-        public static bool TryColose(string windowKey)
+        public static bool TryColose(string windowKey, bool destroy = false)
         {
             if (TryGetUIWindowData(windowKey, out UIWindowData windowData))
             {
-                if (windowData.instance != null && CloseWindow(windowData))
+                if (windowData.instance != null && CloseWindow(windowData, destroy))
                 {
                     UILayers[windowData.layerNum].OnWindowClose();
                     return true;
@@ -493,13 +514,13 @@ namespace JKFrame
         }
 
 
-        private static bool CloseWindow(UIWindowData windowData)
+        private static bool CloseWindow(UIWindowData windowData, bool destroy = false)
         {
             if (windowData.instance.UIEnable)
             {
                 windowData.instance.CloseGeneralLogic();
                 // 缓存则隐藏
-                if (windowData.isCache)
+                if (windowData.isCache || !destroy)
                 {
                     windowData.instance.transform.SetAsFirstSibling();
                     windowData.instance.gameObject.SetActive(false);
@@ -524,14 +545,14 @@ namespace JKFrame
         /// <summary>
         /// 关闭全部窗口
         /// </summary>
-        public static void CloseAllWindow()
+        public static void CloseAllWindow(bool destroy = false)
         {
             // 处理缓存中所有状态的逻辑
             foreach (var item in UIWindowDataDic.Values)
             {
                 if (item.instance != null && item.instance.gameObject.activeInHierarchy == true)
                 {
-                    CloseWindow(item);
+                    CloseWindow(item, destroy);
                 }
             }
             for (int i = 0; i < UILayers.Length; i++)
