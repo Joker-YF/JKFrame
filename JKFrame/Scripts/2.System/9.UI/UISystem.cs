@@ -520,7 +520,7 @@ namespace JKFrame
             {
                 windowData.instance.CloseGeneralLogic();
                 // 缓存则隐藏
-                if (windowData.isCache || !destroy)
+                if (windowData.isCache && !destroy)
                 {
                     windowData.instance.transform.SetAsFirstSibling();
                     windowData.instance.gameObject.SetActive(false);
