@@ -205,6 +205,9 @@ namespace JKFrame
                     continue;
                 }
             }
+
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssetIfDirty(this);
         }
 #endif
 
