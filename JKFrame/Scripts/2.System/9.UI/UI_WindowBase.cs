@@ -62,6 +62,23 @@ namespace JKFrame
         public virtual void OnClose() { }
 
         /// <summary>
+        /// 窗口激活上报：窗口可能保持打开状态、直接SetActive显隐（不经过Show/Close），
+        /// 激活变化上报给窗口系统，使按窗口层级派生的状态保持最新
+        /// </summary>
+        protected virtual void OnEnable()
+        {
+            UISystem.NotifyWindowStateChanged();
+        }
+
+        /// <summary>
+        /// 窗口失活上报（同OnEnable）
+        /// </summary>
+        protected virtual void OnDisable()
+        {
+            UISystem.NotifyWindowStateChanged();
+        }
+
+        /// <summary>
         /// 注册事件
         /// </summary>
         protected virtual void RegisterEventListener() { }
